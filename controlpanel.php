@@ -46,15 +46,12 @@ function bookings_add_admin() {
 		}
 	}
 
-	//add_options_page($bookings_name, $bookings_name, 'administrator', 'cc-ce-bridge-cp','bookings_admin');
 	add_menu_page($bookings_name, $bookings_name, 'administrator', 'bookings','bookings_main');
 	add_submenu_page('bookings', $bookings_name.' - Setup', 'Setup', 'administrator', 'bookings', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.'- 20', 'Control Panel', 'administrator', 'bookings&zb=ctrlpnl', 'bookings_main');
-	//add_submenu_page('bookings', $bookings_name.'- Main', 'Schedules', 'administrator', 'bookings&zb=admin&tool=schedules', 'bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - Schedules', 'Schedules', 'administrator', 'bookings&zb=admin&tool=schedules', 'bookings_main');
 	add_submenu_page('bookings', $bookings_name.' - Resources', 'Resources', 'administrator', 'bookings&zb=admin&tool=resources', 'bookings_main');
 	add_submenu_page('bookings', $bookings_name.' - Blackouts', 'Blackouts', 'administrator', 'bookings&zb=blackouts', 'bookings_main');
 	add_submenu_page('bookings', $bookings_name.' - List', 'Bookings List', 'administrator', 'bookings&zb=admin&tool=reservations', 'bookings_main');
-	//add_submenu_page('bookings', $bookings_name.'- Main', 'Approve reservations', 'administrator', 'bookings&zb=admin&tool=approval', 'bookings_main');
 	add_submenu_page('bookings', $bookings_name.' - Calendar', 'Bookings Calendar', 'administrator', 'bookings&zb=schedule', 'bookings_main');
 	add_submenu_page('bookings', $bookings_name.' - Search Bookings', 'Search Bookings', 'administrator', 'bookings&zb=usage', 'bookings_main');
 }
@@ -63,10 +60,7 @@ function bookings_main() {
 	global $bookings;
 	
 	if (!isset($_GET['zb'])) return bookings_admin();
-//	elseif (isset($_GET['ajax'])) return bookings_ajax();
-	
-	//bookings_home($home,$pid);
-	
+
 	echo '<div class="wrap">';
 	echo '<div id="bookings" style="position:relative;float:left;width:75%">';
 	if (isset($bookings['output']['messages']) && (count($bookings['output']['messages']) > 0)) {
@@ -82,13 +76,14 @@ function bookings_main() {
 	zing_support_us('bookings','bookings','cc-ce-bridge-cp',BOOKINGS_VERSION);
 	echo '</div>';
 }
+
 function bookings_admin() {
 
 	global $bookings_name, $bookings_shortname;
 
 	$controlpanelOptions=bookings_options();
 
-	if ( isset($_REQUEST['installed']) ) echo '<div id="message" class="updated fade"><p><strong>'.$bookings_name.' installed.</strong></p></div>';
+	if ( isset($_REQUEST['install']) ) echo '<div id="message" class="updated fade"><p><strong>'.$bookings_name.' settings updated.</strong></p></div>';
 	if ( isset($_REQUEST['error']) ) echo '<div id="message" class="updated fade"><p>The following error occured: <strong>'.$_REQUEST['error'].'</strong></p></div>';
 	
 	?>
@@ -128,6 +123,6 @@ function bookings_admin() {
 </div> <!-- end cc-left -->
 <?php
 	require(dirname(__FILE__).'/includes/support-us.inc.php');
-	zing_support_us('bookings','bookings','cc-ce-bridge-cp',BOOKINGS_VERSION);
+	zing_support_us('bookings','bookings','bookings',BOOKINGS_VERSION);
 }
 add_action('admin_menu', 'bookings_add_admin'); ?>

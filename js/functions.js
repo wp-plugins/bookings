@@ -592,13 +592,15 @@ function changeMyCal(m, d, y, view) {
 	document.location.href = url + "?date=" + m + "-" + d + "-" + y + "&view=" + view;
 }
 
-function changeResCalendar(m, d, y, view, id) {
+function changeResCalendar(m, d, y, view, id, page) {
 	var url = document.URL.split('?')[0];
 	var type_id = id.split("|");
 	var type = type_id[0];
 	var p = (type == "s") ? "scheduleid" : "machid";
 	var id = type_id[1];
-	document.location.href = url + "?page=bookings&zb=rescalendar&date=" + m + "-" + d + "-" + y + "&view=" + view + "&" + p + "=" + id;
+	if (page == null) page='rescalendar'; 
+	//document.location.href = url + "?page=bookings&zb=rescalendar&date=" + m + "-" + d + "-" + y + "&view=" + view + "&" + p + "=" + id;
+	document.location.href = bookingsPageurl + "zb=" + page + "&date=" + m + "-" + d + "-" + y + "&view=" + view + "&" + p + "=" + id;
 }
 
 function selectUserForReservation(memberid, fname, lname, email) {
