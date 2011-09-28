@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.net
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 0.9.2
+ Version: 0.9.3
  Author URI: http://www.zingiri.net/
  */
 
-define("BOOKINGS_VERSION","0.9.2");
+define("BOOKINGS_VERSION","0.9.3");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -58,7 +58,7 @@ function bookings_admin_notices() {
 	$dirs=array();
 
 	$upload=wp_upload_dir();
-	if (!is_writable(session_save_path())) $errors[]='PHP sessions are not properly configured on your server, the sessions save path '.session_save_path().' is not writable.';
+	//if (!is_writable(session_save_path())) $errors[]='PHP sessions are not properly configured on your server, the sessions save path '.session_save_path().' is not writable.';
 	if ($upload['error']) $errors[]=$upload['error'];
 	if (get_option('bookings_debug')) $warnings[]="Debug is active, once you finished debugging, it's recommended to turn this off";
 	if (phpversion() < '5') $warnings[]="You are running PHP version ".phpversion().". We recommend you upgrade to PHP 5.3 or higher.";
@@ -67,12 +67,12 @@ function bookings_admin_notices() {
 
 	if (count($warnings) > 0) {
 		echo "<div id='zing-warning' style='background-color:greenyellow' class='updated fade'><p><strong>";
-		foreach ($warnings as $message) echo 'WHMCS Bridge: '.$message.'<br />';
+		foreach ($warnings as $message) echo 'Bookings: '.$message.'<br />';
 		echo "</strong> "."</p></div>";
 	}
 	if (count($errors) > 0) {
 		echo "<div id='zing-warning' style='background-color:pink' class='updated fade'><p><strong>";
-		foreach ($errors as $message) echo 'WHMCS Bridge :'.$message.'<br />';
+		foreach ($errors as $message) echo 'Bookings:'.$message.'<br />';
 		echo "</strong> "."</p></div>";
 	}
 
@@ -218,8 +218,8 @@ function bookings_http($page="index") {
 	if (is_user_logged_in()) {
 		$wp['login']=$current_user->data->user_login;
 		$wp['email']=$current_user->data->user_email;
-		$wp['first_name']=$current_user->data->first_name;
-		$wp['last_name']=$current_user->data->last_name;
+		$wp['first_name']=$current_user->data->first_name ? $current_user->data->first_name: $current_user->data->display_name;
+		$wp['last_name']=$current_user->data->last_name ? $current_user->data->last_name : $current_user->data->display_name;
 		$wp['roles']=$current_user->roles;
 	}
 	$wp['siteurl']=home_url();

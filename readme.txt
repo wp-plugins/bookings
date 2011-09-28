@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.net/donations
 Tags: booking, schedule, scheduler, appointment, reservation
 Requires at least: 2.1.7
 Tested up to: 3.2.1
-Stable tag: 0.9.2
+Stable tag: 0.9.3
 
 Bookings is a powerful reservations scheduler.
 
@@ -39,6 +39,11 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots will be coming soon [here](http://www.zingiri.net/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 0.9.3 =
+* Removed references to WHMCS Bridge in admin notices
+* Forced display name as first name and/or last name when those are not specified
+* Disabled check on sessions save path
 
 = 0.9.2 =
 * Fixed issue with installations running PHP 5.2 or lower
