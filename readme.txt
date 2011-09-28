@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.net/donations
 Tags: booking, schedule, scheduler, appointment, reservation
 Requires at least: 2.1.7
 Tested up to: 3.2.1
-Stable tag: 0.9.1
+Stable tag: 0.9.2
 
 Bookings is a powerful reservations scheduler.
 
@@ -28,21 +28,21 @@ This WordPress plugin allows you to provide online booking services for your sit
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Include the code [bookings] in any page to display the bookings form
 
-Please visit the [Zingiri](http://forums.zingiri.net "Zingiri Support Forum") for more information and support.
+Please visit [Zingiri](http://www.zingiri.net/plugins-and-addons/bookings/#installation "Zingiri") for more information and support.
 
 == Frequently Asked Questions ==
 
-Please visit the [Zingiri](http://forums.zingiri.net/forumdisplay.php?fid=56 "Zingiri Support Forum") for more information and support.
+Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay.php?fid=60 "Zingiri Support Forum") for more information and support.
 
 == Screenshots ==
 
-No screenshots here but have a look at [our site](http://www.zingiri.net/portal/ "our site") to see it in action.
-
-== Upgrade Notice ==
-
-Simply go to the Wordpress Settings page for the plugins and click the Upgrade button.
+Screenshots will be coming soon [here](http://www.zingiri.net/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 0.9.2 =
+* Fixed issue with installations running PHP 5.2 or lower
+* Updated documentation and support links
 
 = 0.9.1 =
 * Beta release
