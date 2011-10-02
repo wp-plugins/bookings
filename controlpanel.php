@@ -46,14 +46,14 @@ function bookings_add_admin() {
 		}
 	}
 
-	add_menu_page($bookings_name, $bookings_name, 'administrator', 'bookings','bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Setup', 'Setup', 'administrator', 'bookings', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Schedules', 'Schedules', 'administrator', 'bookings&zb=admin&tool=schedules', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Resources', 'Resources', 'administrator', 'bookings&zb=admin&tool=resources', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Blackouts', 'Blackouts', 'administrator', 'bookings&zb=blackouts', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - List', 'Bookings List', 'administrator', 'bookings&zb=admin&tool=reservations', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Calendar', 'Bookings Calendar', 'administrator', 'bookings&zb=schedule', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Search Bookings', 'Search Bookings', 'administrator', 'bookings&zb=usage', 'bookings_main');
+	add_menu_page($bookings_name, $bookings_name, 'edit_plugins', 'bookings','bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - Setup', 'Setup', 'edit_plugins', 'bookings', 'bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - Schedules', 'Schedules', 'edit_plugins', 'bookings&zb=admin&tool=schedules', 'bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - Resources', 'Resources', 'edit_plugins', 'bookings&zb=admin&tool=resources', 'bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - Blackouts', 'Blackouts', 'edit_plugins', 'bookings&zb=blackouts', 'bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - List', 'Bookings List', 'edit_plugins', 'bookings&zb=admin&tool=reservations', 'bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - Calendar', 'Bookings Calendar', 'edit_plugins', 'bookings&zb=schedule', 'bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - Search Bookings', 'Search Bookings', 'edit_plugins', 'bookings&zb=usage', 'bookings_main');
 }
 
 function bookings_main() {
