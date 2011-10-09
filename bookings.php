@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.net
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.0.1
+ Version: 1.0.2
  Author URI: http://www.zingiri.net/
  */
 
-define("BOOKINGS_VERSION","1.0.1");
+define("BOOKINGS_VERSION","1.0.2");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -104,7 +104,7 @@ function bookings_deactivate() {
 	delete_option("bookings_ftp_user"); //legacy
 	delete_option("bookings_ftp_password"); //legacy
 	delete_option("bookings_version");
-	delete_option('cc-ce-bridge-cp-support-us');
+	delete_option('bookings-support-us');
 }
 
 function bookings_content($content) {
@@ -222,6 +222,8 @@ function bookings_http($page="index") {
 		$wp['last_name']=$current_user->data->last_name ? $current_user->data->last_name : $current_user->data->display_name;
 		$wp['roles']=$current_user->roles;
 	}
+	//$wp['time']=$_SERVER['REQUEST_TIME']+get_option('gmt_offset')*3600;
+	$wp['gmt_offset']=get_option('gmt_offset');
 	$wp['siteurl']=home_url();
 	$wp['sitename']=get_bloginfo('name');
 	$wp['pluginurl']=BOOKINGS_URL;
@@ -230,7 +232,7 @@ function bookings_http($page="index") {
 
 	$wp['admin_email']=get_option('admin_email');
 	$wp['key']=get_option('bookings_key');
-	$wp['lang']=get_bloginfo('language');
+	$wp['lang']=get_option('bookings_lang'); //get_bloginfo('language');
 	$vars.=$and.'wp='.base64_encode(json_encode($wp));
 
 	if (isset($_SESSION['bookings']['http_referer'])) $vars.='&http_referer='.cc_urlencode($_SESSION['bookings']['http_referer']);

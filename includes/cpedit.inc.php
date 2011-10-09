@@ -5,6 +5,8 @@
 
 <?php if ($controlpanelOptions) foreach ($controlpanelOptions as $value) {
 
+	$selected=false;
+	
 	if ($value['type'] == "text" || $value['type'] == "password") { ?>
 
 	<tr align="left">
@@ -83,8 +85,8 @@
 		<?php foreach ($value['options'] as $key => $option) { ?>
 			<option value="<?php echo $key;?>"
 			<?php 
-			if ( get_option($value['id']) && get_option( $value['id'] ) == $key) { echo ' selected="selected"'; }
-			elseif ( !get_option($value['id']) && $value['std'] == $key) { echo ' selected="selected"'; }
+			if (!$selected && get_option($value['id']) && (get_option( $value['id'] ) == $key)) { echo ' selected="selected"'; $selected=true; }
+			elseif (!$selected && !get_option($value['id']) && $value['std'] == $key) { echo ' selected="selected"'; $selected=true; }
 			?>
 			><?php echo $option; ?></option>
 			<?php } ?>

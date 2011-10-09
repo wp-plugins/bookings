@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.net/donations
 Tags: booking, schedule, scheduler, appointment, reservation
 Requires at least: 2.1.7
 Tested up to: 3.2.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 
 Bookings is a powerful reservations scheduler.
 
@@ -39,6 +39,13 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots will be coming soon [here](http://www.zingiri.net/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.0.2 = 
+* Added possibility to choose the language/locale
+* Added display of reservation time in confirmation message
+* Fixed issue with sending of confirmation email
+* Fixed issue with minimum and maximum booking notice not being taken into account in the calendar
+* Fixed issue with settings not updating properly
 
 = 1.0.1 =
 * Fixed issue with guest bookings causing a database error
