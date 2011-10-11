@@ -1,10 +1,10 @@
 === Bookings ===
 Contributors: zingiri
 Donate link: http://www.zingiri.net/donations
-Tags: booking, schedule, scheduler, appointment, reservation
+Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling
 Requires at least: 2.1.7
 Tested up to: 3.2.1
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 
 Bookings is a powerful reservations scheduler.
 
@@ -39,6 +39,11 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots will be coming soon [here](http://www.zingiri.net/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.0.3 =
+* Fixed permissions issue for guest bookings
+* Fixed issue with German language not working (encoding issue)
+* Added 6 hours and 8 hours timespans
 
 = 1.0.2 = 
 * Added possibility to choose the language/locale

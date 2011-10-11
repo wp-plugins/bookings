@@ -96,7 +96,7 @@ function bookings_main() {
 
 	echo '<div class="wrap">';
 	echo '<div id="bookings" style="position:relative;float:left;width:75%">';
-	if (isset($bookings['output']['messages']) && (count($bookings['output']['messages']) > 0)) {
+	if (isset($bookings['output']['messages']) && is_array($bookings['output']['messages']) && (count($bookings['output']['messages']) > 0)) {
 		echo '<div class="error">';
 		foreach ($bookings['output']['messages'] as $msg) {
 			echo $msg.'<br />';
