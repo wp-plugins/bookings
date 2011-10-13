@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.net
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.0.4
+ Version: 1.0.5
  Author URI: http://www.zingiri.net/
  */
 
-define("BOOKINGS_VERSION","1.0.4");
+define("BOOKINGS_VERSION","1.0.5");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -89,7 +89,7 @@ function bookings_activate() {
 
 function bookings_deactivate() {
 	bookings_output('deactivate');
-	
+
 	delete_option('bookings_key');
 
 	$bookings_options=bookings_options();
@@ -109,18 +109,41 @@ function bookings_deactivate() {
 function bookings_content($content) {
 	global $bookings;
 
-	if (preg_match('/\[bookings(.*)\]/',$content,$matches)==1) {
-		//print_r($matches);echo '<br />'; //[1] contains string
+	if (preg_match_all('/\[bookings(.*)\]/',$content,$matches)) {
 		$pg=isset($_REQUEST['zb']) ? $_REQUEST['zb'] : 'book1';
-		bookings_output($pg);
-		$content='<div id="bookings">';
-		$content.=$bookings['output']['body'];
-		$content.='</div>';
+		if ($pg=='book1') {
+			foreach ($matches[0] as $id => $match) {
+				$postVars=array();
+				if ($matches[1][$id]) {
+					$vars=explode(',',$matches[1][$id]);
+					foreach ($vars as $var) {
+						list($n,$v)=explode('=',$var);
+						$n=trim($n);
+						$v=trim($v);
+						if ($n=='template') $postVars['template']=$v;
+						elseif ($n=='schedule') $postVars['machid']=$v;
+						else echo '<br />Unknown variable '.$n;
+					}
+				}
+				bookings_output($pg,$postVars);
+				$output='<div id="bookings">';
+				$output.=$bookings['output']['body'];
+				$output.='</div>';
+				$content=str_replace($match,$output,$content);
+			}
+		} else {
+			bookings_output($pg);
+			$output='<div id="bookings">';
+			$output.=$bookings['output']['body'];
+			$output.='</div>';
+			$content=$output;
+				
+		}
 		return $content;
 	} else return $content;
 }
 
-function bookings_output($bookings_to_include='') {
+function bookings_output($bookings_to_include='',$postVars=array()) {
 	global $post,$bookings;
 	global $wpdb;
 	global $wordpressPageName;
@@ -132,6 +155,7 @@ function bookings_output($bookings_to_include='') {
 	bookings_log('Notification','Call: '.$http);
 	//echo '<br />'.$http.'<br />';
 	$news = new zHttpRequest($http,'bookings');
+	$news->post=array_merge($news->post,$postVars);
 
 	if (!$news->curlInstalled()) {
 		bookings_log('Error','CURL not installed');
