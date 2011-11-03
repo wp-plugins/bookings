@@ -11,6 +11,10 @@ function bookings_options() {
 			"desc" => 'This is your API key, it is uniquely linked to your web site, make sure to keep it in a safe place.',
 			"id" => $bookings_shortname."_key",
 			"type" => "text");
+	$bookings_options[] = array("name" => "License Key",
+			"desc" => 'If you wish to make use of the Bookings Pro features, enter your license key here. You can purchase a license key <a href="http://www.zingiri.net/portal/?ccce=cart&a=add&pid=121" target="blank">here</a>.<br />The Pro version provides additional functionality and has no limits to the number of bookings and schedules you can use.',
+			"id" => $bookings_shortname."_lic",
+			"type" => "text");
 	$bookings_options[] = array(	"name" => "Debug Mode",
 			"desc" => "If you have problems with the plugin, activate the debug mode to generate a debug log for our support team",
 			"id" => $bookings_shortname."_debug",
@@ -74,19 +78,20 @@ function bookings_add_admin() {
 				} else { delete_option( $value['id'] );
 				}
 			}
-			header("Location: options-general.php?page=bookings&installed=true");
+			header("Location: admin.php?page=bookings&installed=true");
 			die;
 		}
 	}
 
-	add_menu_page($bookings_name, $bookings_name, 'edit_plugins', 'bookings','bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Setup', 'Setup', 'edit_plugins', 'bookings', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Schedules', 'Schedules', 'edit_plugins', 'bookings&zb=admin&tool=schedules', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Resources', 'Resources', 'edit_plugins', 'bookings&zb=admin&tool=resources', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Blackouts', 'Blackouts', 'edit_plugins', 'bookings&zb=blackouts', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - List', 'Bookings List', 'edit_plugins', 'bookings&zb=admin&tool=reservations', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Calendar', 'Bookings Calendar', 'edit_plugins', 'bookings&zb=schedule', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Search Bookings', 'Search Bookings', 'edit_plugins', 'bookings&zb=usage', 'bookings_main');
+	add_menu_page($bookings_name, $bookings_name, 'manage_options', 'bookings','bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - Setup', 'Setup', 'manage_options', 'bookings', 'bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - Schedules', 'Schedules', 'manage_options', 'bookings&zb=admin&tool=schedules', 'bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - Resources', 'Resources', 'manage_options', 'bookings&zb=admin&tool=resources', 'bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - Blackouts', 'Blackouts', 'manage_options', 'bookings&zb=blackouts', 'bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - List', 'Bookings List', 'manage_options', 'bookings&zb=admin&tool=reservations', 'bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - Calendar', 'Bookings Calendar', 'manage_options', 'bookings&zb=schedule', 'bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - Search Bookings', 'Search Bookings', 'manage_options', 'bookings&zb=usage', 'bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - Stats', 'Stats', 'manage_options', 'bookings&zb=stats', 'bookings_main');
 }
 
 function bookings_main() {

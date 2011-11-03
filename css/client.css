@@ -4,9 +4,19 @@
 	width:100%;
 }
 
-/*
-#bookings .MyCalCellColor, #bookings .MyCalCellColor a {
-	color: #FFFFFF;
-	text-decoration: none;
+.currentDayBoxStyle {
+	font-size: smaller;
+	background-color: #DDCAF6;
+	text-align: center;
 }
-*/
+
+.dayBoxStyle {
+	font-size: smaller;
+	text-align: center;
+}
+
+.dayNamesStyle {
+	font-size: smaller;
+	text-align: center;
+	background-color: #F0F0F0;
+}

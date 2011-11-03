@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.net
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.0.5
+ Version: 1.0.6
  Author URI: http://www.zingiri.net/
  */
 
-define("BOOKINGS_VERSION","1.0.5");
+define("BOOKINGS_VERSION","1.0.6");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -50,12 +50,18 @@ require_once(dirname(__FILE__) . '/includes/http.class.php');
 require_once(dirname(__FILE__) . '/controlpanel.php');
 
 function bookings_admin_notices() {
-	global $wpdb;
+	global $bookings;
 	$errors=array();
 	$warnings=array();
 	$files=array();
 	$dirs=array();
 
+	if (isset($bookings['output']['warnings']) && is_array($bookings['output']['warnings']) && (count($bookings['output']['warnings']) > 0)) {
+		$warnings=$bookings['output']['warnings'];
+	}
+	if (isset($bookings['output']['errors']) && is_array($bookings['output']['errors']) && (count($bookings['output']['errors']) > 0)) {
+		$errors=$bookings['output']['errors'];
+	}
 	$upload=wp_upload_dir();
 	//if (!is_writable(session_save_path())) $errors[]='PHP sessions are not properly configured on your server, the sessions save path '.session_save_path().' is not writable.';
 	if ($upload['error']) $errors[]=$upload['error'];
@@ -79,8 +85,6 @@ function bookings_admin_notices() {
 }
 
 function bookings_activate() {
-	global $wpdb,$current_user;
-
 	update_option('bookings_key',md5(time().sprintf(mt_rand(),'%10d')));
 
 	update_option("bookings_version",BOOKINGS_VERSION);
@@ -184,7 +188,6 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 			$buffer=$news->DownloadToString();
 			//print_r($buffer);
 			$bookings['output']=json_decode($buffer,true);
-
 			if (!$bookings['output']) {
 				$bookings['output']['body']=$buffer;
 				$bookings['output']['head']='';
@@ -208,7 +211,7 @@ function bookings_header() {
 
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/jscalendar/calendar-blue-custom.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/client.css" media="screen" />';
-
+	
 }
 
 function bookings_admin_header() {
@@ -246,6 +249,7 @@ function bookings_http($page="index") {
 		$wp['last_name']=$current_user->data->last_name ? $current_user->data->last_name : $current_user->data->display_name;
 		$wp['roles']=$current_user->roles;
 	}
+	$wp['lic']=get_option('bookings_lic');
 	//$wp['time']=$_SERVER['REQUEST_TIME']+get_option('gmt_offset')*3600;
 	$wp['gmt_offset']=get_option('gmt_offset');
 	$wp['siteurl']=home_url();

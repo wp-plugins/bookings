@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.net/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling
 Requires at least: 2.1.7
 Tested up to: 3.2.1
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 
 Bookings is a powerful reservations scheduler.
 
@@ -22,11 +22,18 @@ This WordPress plugin allows you to provide online booking services for your sit
 * Calendars can be viewed in a day/week/month layout.
 * Supports multiple languages: English (US & GB), German, French, Spanish, Italian, Hungarian, Dutch, Finnish, Swedish and Turkish.
 
+The Pro version of the plugin additionaly offers:
+
+* Unlimited bookings
+* Unlimited schedules
+* Possibility to search reservations by reservation ID
+* Customization of the booking form (coming soon)
+
 == Installation ==
 
 1. Upload the `bookings` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Include the code [bookings] in any page to display the bookings form. There are differrent options for formatting the bookings form that are documented on [our site](http://www.zingiri.net/plugins-and-addons/bookings "our site").
+3. Include the code [bookings] in any page to display the bookings form. There are differrent options for formatting the bookings form that are documented on [our site](http://www.zingiri.net/plugins-and-addons/bookings#usage "our site").
 
 Please visit [Zingiri](http://www.zingiri.net/plugins-and-addons/bookings/#installation "Zingiri") for more information and support.
 
@@ -39,6 +46,15 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots will be coming soon [here](http://www.zingiri.net/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.0.6 =
+* Added dashboard view showing various statistics on resources and reservations
+* Upgraded HttpRequest class to v1.10.02
+* Added license key field for Pro features
+* Days before today's date are now protected in calendar
+* Added highlight of today's date in calendar
+
+* Fixed encoding issue with Spanish and Danish language files
 
 = 1.0.5 =
 * Added new booking templates
