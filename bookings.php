@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.net
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.0.6
+ Version: 1.1.0
  Author URI: http://www.zingiri.net/
  */
 
-define("BOOKINGS_VERSION","1.0.6");
+define("BOOKINGS_VERSION","1.1.0");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -141,7 +141,7 @@ function bookings_content($content) {
 			$output.=$bookings['output']['body'];
 			$output.='</div>';
 			$content=$output;
-				
+
 		}
 		return $content;
 	} else return $content;
@@ -153,7 +153,7 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 	global $wordpressPageName;
 	global $bookings_loaded;
 
-	$ajax=false;
+	$ajax=isset($_REQUEST['ajax']) ? $_REQUEST['ajax'] : false;
 
 	$http=bookings_http($bookings_to_include);
 	bookings_log('Notification','Call: '.$http);
@@ -170,10 +170,14 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 	} else {
 		if ($ajax==1) {
 			ob_end_clean();
-			$output=$news->DownloadToString();
-			$body=$news->body;
-			$body=bookings_parser_ajax1($body);
-			echo $body;
+			$buffer=$news->DownloadToString();
+			$bookings['output']=json_decode($buffer,true);
+			if (!$bookings['output']) {
+				$bookings['output']['body']=$buffer;
+				$bookings['output']['head']='';
+			}
+			//$body=bookings_parser_ajax1($bookings['output']['body']);
+			echo $bookings['output']['body'];
 			die();
 		} elseif ($ajax==2) {
 			ob_end_clean();
@@ -200,9 +204,12 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 
 function bookings_header() {
 	global $bookings;
+	
 	echo '<script type="text/javascript">';
 	echo "var bookingsPageurl='".bookings_home()."';";
 	echo '</script>';
+	
+	//if (isset($bookings['output']['head'])) echo $bookings['output']['head'];
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/functions.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/ajax.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/calendar.js"></script>';
@@ -211,6 +218,7 @@ function bookings_header() {
 
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/jscalendar/calendar-blue-custom.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/client.css" media="screen" />';
+	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/integrated_view.css" media="screen" />';
 	
 }
 
@@ -258,6 +266,7 @@ function bookings_http($page="index") {
 	if (is_admin()) $wp['pageurl']='admin.php?page=bookings&';
 	else $wp['pageurl']=bookings_home();
 
+	$wp['time_format']=get_option('time_format');
 	$wp['admin_email']=get_option('admin_email');
 	$wp['key']=get_option('bookings_key');
 	$wp['lang']=get_option('bookings_lang'); //get_bloginfo('language');
@@ -300,10 +309,15 @@ function bookings_init()
 {
 	ob_start();
 	session_start();
-	if (is_admin() && isset($_GET['zb'])) {
-		$pg=$_GET['zb'];
+	if (is_admin() && (isset($_GET['zb']) || !isset($_SESSION['bookings']['menus']))) {
+		$pg=isset($_GET['zb']) ? $_GET['zb'] : 'usage';
 		bookings_output($pg);
+		if ($pg=='form_edit') {
+			wp_enqueue_script('prototype');
+			wp_enqueue_script('scriptaculous');
+		}
 	}
+
 }
 
 function bookings_log($type=0,$msg='',$filename="",$linenum=0) {

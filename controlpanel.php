@@ -12,7 +12,7 @@ function bookings_options() {
 			"id" => $bookings_shortname."_key",
 			"type" => "text");
 	$bookings_options[] = array("name" => "License Key",
-			"desc" => 'If you wish to make use of the Bookings Pro features, enter your license key here. You can purchase a license key <a href="http://www.zingiri.net/portal/?ccce=cart&a=add&pid=121" target="blank">here</a>.<br />The Pro version provides additional functionality and has no limits to the number of bookings and schedules you can use.',
+			"desc" => 'If you wish to make use of the <strong>Bookings Pro</strong> features, enter your license key here. You can purchase a license key <a href="http://www.zingiri.net/portal/?ccce=cart&a=add&pid=121" target="blank">here</a>.<br />The Pro version provides additional functionality and has no limits to the number of bookings and schedules you can use.',
 			"id" => $bookings_shortname."_lic",
 			"type" => "text");
 	$bookings_options[] = array(	"name" => "Debug Mode",
@@ -47,29 +47,29 @@ function bookings_options() {
 		'sv'	=> array('sv([-_][[:alpha:]]{2})?|swedish', 'sv.lang.php', 'sv', 'Swedish'),
 		'tr'	=> array('fi([-_][[:alpha:]]{2})?|turkish', 'tr.lang.php', 'tr', 'T&uuml;rk&ccedil;e')
 	);
-	
+
 	$options=array();
 	foreach ($languages as $lang => $desc) {
 		$options[$lang]=$desc[3];
 	}
 	$bookings_options[] = array(	"name" => "Language",
-			"desc" => "Bookings supports multiple languages, here you can select the language of your choice.",
+			"desc" => "Bookings supports multiple languages, here you can select the language of your choice.<br />If you see blank screens after changing the language from English, please contact us as some of the language files have some encoding issues.<br />If you see missing translations, please send us the translations and we'll incorporate them into a new version.<br /> And if you can't see your language but are interested to add it, contact us so we can see how we can work something out.",
 			"id" => $bookings_shortname."_lang",
 			"options" => $options,
 			"std" => get_locale(),
 			"type" => "selectwithkey");
-	
+
 	return $bookings_options;
 }
 
 function bookings_add_admin() {
 
-	global $bookings_name, $bookings_shortname;
+	global $bookings_name, $bookings_shortname, $bookings;
 
 	$bookings_options=bookings_options();
 
 	if (isset($_GET['page']) && ($_GET['page'] == "bookings")) {
-		
+
 		if ( isset($_REQUEST['action']) && 'install' == $_REQUEST['action'] ) {
 			delete_option('bookings_log');
 			foreach ($bookings_options as $value) {
@@ -92,11 +92,22 @@ function bookings_add_admin() {
 	add_submenu_page('bookings', $bookings_name.' - Calendar', 'Bookings Calendar', 'manage_options', 'bookings&zb=schedule', 'bookings_main');
 	add_submenu_page('bookings', $bookings_name.' - Search Bookings', 'Search Bookings', 'manage_options', 'bookings&zb=usage', 'bookings_main');
 	add_submenu_page('bookings', $bookings_name.' - Stats', 'Stats', 'manage_options', 'bookings&zb=stats', 'bookings_main');
+	if (!isset($bookings['output']['menus'])) {
+		$menus=isset($_SESSION['bookings']['menus']) ? $_SESSION['bookings']['menus'] : array();
+	} else {
+		$menus=$bookings['output']['menus'];
+		$_SESSION['bookings']['menus']=$bookings['output']['menus'];
+	}
+	if (count($menus) > 0) {
+		foreach ($menus as $menu) {
+			add_submenu_page($menu[0],$menu[1],$menu[2],$menu[3],$menu[4],$menu[5]);
+		}
+	}
 }
 
 function bookings_main() {
 	global $bookings;
-	
+
 	if (!isset($_GET['zb'])) return bookings_admin();
 
 	echo '<div class="wrap">';
@@ -107,7 +118,7 @@ function bookings_main() {
 			echo $msg.'<br />';
 		}
 		echo '</div>';
-	} 
+	}
 	if (isset($bookings['output']['body'])) echo $bookings['output']['body'];
 	echo '</div>';
 	require(dirname(__FILE__).'/includes/support-us.inc.php');
@@ -123,26 +134,24 @@ function bookings_admin() {
 
 	if ( isset($_REQUEST['install']) ) echo '<div id="message" class="updated fade"><p><strong>'.$bookings_name.' settings updated.</strong></p></div>';
 	if ( isset($_REQUEST['error']) ) echo '<div id="message" class="updated fade"><p>The following error occured: <strong>'.$_REQUEST['error'].'</strong></p></div>';
-	
+
 	?>
 <div class="wrap">
-<div id="cc-left" style="position:relative;float:left;width:80%">
+<div id="cc-left" style="position: relative; float: left; width: 80%">
 <h2><b><?php echo $bookings_name; ?></b></h2>
 
 	<?php
 	$bookings_version=get_option("bookings_version");
 	$submit='Update';
 	?>
-<form method="post">
-
-<?php require(dirname(__FILE__).'/includes/cpedit.inc.php')?>
+<form method="post"><?php require(dirname(__FILE__).'/includes/cpedit.inc.php')?>
 
 <p class="submit"><input name="install" type="submit" value="<?php echo $submit;?>" /> <input
 	type="hidden" name="action" value="install"
 /></p>
 </form>
 <hr />
-<?php  
+	<?php
 	if ($bookings_version && get_option('bookings_debug')) {
 		echo '<h2 style="color: green;">Debug log</h2>';
 		echo '<textarea rows=10 cols=80>';
@@ -156,11 +165,9 @@ function bookings_admin() {
 		}
 		echo '</textarea><hr />';
 	}
-?>
-
-</div> <!-- end cc-left -->
-<?php
-	require(dirname(__FILE__).'/includes/support-us.inc.php');
-	zing_support_us('bookings','bookings','bookings',BOOKINGS_VERSION);
+	?></div>
+<!-- end cc-left --> <?php
+require(dirname(__FILE__).'/includes/support-us.inc.php');
+zing_support_us('bookings','bookings','bookings',BOOKINGS_VERSION);
 }
 add_action('admin_menu', 'bookings_add_admin'); ?>

@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.net/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling
 Requires at least: 2.1.7
 Tested up to: 3.2.1
-Stable tag: 1.0.6
+Stable tag: 1.1.0
 
 Bookings is a powerful reservations scheduler.
 
@@ -27,7 +27,7 @@ The Pro version of the plugin additionaly offers:
 * Unlimited bookings
 * Unlimited schedules
 * Possibility to search reservations by reservation ID
-* Customization of the booking form (coming soon)
+* Customization of the booking form
 
 == Installation ==
 
@@ -46,6 +46,12 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots will be coming soon [here](http://www.zingiri.net/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.1.0 =
+* Use Wordpress time settings for calendar time settings (military time vs am/pm notation)
+* Fixed issue with Polish, Czech and French language files encoding
+* Show registration form in all cases
+* Added possibility to edit custom booking form (Pro version)
 
 = 1.0.6 =
 * Added dashboard view showing various statistics on resources and reservations
