@@ -176,8 +176,11 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 				$bookings['output']['body']=$buffer;
 				$bookings['output']['head']='';
 			}
-			//$body=bookings_parser_ajax1($bookings['output']['body']);
+			echo '<html><head>';
+			echo $bookings['output']['head'];
+			echo '</head><body>';
 			echo $bookings['output']['body'];
+			echo '</body></hmtl>';
 			die();
 		} elseif ($ajax==2) {
 			ob_end_clean();

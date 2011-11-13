@@ -20,14 +20,21 @@ This WordPress plugin allows you to provide online booking services for your sit
 * Administrator has control over all reservations and can browse, modify and delete any reservation in the system.
 * Administrators can search through the reservation database with a very flexible search tool. Search results can be viewed as HTML, plain-text, XML or CSV.
 * Calendars can be viewed in a day/week/month layout.
-* Supports multiple languages: English (US & GB), German, French, Spanish, Italian, Hungarian, Dutch, Finnish, Swedish and Turkish.
+* Supports multiple languages: English (US & GB), German, French, Spanish, Italian, Hungarian, Dutch, Finnish, Swedish, Turkish, Arabic, Bulgarian, Chinese (Traditional & Simplified), Czech, Danish, Greek, Japanese, Korean, Polish, Portuguese, Slovak and Slovenian.
 
 The Pro version of the plugin additionaly offers:
 
 * Unlimited bookings
 * Unlimited schedules
+* Customization of the booking form with custom fields
 * Possibility to search reservations by reservation ID
-* Customization of the booking form
+
+And coming soon in the Pro version:
+* Integration of payment gateways such as Paypal etc 
+* Mutliple configuration options: send admin confirmation email, reservations require confirmation (or not), 
+* Possibility to edit the thank you text on the confirmation page
+* Possibility to edit the confirmation emails 
+* Export to calendars
 
 == Installation ==
 
@@ -46,6 +53,13 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots will be coming soon [here](http://www.zingiri.net/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.1.1 =
+* Removed Accessories and Participants tabs from reservation pop-up (back-end) as currently not used
+* Fixed issue with pop-up windows not being styled properly
+* Fixed issue with Change Name not working when editing a reservation in the back-end
+* Fixed encoding issues with Slovenian and Slovak languages
+* Fixed issue with booking confirmation not showing when default permalinks set (Pro version)
 
 = 1.1.0 =
 * Use Wordpress time settings for calendar time settings (military time vs am/pm notation)
