@@ -94,7 +94,7 @@
 
 	</tr>
 	<tr>
-		<td colspan=2><small><?php echo $value['desc']; ?> </small></td>
+		<td colspan=2><small><?php echo $value['desc']; ?> </small><hr /></td>
 	</tr>
 
 	<?php } elseif ($value['type'] == "heading") { ?>

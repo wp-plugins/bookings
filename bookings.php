@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.net
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.1.2
+ Version: 1.2.0
  Author URI: http://www.zingiri.net/
  */
 
-define("BOOKINGS_VERSION","1.1.2");
+define("BOOKINGS_VERSION","1.2.0");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -28,6 +28,9 @@ if (!defined("BLOGUPLOADDIR")) {
 	$upload=wp_upload_dir();
 	define("BLOGUPLOADDIR",$upload['path']);
 }
+
+define("BOOKINGS_USER_CAP",get_option('bookings_user_cap') ? get_option('bookings_user_cap') : 'edit_posts');
+define("BOOKINGS_ADMIN_CAP",get_option('bookings_admin_cap') ? get_option('bookings_admin_cap') : 'manage_options');
 
 define("BOOKINGS_URL", WP_CONTENT_URL . "/plugins/".BOOKINGS_PLUGIN."/");
 
@@ -144,6 +147,13 @@ function bookings_content($content) {
 
 		}
 		return $content;
+	} elseif (isset($_REQUEST['page']) && ($_REQUEST['page']=='bookings') && isset($_REQUEST['zb']) && $_REQUEST['zb']) {
+		bookings_output($_REQUEST['zb']);
+		$output='<div id="bookings">';
+		$output.=$bookings['output']['body'];
+		$output.='</div>';
+		$content=str_replace($match,$output,$content);
+		return $content;
 	} else return $content;
 }
 
@@ -176,19 +186,24 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 				$bookings['output']['body']=$buffer;
 				$bookings['output']['head']='';
 			}
-			echo '<html><head>';
-			echo $bookings['output']['head'];
-			echo '</head><body>';
-			echo $bookings['output']['body'];
-			echo '</body></hmtl>';
+			if (isset($_REQUEST['scr'])) {
+				echo $bookings['output']['body'];
+			} else {
+				echo '<html><head>';
+				echo $bookings['output']['head'];
+				echo '</head><body>';
+				echo $bookings['output']['body'];
+				echo '</body></hmtl>';
+			}
 			die();
 		} elseif ($ajax==2) {
 			ob_end_clean();
 			$output=$news->DownloadToString();
-			$body=$news->body;
-			$body=bookings_parser_ajax2($body);
-			header('HTTP/1.1 200 OK');
-			echo $body;
+			foreach (array('content-disposition','content-type') as $i) {
+				if (isset($news->headers[$i])) header($i.':'.$news->headers[$i]);
+			}
+			echo $news->body;
+			die();
 			//echo 'it is ajax 2';
 			die();
 		} else {
@@ -207,11 +222,11 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 
 function bookings_header() {
 	global $bookings;
-	
+
 	echo '<script type="text/javascript">';
 	echo "var bookingsPageurl='".bookings_home()."';";
 	echo '</script>';
-	
+
 	//if (isset($bookings['output']['head'])) echo $bookings['output']['head'];
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/functions.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/ajax.js"></script>';
@@ -221,8 +236,9 @@ function bookings_header() {
 
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/jscalendar/calendar-blue-custom.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/client.css" media="screen" />';
+	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/integrated_view.css" media="screen" />';
-	
+
 }
 
 function bookings_admin_header() {
@@ -312,12 +328,17 @@ function bookings_init()
 {
 	ob_start();
 	session_start();
-	if (is_admin() && (isset($_GET['zb']) || !isset($_SESSION['bookings']['menus']))) {
-		$pg=isset($_GET['zb']) ? $_GET['zb'] : 'usage';
-		bookings_output($pg);
-		if ($pg=='form_edit') {
-			wp_enqueue_script('prototype');
-			wp_enqueue_script('scriptaculous');
+	if (is_admin()) {
+		if (isset($_GET['page']) && $_GET['page']=='bookings' && !current_user_can(BOOKINGS_ADMIN_CAP) && !isset($_GET['zb'])) {
+			$_GET['zb']='stats';
+		}
+		if ((isset($_GET['zb']) || !isset($_SESSION['bookings']['menus']))) {
+			$pg=isset($_GET['zb']) ? $_GET['zb'] : 'usage';
+			bookings_output($pg);
+			if ($pg=='form_edit') {
+				wp_enqueue_script('prototype');
+				wp_enqueue_script('scriptaculous');
+			}
 		}
 	}
 

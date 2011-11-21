@@ -730,7 +730,7 @@ function openExport(type, id, start, end) {
 		}
 	}
 	
-	window.open("exports/ical.php?" + qs);
+	window.open("admin.php?page=bookings&ajax=2&zb=ical&" + qs);
 }
 
 function exportSearch() {

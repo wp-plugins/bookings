@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.net/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling
 Requires at least: 2.1.7
 Tested up to: 3.2.1
-Stable tag: 1.1.2
+Stable tag: 1.2.0
 
 Bookings is a powerful reservations scheduler.
 
@@ -21,20 +21,24 @@ This WordPress plugin allows you to provide online booking services for your sit
 * Administrators can search through the reservation database with a very flexible search tool. Search results can be viewed as HTML, plain-text, XML or CSV.
 * Calendars can be viewed in a day/week/month layout.
 * Supports multiple languages: English (US & GB), German, French, Spanish, Italian, Hungarian, Dutch, Finnish, Swedish, Turkish, Arabic, Bulgarian, Chinese (Traditional & Simplified), Czech, Danish, Greek, Japanese, Korean, Polish, Portuguese, Slovak and Slovenian.
+* Community support via our [Forums](http://forums.zingiri.net "Forums") 
 
 The Pro version of the plugin additionaly offers:
 
 * Unlimited bookings
 * Unlimited schedules
 * Customization of the booking form with custom fields
+* Export reservations to your favorite calendar (Outlook, iCal, etc) from the admin back-end or your confirmation email
 * Possibility to search reservations by reservation ID
+* Priority support via our [Helpdesk](http://www.zingiri.net/portal "Helpdesk")
 
 And coming soon in the Pro version:
+
 * Integration of payment gateways such as Paypal etc 
-* Mutliple configuration options: send admin confirmation email, reservations require confirmation (or not), 
+* Mobile syncing with your iPhone, iPad, Android device and more
+* Mutliple configuration options: send admin confirmation email, reservations require confirmation (or not), etc
 * Possibility to edit the thank you text on the confirmation page
 * Possibility to edit the confirmation emails 
-* Export to calendars
 
 == Installation ==
 
@@ -48,11 +52,30 @@ Please visit [Zingiri](http://www.zingiri.net/plugins-and-addons/bookings/#insta
 
 Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay.php?fid=60 "Zingiri Support Forum") for more information and support.
 
+= Available front-end style classes =
+
+.bookingsCalendarBody : class for div containing the calendar
+
 == Screenshots ==
 
 Screenshots will be coming soon [here](http://www.zingiri.net/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.2.0 =
+* Split back-end roles in admin and user roles
+* Added possibility to select required capability for admins and users
+* Own reservations are now highlighted in a different color in front end
+* Translated booking registration page
+* Replaced [...] by 'Available' for English GB and US languages
+* Added 45 minutes schedule time span
+* Fixed issue with disappearing user name in front end calendar
+* Changed header date format for English GB so that day appears before month
+* Updated readme
+* Allow navigation on days before today in back-end calendar
+* Fixed Brazilian Portuguese language encoding
+* Added possibility to export reservation to calendard in ICS or VCS format (Pro)
+* Added 'Add to calendar' link on emails (Pro)
 
 = 1.1.2 =
 * Fixed release issue

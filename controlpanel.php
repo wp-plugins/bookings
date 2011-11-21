@@ -1,6 +1,6 @@
 <?php
 function bookings_options() {
-	global $bookings_name,$bookings_shortname,$cc_login_type,$current_user;
+	global $bookings_name,$bookings_shortname,$cc_login_type,$current_user,$wp_roles;
 	$bookings_name = "Bookings";
 	$bookings_shortname = "bookings";
 
@@ -19,6 +19,8 @@ function bookings_options() {
 			"desc" => "If you have problems with the plugin, activate the debug mode to generate a debug log for our support team",
 			"id" => $bookings_shortname."_debug",
 			"type" => "checkbox");
+	
+	//languages
 	$languages = array (
 		'ar'	=> array('ar([-_][[:alpha:]]{2})?|arabic', 'ar.lang.php', 'ar', 'Arabic (&#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577;)'),
 		'bg'	=> array('bg([-_][[:alpha:]]{2})?|bulgarian', 'bg.lang.php', 'bg', 'Bulgarian (&#x0411;&#x044a;&#x043b;&#x0433;&#x0430;&#x0440;&#x0441;&#x043a;&#x0438;)'),
@@ -53,12 +55,32 @@ function bookings_options() {
 		$options[$lang]=$desc[3];
 	}
 	$bookings_options[] = array(	"name" => "Language",
-			"desc" => "Bookings supports multiple languages, here you can select the language of your choice.<br />If you see blank screens after changing the language from English, please contact us as some of the language files have some encoding issues.<br />If you see missing translations, please send us the translations and we'll incorporate them into a new version.<br /> And if you can't see your language but are interested to add it, contact us so we can see how we can work something out.",
+			"desc" => "Bookings supports multiple languages, here you can select the language of your choice.<br />The language will affect related settings such as the date format used to display dates. <br />If you see blank screens after changing the language from English, please contact us as some of the language files have some encoding issues.<br />If you see missing translations, please send us the translations and we'll incorporate them into a new version.<br /> And if you can't see your language but are interested to add it, contact us so we can see how we can work something out.",
 			"id" => $bookings_shortname."_lang",
 			"options" => $options,
 			"std" => get_locale(),
 			"type" => "selectwithkey");
 
+	//capabilities
+	$allCaps=array();
+	foreach ($wp_roles->roles as $role) {
+		$allCaps=array_merge($allCaps,$role['capabilities']);
+	}
+	ksort($allCaps);
+	array_walk($allCaps,create_function('&$value,$key','$value=str_replace("_"," ",ucfirst($key));'));
+	$bookings_options[] = array(	"name" => "Admin capability",
+			"desc" => "Choose the required capability for managing settings, schedules and resources. It is recommended to use an admin type of capability, such as 'Manage options'",
+			"id" => $bookings_shortname."_admin_cap",
+			"options" => $allCaps,
+			"std" => 'manage_options',
+			"type" => "selectwithkey");
+	$bookings_options[] = array(	"name" => "User capability",
+			"desc" => "Choose the required capability for managing bookings. It is recommended to use an editor type of capability, such as 'Edit posts'",
+			"id" => $bookings_shortname."_user_cap",
+			"options" => $allCaps,
+			"std" => 'edit_posts',
+			"type" => "selectwithkey");
+	
 	return $bookings_options;
 }
 
@@ -82,16 +104,22 @@ function bookings_add_admin() {
 			die;
 		}
 	}
+	
+	if (current_user_can(BOOKINGS_ADMIN_CAP)) {
+		add_menu_page($bookings_name, $bookings_name, BOOKINGS_USER_CAP, 'bookings','bookings_main');
+		add_submenu_page('bookings', $bookings_name.' - Setup', 'Setup', BOOKINGS_ADMIN_CAP, 'bookings', 'bookings_main');
+		add_submenu_page('bookings', $bookings_name.' - Stats', 'Stats', BOOKINGS_USER_CAP, 'bookings&zb=stats', 'bookings_main');
+	} else {
+		add_menu_page($bookings_name, $bookings_name, BOOKINGS_USER_CAP, 'bookings','bookings_main');
+		add_submenu_page('bookings', $bookings_name.' - Stats', 'Stats', BOOKINGS_USER_CAP, 'bookings', 'bookings_main');
+	}
+	add_submenu_page('bookings', $bookings_name.' - Schedules', 'Schedules', BOOKINGS_ADMIN_CAP, 'bookings&zb=admin&tool=schedules', 'bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - Resources', 'Resources', BOOKINGS_ADMIN_CAP, 'bookings&zb=admin&tool=resources', 'bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - Blackouts', 'Blackouts', BOOKINGS_ADMIN_CAP, 'bookings&zb=blackouts', 'bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - List', 'Bookings List', BOOKINGS_USER_CAP, 'bookings&zb=admin&tool=reservations', 'bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - Calendar', 'Bookings Calendar', BOOKINGS_USER_CAP, 'bookings&zb=schedule', 'bookings_main');
+	add_submenu_page('bookings', $bookings_name.' - Search Bookings', 'Search Bookings', BOOKINGS_USER_CAP, 'bookings&zb=usage', 'bookings_main');
 
-	add_menu_page($bookings_name, $bookings_name, 'manage_options', 'bookings','bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Setup', 'Setup', 'manage_options', 'bookings', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Schedules', 'Schedules', 'manage_options', 'bookings&zb=admin&tool=schedules', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Resources', 'Resources', 'manage_options', 'bookings&zb=admin&tool=resources', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Blackouts', 'Blackouts', 'manage_options', 'bookings&zb=blackouts', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - List', 'Bookings List', 'manage_options', 'bookings&zb=admin&tool=reservations', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Calendar', 'Bookings Calendar', 'manage_options', 'bookings&zb=schedule', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Search Bookings', 'Search Bookings', 'manage_options', 'bookings&zb=usage', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Stats', 'Stats', 'manage_options', 'bookings&zb=stats', 'bookings_main');
 	if (!isset($bookings['output']['menus'])) {
 		$menus=isset($_SESSION['bookings']['menus']) ? $_SESSION['bookings']['menus'] : array();
 	} else {
@@ -100,7 +128,8 @@ function bookings_add_admin() {
 	}
 	if (count($menus) > 0) {
 		foreach ($menus as $menu) {
-			add_submenu_page($menu[0],$menu[1],$menu[2],$menu[3],$menu[4],$menu[5]);
+			if ($menu[3]=='manage_options') add_submenu_page($menu[0],$menu[1],$menu[2],BOOKINGS_ADMIN_CAP,$menu[4],$menu[5]);
+			else add_submenu_page($menu[0],$menu[1],$menu[2],BOOKINGS_USER_CAP,$menu[4],$menu[5]);
 		}
 	}
 }
