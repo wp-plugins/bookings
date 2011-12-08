@@ -1,10 +1,10 @@
 === Bookings ===
 Contributors: zingiri
-Donate link: http://www.zingiri.net/donations
+Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling
 Requires at least: 2.1.7
 Tested up to: 3.2.1
-Stable tag: 1.2.0
+Stable tag: 1.3.0
 
 Bookings is a powerful reservations scheduler.
 
@@ -30,7 +30,7 @@ The Pro version of the plugin additionaly offers:
 * Customization of the booking form with custom fields
 * Export reservations to your favorite calendar (Outlook, iCal, etc) from the admin back-end or your confirmation email
 * Possibility to search reservations by reservation ID
-* Priority support via our [Helpdesk](http://www.zingiri.net/portal "Helpdesk")
+* Priority support via our [Helpdesk](http://www.zingiri.com/portal "Helpdesk")
 
 And coming soon in the Pro version:
 
@@ -44,9 +44,9 @@ And coming soon in the Pro version:
 
 1. Upload the `bookings` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Include the code [bookings] in any page to display the bookings form. There are differrent options for formatting the bookings form that are documented on [our site](http://www.zingiri.net/plugins-and-addons/bookings#usage "our site").
+3. Include the code [bookings] in any page to display the bookings form. There are differrent options for formatting the bookings form that are documented on [our site](http://www.zingiri.com/bookings#usage "our site").
 
-Please visit [Zingiri](http://www.zingiri.net/plugins-and-addons/bookings/#installation "Zingiri") for more information and support.
+Please visit [Zingiri](http://www.zingiri.com/bookings/#installation "Zingiri") for more information and support.
 
 == Frequently Asked Questions ==
 
@@ -58,9 +58,20 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 
 == Screenshots ==
 
-Screenshots will be coming soon [here](http://www.zingiri.net/plugins-and-addons/bookings/ "screenshots").
+Screenshots will be coming soon [here](http://www.zingiri.com/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.3.0 =
+* Added possibility to define minimum time between bookings for each resource
+* Added possibility to define email templates and override the default text
+* Fixed issue with double body tag appearing on some pages
+* Always show registration form, even for registered Wordpress users
+* Updated Italian language translations
+* Removed wrapping tables styling
+* Changed bookings template=link parameter, 'resource' should be specified instead of 'schedule'
+* Fixed 'per page' and 'cancel' links on resource page
+* Fixed issue with captcha element on forms not working properly
 
 = 1.2.0 =
 * Split back-end roles in admin and user roles
@@ -74,7 +85,7 @@ Screenshots will be coming soon [here](http://www.zingiri.net/plugins-and-addons
 * Updated readme
 * Allow navigation on days before today in back-end calendar
 * Fixed Brazilian Portuguese language encoding
-* Added possibility to export reservation to calendard in ICS or VCS format (Pro)
+* Added possibility to export reservation to calendar in ICS or VCS format (Pro)
 * Added 'Add to calendar' link on emails (Pro)
 
 = 1.1.2 =
@@ -129,7 +140,7 @@ Screenshots will be coming soon [here](http://www.zingiri.net/plugins-and-addons
 * Changed menu capability level from 'administrator' to 'edit_plugins'
 
 = 0.9.3 =
-* Removed references to WHMCS Bridge in admin notices
+* Removed wrong plugin name in admin notices
 * Forced display name as first name and/or last name when those are not specified
 * Disabled check on sessions save path
 

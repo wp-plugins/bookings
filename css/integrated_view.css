@@ -582,3 +582,47 @@ li.zfacestab {
 	clear:both;
 	text-align:center;
 }
+
+.aphps-list-table {
+	border: 1px solid #808080; /*darkgrey*/
+	margin-left: auto;
+	margin-right: auto;
+	min-width: 100%;
+	border-radius: 12px;
+	-moz-border-radius: 12px;	
+	padding:10px;
+}
+
+
+.aphps-list-table td {
+	border-top: 1px solid #808080; 
+	border-bottom: 1px solid #808080; 
+	padding: 4px;
+	text-align: left;
+	vertical-align: top;
+}
+
+.aphps-list-table th {
+	font-weight: bold;
+	text-align: left;
+	padding: 4px;
+}
+
+.aphps-list-table input[type="text"],.aphps-list-table textarea {
+	
+}
+
+.aphps-list-table tr.altrow td {
+	background-color: #D6DDE6; /*verylightgrey*/
+	color: black;
+}
+
+.zfaces-form {
+	background-color:#F8F8F8; 
+	border-radius: 12px;
+	-moz-border-radius: 12px;	
+}
+
+.mceContentBody p, .zfaces-form input[type="text"],.zfaces-form textarea {
+	background-color:white; 
+}

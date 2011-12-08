@@ -11,13 +11,11 @@ if (!function_exists('zing_support_us')) {
 					<a style="margin-bottom:15px" href="http://www.twitter.com/zingiri"><img align="middle" src="http://twitter-badges.s3.amazonaws.com/follow_us-a.png" alt="Follow Zingiri on Twitter"/></a>
 				</div>
 				<div style="margin-bottom:15px;text-align:center">
-					<fb:share-button href="http://www.zingiri.net/plugins-and-addons/<?php echo $shareName;?>/" type="button" >
+					<fb:share-button href="http://www.zingiri.com/bookings/<?php echo $shareName;?>/" type="button" >
 				</div>
 				<p>Rate our plugin on Wordpress</p>
 				<a href="http://wordpress.org/extend/plugins/<?php echo $wpPluginName;?>" alt="Rate our plugin">
-				<?php for ($i=0;$i<5;$i++) {?>
-					<img height="35px" src="http://www.zingiri.net/wordpress/wp-content/uploads/stars.png" />
-				<?php }?>
+				<img src="http://www.zingiri.com/wordpress/wp-content/uploads/5-stars-125pxw.png" />
 				</a>
 				<?php 
 				//echo zing_support_us($adminLink);
@@ -28,18 +26,21 @@ if (!function_exists('zing_support_us')) {
 					update_option($option,time()+7776000);
 				} else {
 					if ((time() - get_option($option)) > 1209600) { //14 days 
-						echo "<div id='zing-warning' style='background-color:red;color:white;font-size:large;margin:20px;padding:10px;'>Looks like you've been using this plugin for quite a while now. Have you thought about showing your appreciation through a small donation?<br /><br /><a href='http://www.zingiri.net/donations'><img src='https://www.paypal.com/en_GB/i/btn/btn_donate_LG.gif' /></a><br /><br />If you already made a donation, you can <a href='?page=".$adminLink."&support-us=hide'>hide</a> this message.</div>";
+						echo "<div id='zing-warning' style='background-color:red;color:white;font-size:large;margin:20px;padding:10px;'>Looks like you've been using this plugin for quite a while now. Have you thought about showing your appreciation through a small donation?<br /><br /><a href='http://www.zingiri.com/donations'><img src='https://www.paypal.com/en_GB/i/btn/btn_donate_LG.gif' /></a><br /><br />If you already made a donation, you can <a href='?page=".$adminLink."&support-us=hide'>hide</a> this message.</div>";
 					}
 				}
 				?>
 			</div>
 			<?php 	
-			global $current_user;
-			$url='http://www.zingiri.net/index.php?zlistpro=register&e='.urlencode($current_user->data->user_email).'&f='.urlencode(isset($current_user->data->first_name) ? $current_user->data->first_name : '').'&l='.urlencode(isset($current_user->data->last_name) ? $current_user->data->last_name : '').'&w='.urlencode(get_option('home')).'&p='.$wpPluginName.'&v='.urlencode($version);			
-			$news = new zHttpRequest($url);
-			if ($news->live() && (!isset($_SESSION[$wpPluginName]['news']) || !$_SESSION[$wpPluginName]['news'])) {
-				update_option($wpPluginName.'_news',$news->DownloadToString());
-				$_SESSION[$wpPluginName]['news']=true;
+			if ((time()-get_option($wpPluginName.'_news_time')) > 7200) {
+				global $current_user;
+			
+				$url='http://www.zingiri.com/index.php?zlistpro=register&e='.urlencode($current_user->data->user_email).'&f='.urlencode(isset($current_user->data->first_name) ? $current_user->data->first_name : '').'&l='.urlencode(isset($current_user->data->last_name) ? $current_user->data->last_name : '').'&w='.urlencode(get_option('home')).'&p='.$wpPluginName.'&v='.urlencode($version);			
+				$news = new zHttpRequest($url);
+				if ($news->live()) {
+					update_option($wpPluginName.'_news',$news->DownloadToString());
+				}
+				update_option($wpPluginName.'_news_time',time());
 			}
 			?>
 			<?php
@@ -55,7 +56,7 @@ if (!function_exists('zing_support_us')) {
 			}?>
 
 			<div style="text-align:center;margin-top:40px">
-				<a href="http://www.zingiri.net" target="_blank"><img src="http://www.zingiri.net/logo.png" /></a>
+				<a href="http://www.zingiri.com" target="_blank"><img src="http://www.zingiri.com/logo.png" /></a>
 			</div>
 		</div>
 <?php 

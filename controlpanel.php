@@ -12,7 +12,7 @@ function bookings_options() {
 			"id" => $bookings_shortname."_key",
 			"type" => "text");
 	$bookings_options[] = array("name" => "License Key",
-			"desc" => 'If you wish to make use of the <strong>Bookings Pro</strong> features, enter your license key here. You can purchase a license key <a href="http://www.zingiri.net/portal/?ccce=cart&a=add&pid=121" target="blank">here</a>.<br />The Pro version provides additional functionality and has no limits to the number of bookings and schedules you can use.',
+			"desc" => 'If you wish to make use of the <strong>Bookings Pro</strong> features, enter your license key here. You can purchase a license key <a href="http://www.zingiri.com/portal/?ccce=cart&a=add&pid=121" target="blank">here</a>.<br />The Pro version provides additional functionality and has no limits to the number of bookings and schedules you can use.',
 			"id" => $bookings_shortname."_lic",
 			"type" => "text");
 	$bookings_options[] = array(	"name" => "Debug Mode",
