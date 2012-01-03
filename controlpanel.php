@@ -15,11 +15,18 @@ function bookings_options() {
 			"desc" => 'If you wish to make use of the <strong>Bookings Pro</strong> features, enter your license key here. You can purchase a license key <a href="http://www.zingiri.com/portal/?ccce=cart&a=add&pid=121" target="blank">here</a>.<br />The Pro version provides additional functionality and has no limits to the number of bookings and schedules you can use.',
 			"id" => $bookings_shortname."_lic",
 			"type" => "text");
+	if (!get_option('bookings_region')) {
+		$bookings_options[] = array("name" => "Region",
+			"desc" => "Select the region you are located in. This can only be set once so make sure you select the right region.",
+			"id" => $bookings_shortname."_region",
+			"options" => array('us1' => 'North America, South America & Asia Pacific', 'eu1' => 'Europe & Africa'),
+			"type" => "selectwithkey");
+	}
 	$bookings_options[] = array(	"name" => "Debug Mode",
 			"desc" => "If you have problems with the plugin, activate the debug mode to generate a debug log for our support team",
 			"id" => $bookings_shortname."_debug",
 			"type" => "checkbox");
-	
+
 	//languages
 	$languages = array (
 		'ar'	=> array('ar([-_][[:alpha:]]{2})?|arabic', 'ar.lang.php', 'ar', 'Arabic (&#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577;)'),
@@ -39,6 +46,7 @@ function bookings_options() {
 		'ko'	=> array('ko([-_][[:alpha:]]{2})?|korean', 'ko_KR.lang.php', 'ko', 'Korean (&#54620;&#44397;&#50612;)'),
 		'hu'	=> array('hu([-_][[:alpha:]]{2})?|hungarian', 'hu.lang.php', 'hu', 'Magyar'),
 		'nl'	=> array('nl([-_][[:alpha:]]{2})?|dutch', 'nl.lang.php', 'nl', 'Nederlands'),
+		'no'	=> array('no([-_][[:alpha:]]{2})?|norwegian', 'no.lang.php', 'no', 'Norwegian'),
 		'pl'	=> array('pl([-_][[:alpha:]]{2})|polish', 'pl.lang.php', 'pl', 'Polski'),
 		'pt_PT'	=> array('pr([-_]PT)|portuguese', 'pt_PT.lang.php', 'pt', 'Portugu&ecirc;s'),
 		'pt_BR'	=> array('pr([-_]BR)|portuguese', 'pt_BR.lang.php', 'pt', 'Portugu&ecirc;s Brasileiro'),
@@ -80,7 +88,7 @@ function bookings_options() {
 			"options" => $allCaps,
 			"std" => 'edit_posts',
 			"type" => "selectwithkey");
-	
+
 	return $bookings_options;
 }
 
@@ -104,32 +112,37 @@ function bookings_add_admin() {
 			die;
 		}
 	}
-	
-	if (current_user_can(BOOKINGS_ADMIN_CAP)) {
+
+	if (!get_option('bookings_region') && current_user_can(BOOKINGS_ADMIN_CAP)) {
 		add_menu_page($bookings_name, $bookings_name, BOOKINGS_USER_CAP, 'bookings','bookings_main');
 		add_submenu_page('bookings', $bookings_name.' - Setup', 'Setup', BOOKINGS_ADMIN_CAP, 'bookings', 'bookings_main');
-		add_submenu_page('bookings', $bookings_name.' - Stats', 'Stats', BOOKINGS_USER_CAP, 'bookings&zb=stats', 'bookings_main');
 	} else {
-		add_menu_page($bookings_name, $bookings_name, BOOKINGS_USER_CAP, 'bookings','bookings_main');
-		add_submenu_page('bookings', $bookings_name.' - Stats', 'Stats', BOOKINGS_USER_CAP, 'bookings', 'bookings_main');
-	}
-	add_submenu_page('bookings', $bookings_name.' - Schedules', 'Schedules', BOOKINGS_ADMIN_CAP, 'bookings&zb=admin&tool=schedules', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Resources', 'Resources', BOOKINGS_ADMIN_CAP, 'bookings&zb=admin&tool=resources', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Blackouts', 'Blackouts', BOOKINGS_ADMIN_CAP, 'bookings&zb=blackouts', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - List', 'Bookings List', BOOKINGS_USER_CAP, 'bookings&zb=admin&tool=reservations', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Calendar', 'Bookings Calendar', BOOKINGS_USER_CAP, 'bookings&zb=schedule', 'bookings_main');
-	add_submenu_page('bookings', $bookings_name.' - Search Bookings', 'Search Bookings', BOOKINGS_USER_CAP, 'bookings&zb=usage', 'bookings_main');
+		if (current_user_can(BOOKINGS_ADMIN_CAP)) {
+			add_menu_page($bookings_name, $bookings_name, BOOKINGS_USER_CAP, 'bookings','bookings_main');
+			add_submenu_page('bookings', $bookings_name.' - Setup', 'Setup', BOOKINGS_ADMIN_CAP, 'bookings', 'bookings_main');
+			add_submenu_page('bookings', $bookings_name.' - Stats', 'Stats', BOOKINGS_USER_CAP, 'bookings&zb=stats', 'bookings_main');
+		} else {
+			add_menu_page($bookings_name, $bookings_name, BOOKINGS_USER_CAP, 'bookings','bookings_main');
+			add_submenu_page('bookings', $bookings_name.' - Stats', 'Stats', BOOKINGS_USER_CAP, 'bookings', 'bookings_main');
+		}
+		add_submenu_page('bookings', $bookings_name.' - Schedules', 'Schedules', BOOKINGS_ADMIN_CAP, 'bookings&zb=admin&tool=schedules', 'bookings_main');
+		add_submenu_page('bookings', $bookings_name.' - Resources', 'Resources', BOOKINGS_ADMIN_CAP, 'bookings&zb=admin&tool=resources', 'bookings_main');
+		add_submenu_page('bookings', $bookings_name.' - Blackouts', 'Blackouts', BOOKINGS_ADMIN_CAP, 'bookings&zb=blackouts', 'bookings_main');
+		add_submenu_page('bookings', $bookings_name.' - List', 'Bookings List', BOOKINGS_USER_CAP, 'bookings&zb=admin&tool=reservations', 'bookings_main');
+		add_submenu_page('bookings', $bookings_name.' - Calendar', 'Bookings Calendar', BOOKINGS_USER_CAP, 'bookings&zb=schedule', 'bookings_main');
+		add_submenu_page('bookings', $bookings_name.' - Search Bookings', 'Search Bookings', BOOKINGS_USER_CAP, 'bookings&zb=usage', 'bookings_main');
 
-	if (!isset($bookings['output']['menus'])) {
-		$menus=isset($_SESSION['bookings']['menus']) ? $_SESSION['bookings']['menus'] : array();
-	} else {
-		$menus=$bookings['output']['menus'];
-		$_SESSION['bookings']['menus']=$bookings['output']['menus'];
-	}
-	if (count($menus) > 0) {
-		foreach ($menus as $menu) {
-			if ($menu[3]=='manage_options') add_submenu_page($menu[0],$menu[1],$menu[2],BOOKINGS_ADMIN_CAP,$menu[4],$menu[5]);
-			else add_submenu_page($menu[0],$menu[1],$menu[2],BOOKINGS_USER_CAP,$menu[4],$menu[5]);
+		if (!isset($bookings['output']['menus'])) {
+			$menus=isset($_SESSION['bookings']['menus']) ? $_SESSION['bookings']['menus'] : array();
+		} else {
+			$menus=$bookings['output']['menus'];
+			$_SESSION['bookings']['menus']=$bookings['output']['menus'];
+		}
+		if (count($menus) > 0) {
+			foreach ($menus as $menu) {
+				if ($menu[3]=='manage_options') add_submenu_page($menu[0],$menu[1],$menu[2],BOOKINGS_ADMIN_CAP,$menu[4],$menu[5]);
+				else add_submenu_page($menu[0],$menu[1],$menu[2],BOOKINGS_USER_CAP,$menu[4],$menu[5]);
+			}
 		}
 	}
 }

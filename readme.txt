@@ -3,8 +3,8 @@ Contributors: zingiri
 Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling
 Requires at least: 2.1.7
-Tested up to: 3.2.1
-Stable tag: 1.3.0
+Tested up to: 3.3
+Stable tag: 1.3.1
 
 Bookings is a powerful reservations scheduler.
 
@@ -28,6 +28,9 @@ The Pro version of the plugin additionaly offers:
 * Unlimited bookings
 * Unlimited schedules
 * Customization of the booking form with custom fields
+* Mobile syncing with your iPhone, iPad, Android device and more
+* Possibility to edit the thank you text on the confirmation page
+* Possibility to edit the confirmation emails 
 * Export reservations to your favorite calendar (Outlook, iCal, etc) from the admin back-end or your confirmation email
 * Possibility to search reservations by reservation ID
 * Priority support via our [Helpdesk](http://www.zingiri.com/portal "Helpdesk")
@@ -35,10 +38,7 @@ The Pro version of the plugin additionaly offers:
 And coming soon in the Pro version:
 
 * Integration of payment gateways such as Paypal etc 
-* Mobile syncing with your iPhone, iPad, Android device and more
-* Mutliple configuration options: send admin confirmation email, reservations require confirmation (or not), etc
-* Possibility to edit the thank you text on the confirmation page
-* Possibility to edit the confirmation emails 
+* Multiple configuration options: send admin confirmation email, reservations require confirmation (or not), etc
 
 == Installation ==
 
@@ -46,11 +46,11 @@ And coming soon in the Pro version:
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Include the code [bookings] in any page to display the bookings form. There are differrent options for formatting the bookings form that are documented on [our site](http://www.zingiri.com/bookings#usage "our site").
 
-Please visit [Zingiri](http://www.zingiri.com/bookings/#installation "Zingiri") for more information and support.
+Please visit [Zingiri](http://wiki.zingiri.com/index.php?title=Bookings:Main "Zingiri") for more information and support.
 
 == Frequently Asked Questions ==
 
-Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay.php?fid=60 "Zingiri Support Forum") for more information and support.
+Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay.php?fid=60 "Zingiri Support Forum") or [Wiki](http://wiki.zingiri.com/index.php?title=Bookings:Main "Wiki") for more information and support.
 
 = Available front-end style classes =
 
@@ -58,9 +58,19 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 
 == Screenshots ==
 
-Screenshots will be coming soon [here](http://www.zingiri.com/bookings/ "screenshots").
+Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.3.1 =
+* Added mobile sync
+* Added Norwegian language
+* Verified compatibility with WP 3.3
+* Added new region (Europe & Africa)
+* Updated documentation
+* Fixed issue with Edit form link appearing on front end booking form
+* Removed table containing reservation details from email when custom emails are being used
+* Fixed issue with deleting resources
 
 = 1.3.0 =
 * Added possibility to define minimum time between bookings for each resource

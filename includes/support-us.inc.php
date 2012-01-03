@@ -22,7 +22,7 @@ if (!function_exists('zing_support_us')) {
 				$option=$wpPluginName.'-support-us';
 				if (get_option($option) == '') {
 					update_option($option,time());
-				} elseif (isset($_REQUEST['support-us']) && $_REQUEST['support-us'] == 'hide') {
+				} elseif (isset($_REQUEST['support-us']) && ($_REQUEST['support-us'] == 'hide')) {
 					update_option($option,time()+7776000);
 				} else {
 					if ((time() - get_option($option)) > 1209600) { //14 days 

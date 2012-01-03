@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.3.0
+ Version: 1.3.1
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.3.0");
+define("BOOKINGS_VERSION","1.3.1");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -35,15 +35,23 @@ define("BOOKINGS_ADMIN_CAP",get_option('bookings_admin_cap') ? get_option('booki
 define("BOOKINGS_URL", WP_CONTENT_URL . "/plugins/".BOOKINGS_PLUGIN."/");
 
 $bookings_version=get_option("bookings_version");
-add_action("init","bookings_init");
-if (isset($_GET['ajax']) && ($_GET['ajax'] == 1)) {
-	add_action("init","bookings_ajax");
-} else {
-	add_action('admin_head','bookings_admin_header');
-	add_action('wp_head','bookings_header');
+if ($bookings_version != BOOKINGS_VERSION) {
+	if ($bookings_version && ($bookings_version <= '1.3.0') && !get_option('bookings_region')) update_option('bookings_region','us1');
+	update_option("bookings_version",BOOKINGS_VERSION);
 }
+
+if (get_option('bookings_region')) {
+	add_action("init","bookings_init");
+	if (isset($_GET['ajax']) && ($_GET['ajax'] == 1)) {
+		add_action("init","bookings_ajax");
+	} else {
+		add_action('wp_head','bookings_header');
+	}
+	add_filter('the_content', 'bookings_content', 10, 3);
+}
+
+add_action('admin_head','bookings_admin_header');
 add_action('admin_notices','bookings_admin_notices');
-add_filter('the_content', 'bookings_content', 10, 3);
 
 register_activation_hook(__FILE__,'bookings_activate');
 register_deactivation_hook(__FILE__,'bookings_deactivate');
@@ -68,6 +76,7 @@ function bookings_admin_notices() {
 	$upload=wp_upload_dir();
 	//if (!is_writable(session_save_path())) $errors[]='PHP sessions are not properly configured on your server, the sessions save path '.session_save_path().' is not writable.';
 	if ($upload['error']) $errors[]=$upload['error'];
+	if (!get_option('bookings_region')) $warnings[]="Please verify your settings on the Bookings control panel and click 'Update'";
 	if (get_option('bookings_debug')) $warnings[]="Debug is active, once you finished debugging, it's recommended to turn this off";
 	if (phpversion() < '5') $warnings[]="You are running PHP version ".phpversion().". We recommend you upgrade to PHP 5.3 or higher.";
 	if (ini_get("zend.ze1_compatibility_mode")) $warnings[]="You are running PHP in PHP 4 compatibility mode. We recommend you turn this option off.";
@@ -110,6 +119,7 @@ function bookings_deactivate() {
 	delete_option("bookings_ftp_user"); //legacy
 	delete_option("bookings_ftp_password"); //legacy
 	delete_option("bookings_version");
+	delete_option("bookings_region");
 	delete_option('bookings-support-us');
 }
 
@@ -130,7 +140,6 @@ function bookings_content($content) {
 						if ($n=='template') $postVars['template']=$v;
 						elseif ($n=='resource') $postVars['machid']=$v;
 						elseif ($n=='schedule') $postVars['scheduleid']=$v;
-						elseif ($n=='selectby') $postVars['selectby']=$v;
 						elseif ($n=='product') $postVars['productid']=$v;
 						else echo '<br />Unknown variable '.$n;
 					}
@@ -223,8 +232,28 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 			} else {
 				if (isset($bookings['output']['http_referer'])) $_SESSION['bookings']['http_referer']=$bookings['output']['http_referer'];
 			}
+
+			$bookings['output']['body']=bookings_parser($bookings['output']['body']);
 		}
 	}
+}
+
+function bookings_parser($buffer) {
+	global $wp_version;
+	//<textarea id="element_1_1" name="element_1_1" class="theEditor element text" cols="40" rows="3" >test</textarea>
+	if ($wp_version >= '3.3') {
+		$f[]='/<textarea.id\="(.*?)".*class\="theEditor.*>(.*?)<\/textarea>/';
+		$buffer=preg_replace_callback($f,'bookings_replace',$buffer);
+	}
+	return $buffer;
+}
+
+function bookings_replace($match) {
+	$id=$match[1];
+	$content=$match[2];
+	ob_start();
+	wp_editor($content,$id);
+	return ob_get_clean();
 }
 
 function bookings_header() {
@@ -249,7 +278,7 @@ function bookings_header() {
 }
 
 function bookings_admin_header() {
-	global $bookings;
+	global $bookings,$wp_version;
 	if (isset($bookings['output']['head'])) echo $bookings['output']['head'];
 	echo '<script type="text/javascript">';
 	echo "var bookingsPageurl='admin.php?page=bookings&';";
@@ -259,7 +288,8 @@ function bookings_admin_header() {
 	echo '</script>';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/admin.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/integrated_view.css" media="screen" />';
-	wp_tiny_mce( false, array( 'editor_selector' => 'theEditor' ) );
+	if ($wp_version < '3.3') wp_tiny_mce( false, array( 'editor_selector' => 'theEditor' ) );
+
 }
 
 function bookings_http($page="index") {
@@ -284,8 +314,8 @@ function bookings_http($page="index") {
 	if (is_user_logged_in()) {
 		$wp['login']=$current_user->data->user_login;
 		$wp['email']=$current_user->data->user_email;
-		$wp['first_name']=$current_user->data->first_name ? $current_user->data->first_name: $current_user->data->display_name;
-		$wp['last_name']=$current_user->data->last_name ? $current_user->data->last_name : $current_user->data->display_name;
+		$wp['first_name']=isset($current_user->data->first_name) ? $current_user->data->first_name: $current_user->data->display_name;
+		$wp['last_name']=isset($current_user->data->last_name) ? $current_user->data->last_name : $current_user->data->display_name;
 		$wp['roles']=$current_user->roles;
 	}
 	$wp['lic']=get_option('bookings_lic');
@@ -336,8 +366,9 @@ function bookings_ajax() {
 	die();
 }
 
-function bookings_init()
-{
+function bookings_init() {
+	global $wp_version;
+
 	ob_start();
 	session_start();
 	if (is_admin()) {
@@ -352,8 +383,10 @@ function bookings_init()
 				wp_enqueue_script('scriptaculous');
 			}
 		}
-		wp_enqueue_script(array('editor', 'thickbox', 'media-upload'));
-		wp_enqueue_style('thickbox');
+		if ($wp_version < '3.3') {
+			wp_enqueue_script(array('editor', 'thickbox', 'media-upload'));
+			wp_enqueue_style('thickbox');
+		}
 	}
 	wp_enqueue_script('jquery');
 
@@ -370,7 +403,13 @@ function bookings_log($type=0,$msg='',$filename="",$linenum=0) {
 }
 
 function bookings_url($endpoint=true) {
-	$url='http://bookings.zingiri.net/us1/';
+	switch (get_option('bookings_region')) {
+		case 'eu1':
+			$url='http://bookings-eu.zingiri.net/eu1/';
+			break;
+		default:
+			$url='http://bookings.zingiri.net/us1/';
+	}
 	if ($endpoint) $url.='api.php';
 	return $url;
 }
