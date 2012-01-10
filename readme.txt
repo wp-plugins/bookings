@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling
 Requires at least: 2.1.7
 Tested up to: 3.3
-Stable tag: 1.3.1
+Stable tag: 1.3.3
 
 Bookings is a powerful reservations scheduler.
 
@@ -20,6 +20,7 @@ This WordPress plugin allows you to provide online booking services for your sit
 * Administrator has control over all reservations and can browse, modify and delete any reservation in the system.
 * Administrators can search through the reservation database with a very flexible search tool. Search results can be viewed as HTML, plain-text, XML or CSV.
 * Calendars can be viewed in a day/week/month layout.
+* Reservations can be set to be approved or not
 * Supports multiple languages: English (US & GB), German, French, Spanish, Italian, Hungarian, Dutch, Finnish, Swedish, Turkish, Arabic, Bulgarian, Chinese (Traditional & Simplified), Czech, Danish, Greek, Japanese, Korean, Polish, Portuguese, Slovak and Slovenian.
 * Community support via our [Forums](http://forums.zingiri.net "Forums") 
 
@@ -31,14 +32,15 @@ The Pro version of the plugin additionaly offers:
 * Mobile syncing with your iPhone, iPad, Android device and more
 * Possibility to edit the thank you text on the confirmation page
 * Possibility to edit the confirmation emails 
+* Multiple configuration options: send admin confirmation email, currency, etc
 * Export reservations to your favorite calendar (Outlook, iCal, etc) from the admin back-end or your confirmation email
 * Possibility to search reservations by reservation ID
 * Priority support via our [Helpdesk](http://www.zingiri.com/portal "Helpdesk")
 
 And coming soon in the Pro version:
 
+* Products & services
 * Integration of payment gateways such as Paypal etc 
-* Multiple configuration options: send admin confirmation email, reservations require confirmation (or not), etc
 
 == Installation ==
 
@@ -61,6 +63,19 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.3.2 =
+* Added option to send confirmation email to administrator (Pro)
+* Added SMTP email settings (Pro) 
+* Improved role management (admin vs operator)
+* Added display of region in setup panel
+* Improved usability by auto redirecting after admin update
+* Removed date link from front end calendar
+* Removed grey background from admin screens
+* Removed encapsulating html table from admin screens
+* Fixed issue with front end month selector not working on some themes
+* Centered day headers on front end calendar
+* Removed donations reminder
 
 = 1.3.1 =
 * Added mobile sync

@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.3.1
+ Version: 1.3.2
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.3.1");
+define("BOOKINGS_VERSION","1.3.2");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -181,6 +181,7 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 	bookings_log('Notification','Call: '.$http);
 	//echo '<br />'.$http.'<br />';
 	$news = new zHttpRequest($http,'bookings');
+	$news->noErrors=true;
 	$news->post=array_merge($news->post,$postVars);
 
 	if (!$news->curlInstalled()) {
@@ -220,6 +221,12 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 			die();
 		} else {
 			$buffer=$news->DownloadToString();
+			if ($news->error) {
+				$bookings['output']=array();
+				if (is_admin()) $bookings['output']['body']='An error occured when connecting to the Bookings service:<br /><div style="width:100%;overflow:scroll">'.$news->errorMsg.'</div><br />If you need help with this, please contact our technical support service.';
+				else $bookings['output']['body']='The service is currently not available, please try again later.';
+				return false;
+			}
 			//print_r($buffer);
 			$bookings['output']=json_decode($buffer,true);
 			if (isset($bookings['output']['reload']) && $bookings['output']['reload']) {
@@ -269,7 +276,7 @@ function bookings_header() {
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/calendar.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/lang/calendar-en.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/calendar-setup.js"></script>';
-
+	
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/jscalendar/calendar-blue-custom.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/client.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
@@ -288,6 +295,7 @@ function bookings_admin_header() {
 	echo '</script>';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/admin.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/integrated_view.css" media="screen" />';
+	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jquery-ui-1.7.3.custom.min.js"></script>';
 	if ($wp_version < '3.3') wp_tiny_mce( false, array( 'editor_selector' => 'theEditor' ) );
 
 }
@@ -331,6 +339,10 @@ function bookings_http($page="index") {
 	$wp['admin_email']=get_option('admin_email');
 	$wp['key']=get_option('bookings_key');
 	$wp['lang']=get_option('bookings_lang'); //get_bloginfo('language');
+	$wp['client_version']=BOOKINGS_VERSION;
+	if (current_user_can(BOOKINGS_ADMIN_CAP)) $wp['cap']='admin';
+	elseif (current_user_can(BOOKINGS_USER_CAP)) $wp['cap']='operator';
+	
 	$vars.=$and.'wp='.base64_encode(json_encode($wp));
 
 	if (isset($_SESSION['bookings']['http_referer'])) $vars.='&http_referer='.cc_urlencode($_SESSION['bookings']['http_referer']);
@@ -403,13 +415,8 @@ function bookings_log($type=0,$msg='',$filename="",$linenum=0) {
 }
 
 function bookings_url($endpoint=true) {
-	switch (get_option('bookings_region')) {
-		case 'eu1':
-			$url='http://bookings-eu.zingiri.net/eu1/';
-			break;
-		default:
-			$url='http://bookings.zingiri.net/us1/';
-	}
+	if (substr(get_option('bookings_region'),0,2)=='eu') $url='http://bookings-eu.zingiri.net/'.get_option('bookings_region').'/';
+	else $url='http://bookings.zingiri.net/us1/';
 	if ($endpoint) $url.='api.php';
 	return $url;
 }

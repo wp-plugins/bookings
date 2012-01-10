@@ -15,12 +15,19 @@ function bookings_options() {
 			"desc" => 'If you wish to make use of the <strong>Bookings Pro</strong> features, enter your license key here. You can purchase a license key <a href="http://www.zingiri.com/portal/?ccce=cart&a=add&pid=121" target="blank">here</a>.<br />The Pro version provides additional functionality and has no limits to the number of bookings and schedules you can use.',
 			"id" => $bookings_shortname."_lic",
 			"type" => "text");
+	$regions=array('us1' => 'North America, South America & Asia Pacific', 'eu1' => 'Europe & Africa');
+	if (file_exists(dirname(__FILE__).'/regions.php')) require(dirname(__FILE__).'/regions.php');
 	if (!get_option('bookings_region')) {
 		$bookings_options[] = array("name" => "Region",
 			"desc" => "Select the region you are located in. This can only be set once so make sure you select the right region.",
 			"id" => $bookings_shortname."_region",
-			"options" => array('us1' => 'North America, South America & Asia Pacific', 'eu1' => 'Europe & Africa'),
+			"options" => $regions,
 			"type" => "selectwithkey");
+	} else {
+		$bookings_options[] = array("name" => "Region",
+			"desc" => "Region you are connected to.",
+			"id" => $regions[get_option($bookings_shortname."_region")],
+			"type" => "info");
 	}
 	$bookings_options[] = array(	"name" => "Debug Mode",
 			"desc" => "If you have problems with the plugin, activate the debug mode to generate a debug log for our support team",
@@ -125,13 +132,6 @@ function bookings_add_admin() {
 			add_menu_page($bookings_name, $bookings_name, BOOKINGS_USER_CAP, 'bookings','bookings_main');
 			add_submenu_page('bookings', $bookings_name.' - Stats', 'Stats', BOOKINGS_USER_CAP, 'bookings', 'bookings_main');
 		}
-		add_submenu_page('bookings', $bookings_name.' - Schedules', 'Schedules', BOOKINGS_ADMIN_CAP, 'bookings&zb=admin&tool=schedules', 'bookings_main');
-		add_submenu_page('bookings', $bookings_name.' - Resources', 'Resources', BOOKINGS_ADMIN_CAP, 'bookings&zb=admin&tool=resources', 'bookings_main');
-		add_submenu_page('bookings', $bookings_name.' - Blackouts', 'Blackouts', BOOKINGS_ADMIN_CAP, 'bookings&zb=blackouts', 'bookings_main');
-		add_submenu_page('bookings', $bookings_name.' - List', 'Bookings List', BOOKINGS_USER_CAP, 'bookings&zb=admin&tool=reservations', 'bookings_main');
-		add_submenu_page('bookings', $bookings_name.' - Calendar', 'Bookings Calendar', BOOKINGS_USER_CAP, 'bookings&zb=schedule', 'bookings_main');
-		add_submenu_page('bookings', $bookings_name.' - Search Bookings', 'Search Bookings', BOOKINGS_USER_CAP, 'bookings&zb=usage', 'bookings_main');
-
 		if (!isset($bookings['output']['menus'])) {
 			$menus=isset($_SESSION['bookings']['menus']) ? $_SESSION['bookings']['menus'] : array();
 		} else {
@@ -153,7 +153,7 @@ function bookings_main() {
 	if (!isset($_GET['zb'])) return bookings_admin();
 
 	echo '<div class="wrap">';
-	echo '<div id="bookings" style="position:relative;float:left;width:75%">';
+	echo '<div id="bookings" style="position:relative;float:left;width:80%">';
 	if (isset($bookings['output']['messages']) && is_array($bookings['output']['messages']) && (count($bookings['output']['messages']) > 0)) {
 		echo '<div class="error">';
 		foreach ($bookings['output']['messages'] as $msg) {
@@ -162,9 +162,10 @@ function bookings_main() {
 		echo '</div>';
 	}
 	if (isset($bookings['output']['body'])) echo $bookings['output']['body'];
+	require(dirname(__FILE__).'/includes/help.inc.php');
 	echo '</div>';
 	require(dirname(__FILE__).'/includes/support-us.inc.php');
-	zing_support_us('bookings','bookings','bookings',BOOKINGS_VERSION);
+	zing_support_us('bookings','bookings','bookings',BOOKINGS_VERSION,false);
 	echo '</div>';
 }
 
@@ -207,9 +208,10 @@ function bookings_admin() {
 		}
 		echo '</textarea><hr />';
 	}
+	require(dirname(__FILE__).'/includes/help.inc.php');
 	?></div>
 <!-- end cc-left --> <?php
 require(dirname(__FILE__).'/includes/support-us.inc.php');
-zing_support_us('bookings','bookings','bookings',BOOKINGS_VERSION);
+zing_support_us('bookings','bookings','bookings',BOOKINGS_VERSION,false);
 }
 add_action('admin_menu', 'bookings_add_admin'); ?>
