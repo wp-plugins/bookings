@@ -9,6 +9,21 @@
 	text-align:center;
 }
 
-#bookings {
-	/*max-width: 1000px;*/
+#zingiri-help {
+	margin-top: 20px;
+	text-align:center;
+}
+
+#zingiri-help li {
+	margin-left: 20px;
+	display: inline;
+}
+
+div.nopermission {
+	width: 80%;
+	text-align: center;
+	padding:20px;
+	background-color:red;
+	color:white;
+	font-size:larger;
 }

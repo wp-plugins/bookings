@@ -17,6 +17,8 @@
 
 .dayNamesStyle {
 	font-size: smaller;
+}
+
+tr.dayNamesStyle td {
 	text-align: center;
-	background-color: #F0F0F0;
 }
