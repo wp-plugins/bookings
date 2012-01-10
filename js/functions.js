@@ -268,8 +268,9 @@ function isIE() {
 
 function changeDate(month, year) {
 	var frm = isIE() ? document.changeMonth : document.forms['changeMonth'];
-	frm.month.value = month;
-	frm.year.value = year;
+	frm.newmonth.value = month;
+	frm.newyear.value = year;
+	
 	frm.submit();
 }
 
@@ -550,7 +551,7 @@ function checkCalendarDates() {
 }
 
 function showHideMinMax(chk) {
-	document.getElementById("minH").disabled = document.getElementById("minM").disabled = document.getElementById("maxH").disabled = document.getElementById("maxM").disabled= chk.checked
+	document.getElementById("minH").disabled = document.getElementById("minM").disabled = document.getElementById("maxH").disabled = document.getElementById("maxM").disabled= chk.checked;
 }
 
 function moveSelectItems(from, to) {
