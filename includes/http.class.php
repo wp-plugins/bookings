@@ -1,5 +1,5 @@
 <?php
-//v2.01.08
+//v2.01.11
 //removed cc_whmcs_log call
 //need wpabspath for mailz
 //mailz returns full URL in case of redirection!!
@@ -23,6 +23,7 @@
 //fixed issue with redirect urls duplicating url path
 //added http return code
 //improvide error management
+//v2.01.11: improved debugging
 
 if (!class_exists('zHttpRequest')) {
 	class zHttpRequest
@@ -363,11 +364,15 @@ if (!class_exists('zHttpRequest')) {
 				//echo '<br />redirect to:'.print_r($headers,true);
 				//echo '<br />path='.$this->_path;
 				$redir=$headers['location'];
-				if (strstr($redir,$this->_protocol.'://'.$this->_host.$this->_path)) { //do nothing 
+				//echo '<br />redir1='.$redir;
+				if (strstr($redir,$this->_protocol.'://'.$this->_host.$this->_path)) { 
+					//do nothing
+				} elseif (strstr($this->_protocol.'://'.$this->_host.$redir,$this->_protocol.'://'.$this->_host.$this->_path)) {
+					$redir=$this->_protocol.'://'.$this->_host.$redir;
+				} elseif (!strstr($redir,$this->_host)) {
+					$redir=$this->_protocol.'://'.$this->_host.$this->_path.$redir;
 				}
-				elseif (strstr($this->_protocol.'://'.$this->_host.$redir,$this->_protocol.'://'.$this->_host.$this->_path)) $redir=$this->_protocol.'://'.$this->_host.$redir;
-				elseif (!strstr($redir,$this->_host)) $redir=$this->_protocol.'://'.$this->_host.$this->_path.$redir;
-				//echo '<br />redir='.$redir;
+				//echo '<br />redir2='.$redir;
 				if (strstr($redir,'&')) $redir.='&';
 				elseif (strstr($redir,'?')) $redir.='&';
 				else $redir.='?';

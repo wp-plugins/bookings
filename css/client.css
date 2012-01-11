@@ -10,6 +10,10 @@
 	text-align: center;
 }
 
+.currentTimeBoxStyle {
+	background-color: #DDCAF6;
+}
+
 .dayBoxStyle {
 	font-size: smaller;
 	text-align: center;

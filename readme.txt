@@ -64,6 +64,9 @@ Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/booki
 
 == Changelog ==
 
+= 1.3.3 =
+* Fixed issue with url encoding
+
 = 1.3.2 =
 * Added option to send confirmation email to administrator (Pro)
 * Added SMTP email settings (Pro) 
