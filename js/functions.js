@@ -487,7 +487,7 @@ function setSchedule(sid) {
 
 function changeSchedule(sel) {
 	var url = document.URL.split('?')[0];
-	document.location.href = url + "?scheduleid=" + sel.options[sel.selectedIndex].value;
+	document.location.href = url + "?page=bookings&zb=schedule&scheduleid=" + sel.options[sel.selectedIndex].value;
 }
 
 function showHideCpanelTable(element) {
@@ -765,7 +765,21 @@ function cascadeSelect(parent, child)
 	  child
 	   .append(child.data('options').filter('.sub_' + this.value))
 	   .change();
-	 })
+	 });
 	 
 	 childOptions.not('.static, .sub_' + parent.val()).remove();
+}
+
+function cancelReservation(label, resid) {
+	if (confirm(label+'?') == true) {
+		var url = document.URL.split('?')[0]+'?zb=ctrlpnl&action=cancel&ajax=3&resid='+resid;
+		new jQuery.ajax({
+			url : url,
+			type : "get",
+			success : function(request) {
+				location.reload(true);
+			}
+		});
+	}
+	return void(0);
 }
