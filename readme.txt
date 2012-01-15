@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling
 Requires at least: 2.1.7
 Tested up to: 3.3
-Stable tag: 1.3.3
+Stable tag: 1.4.0
 
 Bookings is a powerful reservations scheduler.
 
@@ -64,12 +64,22 @@ Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/booki
 
 == Changelog ==
 
+= 1.4.0 =
+* Added products & services concept
+* Added Paypal payment gateway (Pro)
+* Added option for customers to view and cancel upcoming reservations (Pro)
+* Fixed issue with timezones
+* Removed 'sc1' prefix from keys
+* Fixed issue with changing schedules in the 'Schedule Calendar'
+* Fixed Finnish language encoding
+
 = 1.3.3 =
 * Fixed issue with url encoding
 
 = 1.3.2 =
 * Added option to send confirmation email to administrator (Pro)
 * Added SMTP email settings (Pro) 
+* Added approval management
 * Improved role management (admin vs operator)
 * Added display of region in setup panel
 * Improved usability by auto redirecting after admin update

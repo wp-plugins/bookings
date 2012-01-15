@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.3.3
+ Version: 1.4.0
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.3.3");
+define("BOOKINGS_VERSION","1.4.0");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -217,7 +217,11 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 			}
 			echo $news->body;
 			die();
-			//echo 'it is ajax 2';
+		} elseif ($ajax==3) {
+			ob_end_clean();
+			$buffer=$news->DownloadToString();
+			$output=json_decode($buffer,true);
+			echo $output['body'];
 			die();
 		} else {
 			$buffer=$news->DownloadToString();
@@ -276,7 +280,7 @@ function bookings_header() {
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/calendar.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/lang/calendar-en.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/calendar-setup.js"></script>';
-	
+
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/jscalendar/calendar-blue-custom.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/client.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
@@ -331,8 +335,13 @@ function bookings_http($page="index") {
 	$wp['siteurl']=home_url();
 	$wp['sitename']=get_bloginfo('name');
 	$wp['pluginurl']=BOOKINGS_URL;
-	if (is_admin()) $wp['pageurl']=get_admin_url().'admin.php?page=bookings&';
-	else $wp['pageurl']=bookings_home();
+	if (is_admin()) {
+		$wp['mode']='b';
+		$wp['pageurl']=get_admin_url().'admin.php?page=bookings&';
+	} else {
+		$wp['mode']='f';
+		$wp['pageurl']=bookings_home();
+	}
 
 	$wp['time_format']=get_option('time_format');
 	$wp['admin_email']=get_option('admin_email');
@@ -341,7 +350,7 @@ function bookings_http($page="index") {
 	$wp['client_version']=BOOKINGS_VERSION;
 	if (current_user_can(BOOKINGS_ADMIN_CAP)) $wp['cap']='admin';
 	elseif (current_user_can(BOOKINGS_USER_CAP)) $wp['cap']='operator';
-	
+
 	$vars.=$and.'wp='.urlencode(base64_encode(json_encode($wp)));
 
 	if (isset($_SESSION['bookings']['http_referer'])) $vars.='&http_referer='.cc_urlencode($_SESSION['bookings']['http_referer']);
@@ -372,6 +381,9 @@ function bookings_home() {
 
 function bookings_ajax() {
 	global $bookings;
+	print_r($bookings);
+	die('here2');
+	die();
 	echo '<head>'.$bookings['output']['head'].'</head>';
 	echo '<body>'.$bookings['output']['body'].'</body>';
 	die();
@@ -400,7 +412,7 @@ function bookings_init() {
 		}
 	}
 	wp_enqueue_script('jquery');
-
+	
 }
 
 function bookings_log($type=0,$msg='',$filename="",$linenum=0) {

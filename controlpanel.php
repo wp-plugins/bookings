@@ -15,8 +15,10 @@ function bookings_options() {
 			"desc" => 'If you wish to make use of the <strong>Bookings Pro</strong> features, enter your license key here. You can purchase a license key <a href="http://www.zingiri.com/portal/?ccce=cart&a=add&pid=121" target="blank">here</a>.<br />The Pro version provides additional functionality and has no limits to the number of bookings and schedules you can use.',
 			"id" => $bookings_shortname."_lic",
 			"type" => "text");
-	$regions=array('us1' => 'North America, South America & Asia Pacific', 'eu1' => 'Europe & Africa');
+	$regions=array();
 	if (file_exists(dirname(__FILE__).'/regions.php')) require(dirname(__FILE__).'/regions.php');
+	$regions['us1']='North America, South America & Asia Pacific';
+	$regions['eu1']='Europe & Africa';
 	if (!get_option('bookings_region')) {
 		$bookings_options[] = array("name" => "Region",
 			"desc" => "Select the region you are located in. This can only be set once so make sure you select the right region.",
