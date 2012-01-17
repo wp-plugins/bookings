@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.4.0
+ Version: 1.4.1
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.4.0");
+define("BOOKINGS_VERSION","1.4.1");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -59,6 +59,7 @@ register_deactivation_hook(__FILE__,'bookings_deactivate');
 require_once(dirname(__FILE__) . '/includes/shared.inc.php');
 require_once(dirname(__FILE__) . '/includes/http.class.php');
 require_once(dirname(__FILE__) . '/controlpanel.php');
+if (!class_exists('simple_html_dom')) require(dirname(__FILE__).'/includes/simple_html_dom.php');
 
 function bookings_admin_notices() {
 	global $bookings;
@@ -251,11 +252,21 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 
 function bookings_parser($buffer) {
 	global $wp_version;
-	//<textarea id="element_1_1" name="element_1_1" class="theEditor element text" cols="40" rows="3" >test</textarea>
-	if ($wp_version >= '3.3') {
-		$f[]='/<textarea.id\="(.*?)".*class\="theEditor.*>(.*?)<\/textarea>/';
-		$buffer=preg_replace_callback($f,'bookings_replace',$buffer);
+	if (is_admin() && ($wp_version >= '3.3')) {
+		$html = new simple_html_dom();
+		$html->load($buffer);
+		if ($textareas=$html->find('textarea[class=theEditor]')) {
+			foreach ($textareas as $textarea) {
+				ob_start();
+				wp_editor($textarea->innertext,$textarea->id);
+				$editor=ob_get_clean();
+				$textarea->outertext=$editor;
+			}
+		}
+		return $html->__toString();
 	}
+	return $buffer;
+	
 	return $buffer;
 }
 

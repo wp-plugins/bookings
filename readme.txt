@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling
 Requires at least: 2.1.7
 Tested up to: 3.3
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 
 Bookings is a powerful reservations scheduler.
 
@@ -28,6 +28,8 @@ The Pro version of the plugin additionaly offers:
 
 * Unlimited bookings
 * Unlimited schedules
+* Integration of payment gateways such as Paypal etc 
+* Products & services
 * Customization of the booking form with custom fields
 * Mobile syncing with your iPhone, iPad, Android device and more
 * Possibility to edit the thank you text on the confirmation page
@@ -37,10 +39,6 @@ The Pro version of the plugin additionaly offers:
 * Possibility to search reservations by reservation ID
 * Priority support via our [Helpdesk](http://www.zingiri.com/portal "Helpdesk")
 
-And coming soon in the Pro version:
-
-* Products & services
-* Integration of payment gateways such as Paypal etc 
 
 == Installation ==
 
@@ -63,6 +61,11 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.4.1 =
+* Fixed issue 'Invalid argument supplied for foreach() in /.../wp-content/plugins/bookings/includes/support-us.inc.php on line 51'
+* Fixed issue with 'no access' being displayed on Blackouts screen
+* Fixed issue with textarea element in templates
 
 = 1.4.0 =
 * Added products & services concept

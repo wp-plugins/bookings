@@ -41,13 +41,13 @@ if (!function_exists('zing_support_us')) {
 				$news = new zHttpRequest($url);
 				if ($news->live()) {
 					update_option($wpPluginName.'_news',$news->DownloadToString());
+					update_option($wpPluginName.'_news_time',time());
 				}
-				update_option($wpPluginName.'_news_time',time());
 			}
 			?>
 			<?php
 			$data=json_decode(get_option($wpPluginName.'_news'));
-			if (count($data) > 0) {
+			if (is_array($data) && count($data) > 0) {
 				foreach ($data as $rec) { ?>
 					<div class="cc-support-us">
 					<h3><?php echo $rec->title;?></h3>
