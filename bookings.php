@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.4.1
+ Version: 1.4.2
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.4.1");
+define("BOOKINGS_VERSION","1.4.2");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -266,7 +266,7 @@ function bookings_parser($buffer) {
 		return $html->__toString();
 	}
 	return $buffer;
-	
+
 	return $buffer;
 }
 
@@ -301,18 +301,19 @@ function bookings_header() {
 
 function bookings_admin_header() {
 	global $bookings,$wp_version;
-	if (isset($bookings['output']['head'])) echo $bookings['output']['head'];
-	echo '<script type="text/javascript">';
-	echo "var bookingsPageurl='admin.php?page=bookings&';";
-	echo "var aphpsAjaxURL='".get_admin_url().'admin.php?page=bookings&zb=ajax&ajax=1&form='."';";
-	echo "var aphpsURL='".bookings_url(false).'aphps/fwkfor/'."';";
-	echo "var wsCms='gn';";
-	echo '</script>';
-	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/admin.css" media="screen" />';
-	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/integrated_view.css" media="screen" />';
-	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jquery-ui-1.7.3.custom.min.js"></script>';
-	if ($wp_version < '3.3') wp_tiny_mce( false, array( 'editor_selector' => 'theEditor' ) );
-
+	if (isset($_REQUEST['page']) && ($_REQUEST['page']=='bookings'))  {
+		if (isset($bookings['output']['head'])) echo $bookings['output']['head'];
+		echo '<script type="text/javascript">';
+		echo "var bookingsPageurl='admin.php?page=bookings&';";
+		echo "var aphpsAjaxURL='".get_admin_url().'admin.php?page=bookings&zb=ajax&ajax=1&form='."';";
+		echo "var aphpsURL='".bookings_url(false).'aphps/fwkfor/'."';";
+		echo "var wsCms='gn';";
+		echo '</script>';
+		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/admin.css" media="screen" />';
+		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/integrated_view.css" media="screen" />';
+		echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jquery-ui-1.7.3.custom.min.js"></script>';
+		if ($wp_version < '3.3') wp_tiny_mce( false, array( 'editor_selector' => 'theEditor' ) );
+	}
 }
 
 function bookings_http($page="index") {
@@ -417,13 +418,16 @@ function bookings_init() {
 				wp_enqueue_script('scriptaculous');
 			}
 		}
-		if ($wp_version < '3.3') {
-			wp_enqueue_script(array('editor', 'thickbox', 'media-upload'));
-			wp_enqueue_style('thickbox');
+		if (isset($_REQUEST['page']) && ($_REQUEST['page']=='bookings'))  {
+
+			if ($wp_version < '3.3') {
+				wp_enqueue_script(array('editor', 'thickbox', 'media-upload'));
+				wp_enqueue_style('thickbox');
+			}
 		}
 	}
 	wp_enqueue_script('jquery');
-	
+
 }
 
 function bookings_log($type=0,$msg='',$filename="",$linenum=0) {

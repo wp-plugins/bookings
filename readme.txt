@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling
 Requires at least: 2.1.7
 Tested up to: 3.3
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 
 Bookings is a powerful reservations scheduler.
 
@@ -61,6 +61,9 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.4.2 =
+* Only load admin javascript and styles on Bookings pages
 
 = 1.4.1 =
 * Fixed issue 'Invalid argument supplied for foreach() in /.../wp-content/plugins/bookings/includes/support-us.inc.php on line 51'
