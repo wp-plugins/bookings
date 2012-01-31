@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.4.2
+ Version: 1.4.3
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.4.2");
+define("BOOKINGS_VERSION","1.4.3");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -107,6 +107,8 @@ function bookings_activate() {
 function bookings_deactivate() {
 	bookings_output('deactivate');
 
+	unset($_SESSION['bookings']);
+	
 	delete_option('bookings_key');
 
 	$bookings_options=bookings_options();
@@ -115,7 +117,7 @@ function bookings_deactivate() {
 	foreach ($bookings_options as $value) {
 		delete_option( $value['id'] );
 	}
-
+	delete_option("bookings_http_referer");
 	delete_option("bookings_log");
 	delete_option("bookings_ftp_user"); //legacy
 	delete_option("bookings_ftp_password"); //legacy
@@ -242,7 +244,8 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 				$bookings['output']['body']=$buffer;
 				$bookings['output']['head']='';
 			} else {
-				if (isset($bookings['output']['http_referer'])) $_SESSION['bookings']['http_referer']=$bookings['output']['http_referer'];
+				if (isset($bookings['output']['http_referer'])) update_option('bookings_http_referer',$bookings['output']['http_referer']);
+				else update_option('bookings_http_referer','');
 			}
 
 			$bookings['output']['body']=bookings_parser($bookings['output']['body']);
@@ -365,7 +368,7 @@ function bookings_http($page="index") {
 
 	$vars.=$and.'wp='.urlencode(base64_encode(json_encode($wp)));
 
-	if (isset($_SESSION['bookings']['http_referer'])) $vars.='&http_referer='.cc_urlencode($_SESSION['bookings']['http_referer']);
+	if (get_option('bookings_http_referer')) $vars.='&http_referer='.cc_urlencode(get_option('bookings_http_referer'));
 
 	if ($vars) $http.=$vars;
 
