@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.4.3
+Stable tag: 1.5.1
 
 Bookings is a powerful reservations scheduler.
 
@@ -62,13 +62,16 @@ Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/booki
 
 == Changelog ==
 
+= 1.5.1 =
+* Fixed packaging issue
+
 = 1.5.0 =
 * Added 'event mode' allowing to define a schedule active only on certain dates
 * Added new template 'schedule1' for the [bookings] short code displaying a calendar with availability for all resources (similar to the schedule calendar in the back-end)
 * Added new template 'schedule2' for the [bookings] short code displaying a calendar with the possibility to search by date, showing availability for all resources
 * Added new template 'hotel1' for the [bookings] short code tailored for hotels and B&B's
 * Added 'daystoshow' parameter for the [bookings] short code allowing to display more than 1 day of availability in the front-end calendar
-* Implemented Wordpress shortcode API, allowing to manage multiple bookings pages and multiple shortcodes on the same page
+* Implemented Wordpress short code API, allowing to manage multiple bookings pages and multiple short codes on the same page
 * Added reservation details on checkout page
 * Fixed issue with selecting Japanese language
 * Added new colors.css style sheet with the colors of the reservation statuses
@@ -80,7 +83,7 @@ Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/booki
 * Removed seconds display from time on confirmation messages
 * Displayed am/pm in lower case for consistency
 * Changed default order of reservations seen by customer to show most recently created first
-* Fixed issue with tooltop being offset from mouse position
+* Fixed issue with tooltip being offset from mouse position
 * Changed Paypal item time to show reservation date instead of reservation id
 * Changed Paypal invoice id to show Bookings invoice id
 * Moved to same checkout form for both standard and pro users
@@ -88,7 +91,6 @@ Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/booki
 * Removed showSummary javascript action from front end calendar
 * Centered calendar and date jumper on front end
 * Show loader icon when saving schedule or resource
-
 
 = 1.4.3 =
 * Fixed issue with redirects not working if PHP sessions not configured properly on client side
