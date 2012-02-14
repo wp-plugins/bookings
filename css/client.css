@@ -1,7 +1,7 @@
 #bookings {
-	position:relative;
-	float:left;
-	width:100%;
+	position: relative;
+	float: left;
+	width: 100%;
 }
 
 .currentDayBoxStyle {
@@ -25,4 +25,271 @@
 
 tr.dayNamesStyle td {
 	text-align: center;
+}
+
+/*
+Individal time cells for the weekly view with resources
+*/
+td.scheduleTimes,.scheduleTimes td {
+	font-size: 11px;
+	color: #333333;
+	text-align: left;
+	background-color: #EDEDED;
+	padding-left: 2px;
+	border: 1px solid;
+}
+
+.r0 td,.ro0 td {
+	padding: 2px;
+	background-color: #FFFFFF;
+	font-size: 11px;
+}
+
+.r1 td,.ro1 td {
+	padding: 2px;
+	background-color: #F8FAEA;
+	font-size: 11px;
+}
+
+.r0 td.o:hover {
+	cursor: default;
+	background-color: #FFFFFF;
+}
+
+.r1 td.o:hover {
+	cursor: default;
+	background-color: #F8FAEA;
+}
+
+.r0:hover td.resourceName,.r1:hover td.resourceName {
+	background-color: #f7f18b;
+}
+
+.r0 td.resourceName:hover,.r1 td.resourceName:hover {
+	cursor: default;
+	background-color: #EDEDED;
+}
+
+.bookingsCalendarBody {
+	/*max-width: 300px;*/
+	text-align:center;
+	width:100%;
+}
+
+.bookingsCalendarBody table, #changeMonth {
+	max-width: 300px;
+		text-align:center;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.viewdays {
+	clear: both;
+}
+
+.viewdays a {
+	margin: 5px;
+	padding: 5px;
+	float: left;
+	border: 1px #000000 solid;
+}
+
+.navMonthRight {
+	text-align: right;
+}
+
+navMonthLeft {
+	text-align: left;
+}
+
+/*
+* Date and time selectors on book2 page
+*/
+#bookings-step2 {
+	text-align:center;
+}
+
+.fromto {
+	clear: both;
+}
+
+.fromdatetime,.todatetime {
+	width: 48%;
+	float: left;
+	margin: 1%;
+	text-align:left;
+}
+
+.totime,.fromtime {
+	margin-top: 10px;
+}
+
+.fromdate {
+	width: 100%;
+}
+
+.fromdate label,.todate label {
+	width: 50%;
+}
+
+div.availability {
+	border-top: 1px #000000 solid;
+	margin-top: 20px;
+	padding-top: 20px;
+}
+
+div.availability .resource {
+	margin-bottom: 30px;
+	clear: both;
+}
+
+div.availability .resourcename {
+	width: 20%;
+	float: left;
+	font-weight: bold;
+}
+
+div.availability .resourcenotes {
+	width: 50%;
+	float: left;
+}
+
+div.availability .resource a {
+	float: left;
+}
+
+/* product availability */
+#product table.availability  {
+	width:100%;
+	clear: both;
+}
+
+table.availability .product {
+	margin-bottom: 30px;
+	clear: both;
+	border: 0px;
+}
+
+table.availability,table.availability tr td {
+	border: 0px;
+}
+
+table.availability div.productname {
+	font-weight: bold;
+}
+
+table.availability div.productexcerpt {
+}
+	
+table.availability td.productprice {
+	text-align:right;
+}
+
+table.availability td.productqty {
+	text-align:right;
+}
+
+table.availability tr.product a {
+	
+}
+
+/*
+* book2 page: This page shows the date selector and resource availability
+*/
+#bookings #book2-submit {
+	float: right;
+}
+
+#bookings #book2-search {
+	text-align:center;
+	margin:20px auto;
+}
+
+/*
+* book3 page: This page shows the registration form
+*/
+#bookings #book3-submit {
+	float: right;
+	margin-top:30px;
+}
+
+.bookings-reservationsummary {
+	clear:both;
+	width:100%;
+	background-color:#F8F8F8;
+	border-radius: 12px;
+	-moz-border-radius: 12px;
+	float:left;
+}
+
+.bookings-productprice {
+	text-align:right;
+}
+
+.bookings-reservationsummary table, .bookings-reservationsummary tr, .bookings-reservationsummary tr td {
+	border: none;
+}
+
+.bookings-reservationsummary table {
+	padding:10px;
+}
+
+.bookings-productname {
+	font-weight:bold;
+}
+
+.bookings-totalprice {
+	text-align:right;
+	font-weight:bold;
+}
+	
+.bookings-resource {
+	font-weight:bold;
+	padding: 10px;
+}
+
+.bookings-reservationdates {
+	float: left;
+}
+
+/* Button */
+#bookings .button {
+	display: inline-block;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	font: 12px/100% Arial, Helvetica, sans-serif;
+	padding: .4em 1.2em .4em;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, .5);
+	-webkit-border-radius: 1.4em;
+	-moz-border-radius: 1.4em;
+	border-radius: 1.4em;
+	color: #222222;
+	border: solid 1px #dddddd;
+	background: #eeeeee;
+	background: -webkit-gradient(linear, left top, left bottombottom, from(#ffffff),
+		to(#cccccc) );
+	background: -moz-linear-gradient(top, #cccccc, #ffffff);
+	filter: progid :   DXImageTransform.Microsoft.gradient (   startColorstr
+		= 
+		 '#cccccc', endColorstr =   '#ffffff' );
+}
+
+#bookings .button:hover {
+	text-decoration: none;
+	color: #111111;
+	border: solid 1px #aaaaaa;
+}
+
+#bookings .button:active {
+	color: #222222;
+	border: solid 1px #aaaaaa;
+	background: #eeeeee;
+	background: -webkit-gradient(linear, left top, left bottombottom, from(#ccccccc),
+		to(#ffffff) );
+	background: -moz-linear-gradient(top, #ffffff, #cccccc);
+	filter: progid :   DXImageTransform.Microsoft.gradient (   startColorstr
+		= 
+		 '#ffffff', endColorstr =   '#cccccc' );
 }

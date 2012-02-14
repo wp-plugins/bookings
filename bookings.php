@@ -47,10 +47,12 @@ if (get_option('bookings_region')) {
 	} else {
 		add_action('wp_head','bookings_header');
 	}
-	add_filter('the_content', 'bookings_content', 10, 3);
+	//add_filter('the_content', 'bookings_content', 10, 3);
+	add_shortcode( 'bookings', 'bookings_shortcode' );
 }
 
 add_action('admin_head','bookings_admin_header');
+add_action('admin_footer','bookings_admin_footer');
 add_action('admin_notices','bookings_admin_notices');
 
 register_activation_hook(__FILE__,'bookings_activate');
@@ -108,7 +110,7 @@ function bookings_deactivate() {
 	bookings_output('deactivate');
 
 	unset($_SESSION['bookings']);
-	
+
 	delete_option('bookings_key');
 
 	$bookings_options=bookings_options();
@@ -126,51 +128,106 @@ function bookings_deactivate() {
 	delete_option('bookings-support-us');
 }
 
-function bookings_content($content) {
-	global $bookings;
+function bookings_shortcode( $atts, $content=null, $code="" ) {
+	global $bookings,$bookings_shortcode_id;
 
-	if (preg_match_all('/\[bookings(.*)\]/',$content,$matches)) {
-		$pg=isset($_REQUEST['zb']) ? $_REQUEST['zb'] : 'book1';
-		if ($pg=='book1') {
-			foreach ($matches[0] as $id => $match) {
-				$postVars=array();
-				if ($matches[1][$id]) {
-					$vars=explode(',',$matches[1][$id]);
-					foreach ($vars as $var) {
-						$t=explode('=',$var);
-						$n=trim($t[0]);
-						$v=isset($t[1]) ? trim($t[1]) : 1;
-						if ($n=='template') $postVars['template']=$v;
-						elseif ($n=='resource') $postVars['machid']=$v;
-						elseif ($n=='schedule') $postVars['scheduleid']=$v;
-						elseif ($n=='product') $postVars['productid']=$v;
-						else echo '<br />Unknown variable '.$n;
-					}
-				}
-				bookings_output($pg,$postVars);
-				$output='<div id="bookings">';
-				$output.=$bookings['output']['body'];
-				$output.='</div>';
-				$content=str_replace($match,$output,$content);
+	if (!is_page() && !is_single()) return '';
+
+	$bookings_shortcode_id=isset($bookings_shortcode_id) ? $bookings_shortcode_id+1 : 1;
+
+	//support old style, comma delimited format
+	$attString='';
+	if (is_array($atts) && count($atts) > 0) {
+		foreach ($atts as $id => $value) {
+			if (!is_numeric($id) && ($value!=',')) {
+				if ($attString) $attString.=',';
+				$attString.=$id.'='.$value;
 			}
-		} else {
-			bookings_output($pg);
-			$output='<div id="bookings">';
-			$output.=$bookings['output']['body'];
-			$output.='</div>';
-			$content=$output;
-
 		}
-		return $content;
-	} elseif (isset($_REQUEST['page']) && ($_REQUEST['page']=='bookings') && isset($_REQUEST['zb']) && $_REQUEST['zb']) {
-		bookings_output($_REQUEST['zb']);
+		$atts=array();
+		$t1=explode(',',$attString);
+		foreach ($t1 as $p1) {
+			$p2=explode('=',$p1);
+			$atts[$p2[0]]=$p2[1];
+		}
+	}
+
+	$defaults=array('template' => '','scheduleid' => '', 'calendar' => '');
+	extract( shortcode_atts( $defaults, $atts ) );
+	$pg=isset($_REQUEST['zb']) ? $_REQUEST['zb'] : 'book1';
+	if ($pg=='book1') {
+		$postVars=array();
+		if (is_array($atts) && count($atts) > 0) {
+			foreach($atts as $id => $value) {
+				$postVars[$id]=$value;
+			}
+		}
+		//if ($postVars[$id]=='fromto2') return 'nothing';
+		bookings_output($pg,$postVars);
 		$output='<div id="bookings">';
 		$output.=$bookings['output']['body'];
 		$output.='</div>';
-		$content=str_replace($match,$output,$content);
-		return $content;
-	} else return $content;
+		return $output;
+	} else {
+		bookings_output($pg);
+		$output='<div id="bookings">';
+		$output.=$bookings['output']['body'];
+		$output.='</div>';
+		return $output;
+	}
 }
+
+/*
+ function bookings_content($content) {
+ global $bookings;
+
+ if (!is_page() && !is_single()) return '';
+
+ if (preg_match_all('/\[bookings(.*)\]/',$content,$matches)) {
+ $pg=isset($_REQUEST['zb']) ? $_REQUEST['zb'] : 'book1';
+ if ($pg=='book1') {
+ foreach ($matches[0] as $id => $match) {
+ $postVars=array();
+ if ($matches[1][$id]) {
+ $vars=explode(',',$matches[1][$id]);
+ foreach ($vars as $var) {
+ $t=explode('=',$var);
+ $n=trim($t[0]);
+ $v=isset($t[1]) ? trim($t[1]) : 1;
+ if (strtolower($n)=='template') $postVars['template']=$v;
+ elseif (strtolower($n)=='resource') $postVars['machid']=$v;
+ elseif (strtolower($n)=='schedule') $postVars['scheduleid']=$v;
+ elseif (strtolower($n)=='product') $postVars['productid']=$v;
+ elseif (strtolower($n)=='daystoshow') $postVars['daystoshow']=$v;
+ elseif (strtolower($n)=='calendar') $postVars['calendar']=$v;
+ else echo '<br />Unknown variable '.$n;
+ }
+ }
+ bookings_output($pg,$postVars);
+ $output='<div id="bookings">';
+ $output.=$bookings['output']['body'];
+ $output.='</div>';
+ $content=str_replace($match,$output,$content);
+ }
+ } else {
+ bookings_output($pg);
+ $output='<div id="bookings">';
+ $output.=$bookings['output']['body'];
+ $output.='</div>';
+ $content=$output;
+
+ }
+ return $content;
+ } elseif (isset($_REQUEST['page']) && ($_REQUEST['page']=='bookings') && isset($_REQUEST['zb']) && $_REQUEST['zb']) {
+ bookings_output($_REQUEST['zb']);
+ $output='<div id="bookings">';
+ $output.=$bookings['output']['body'];
+ $output.='</div>';
+ $content=str_replace($match,$output,$content);
+ return $content;
+ } else return $content;
+ }
+ */
 
 function bookings_output($bookings_to_include='',$postVars=array()) {
 	global $post,$bookings;
@@ -234,7 +291,6 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 				else $bookings['output']['body']='The service is currently not available, please try again later.';
 				return false;
 			}
-			//print_r($buffer);
 			$bookings['output']=json_decode($buffer,true);
 			if (isset($bookings['output']['reload']) && $bookings['output']['reload']) {
 				$buffer=$news->DownloadToString();
@@ -287,13 +343,14 @@ function bookings_header() {
 	echo '<script type="text/javascript">';
 	echo "var bookingsPageurl='".bookings_home()."';";
 	echo '</script>';
-
 	//if (isset($bookings['output']['head'])) echo $bookings['output']['head'];
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/functions.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/ajax.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/calendar.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/lang/calendar-en.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/calendar-setup.js"></script>';
+
+	//if (isset($_REQUEST['zb']) && ($_REQUEST['zb']=='book2')) echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jquery-ui-1.7.3.custom.min.js"></script>';
 
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/jscalendar/calendar-blue-custom.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/client.css" media="screen" />';
@@ -313,6 +370,7 @@ function bookings_admin_header() {
 		echo "var wsCms='gn';";
 		echo '</script>';
 		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/admin.css" media="screen" />';
+		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
 		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/integrated_view.css" media="screen" />';
 		echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jquery-ui-1.7.3.custom.min.js"></script>';
 		if ($wp_version < '3.3') wp_tiny_mce( false, array( 'editor_selector' => 'theEditor' ) );
@@ -320,7 +378,7 @@ function bookings_admin_header() {
 }
 
 function bookings_http($page="index") {
-	global $current_user;
+	global $current_user,$post,$bookings_shortcode_id;
 
 	$vars="";
 	$http=bookings_url().'?pg='.$page;
@@ -356,12 +414,13 @@ function bookings_http($page="index") {
 	} else {
 		$wp['mode']='f';
 		$wp['pageurl']=bookings_home();
+		if (isset($post) && isset($bookings_shortcode_id)) $wp['sid']=$post->ID.'-'.$bookings_shortcode_id;
 	}
 
 	$wp['time_format']=get_option('time_format');
 	$wp['admin_email']=get_option('admin_email');
 	$wp['key']=get_option('bookings_key');
-	$wp['lang']=get_option('bookings_lang'); //get_bloginfo('language');
+	$wp['lang']=get_option('bookings_lang') ? get_option('bookings_lang') : 'en_US'; //get_bloginfo('language');
 	$wp['client_version']=BOOKINGS_VERSION;
 	if (current_user_can(BOOKINGS_ADMIN_CAP)) $wp['cap']='admin';
 	elseif (current_user_can(BOOKINGS_USER_CAP)) $wp['cap']='operator';
@@ -396,8 +455,8 @@ function bookings_home() {
 
 function bookings_ajax() {
 	global $bookings;
-	print_r($bookings);
-	die('here2');
+	//	print_r($bookings);
+	die('Problem loading - contact support');
 	die();
 	echo '<head>'.$bookings['output']['head'].'</head>';
 	echo '<body>'.$bookings['output']['body'].'</body>';
@@ -430,6 +489,12 @@ function bookings_init() {
 		}
 	}
 	wp_enqueue_script('jquery');
+	if (!is_admin() && isset($_REQUEST['zb'])) {
+		wp_enqueue_script( 'jquery-ui-core' );
+		wp_enqueue_script( 'jquery-datepicker', BOOKINGS_URL.'js/jquery-ui-1.8.17.datepicker.min.js', array('jquery', 'jquery-ui-core' ) );
+		wp_register_style('bookings', plugins_url('css/ui-lightness/jquery-ui-1.8.17.custom.css', __FILE__));
+		wp_enqueue_style('bookings');
+	}
 
 }
 
@@ -451,3 +516,7 @@ function bookings_url($endpoint=true) {
 }
 
 
+function bookings_admin_footer() {
+	global $bookings;
+	if (isset($bookings['output']['footer'])) echo $bookings['output']['footer'];
+}

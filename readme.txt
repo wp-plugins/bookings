@@ -38,7 +38,7 @@ The Pro version of the plugin additionaly offers:
 * Export reservations to your favorite calendar (Outlook, iCal, etc) from the admin back-end or your confirmation email
 * Possibility to search reservations by reservation ID
 * Priority support via our [Helpdesk](http://www.zingiri.com/portal "Helpdesk")
-
+* Removed reminder section from blackout pop-up
 
 == Installation ==
 
@@ -61,6 +61,34 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.5.0 =
+* Added 'event mode' allowing to define a schedule active only on certain dates
+* Added new template 'schedule1' for the [bookings] short code displaying a calendar with availability for all resources (similar to the schedule calendar in the back-end)
+* Added new template 'schedule2' for the [bookings] short code displaying a calendar with the possibility to search by date, showing availability for all resources
+* Added new template 'hotel1' for the [bookings] short code tailored for hotels and B&B's
+* Added 'daystoshow' parameter for the [bookings] short code allowing to display more than 1 day of availability in the front-end calendar
+* Implemented Wordpress shortcode API, allowing to manage multiple bookings pages and multiple shortcodes on the same page
+* Added reservation details on checkout page
+* Fixed issue with selecting Japanese language
+* Added new colors.css style sheet with the colors of the reservation statuses
+* Fixed issue where when clicking 'Add' to add another product or service after having added one, the link takes you to the set up screen
+* Removed loading of news info in sidebar, providing more space for other functionality
+* Included local image files
+* Fixed issue with back link when an error occurs creating or modifying a schedule
+* Added new styling to front end buttons
+* Removed seconds display from time on confirmation messages
+* Displayed am/pm in lower case for consistency
+* Changed default order of reservations seen by customer to show most recently created first
+* Fixed issue with tooltop being offset from mouse position
+* Changed Paypal item time to show reservation date instead of reservation id
+* Changed Paypal invoice id to show Bookings invoice id
+* Moved to same checkout form for both standard and pro users
+* Fixed issue with month selector on front end calendar
+* Removed showSummary javascript action from front end calendar
+* Centered calendar and date jumper on front end
+* Show loader icon when saving schedule or resource
+
 
 = 1.4.3 =
 * Fixed issue with redirects not working if PHP sessions not configured properly on client side

@@ -153,9 +153,12 @@ function bookings_main() {
 	global $bookings;
 
 	if (!isset($_GET['zb'])) return bookings_admin();
-
+	
+	require(dirname(__FILE__).'/includes/support-us.inc.php');
+	
 	echo '<div class="wrap">';
-	echo '<div id="bookings" style="position:relative;float:left;width:80%">';
+	zing_support_us_top('bookings','bookings','bookings',BOOKINGS_VERSION,false);
+	echo '<div id="bookings" style="position:relative;float:left;width:100%">';
 	if (isset($bookings['output']['messages']) && is_array($bookings['output']['messages']) && (count($bookings['output']['messages']) > 0)) {
 		echo '<div class="error">';
 		foreach ($bookings['output']['messages'] as $msg) {
@@ -166,8 +169,9 @@ function bookings_main() {
 	if (isset($bookings['output']['body'])) echo $bookings['output']['body'];
 	require(dirname(__FILE__).'/includes/help.inc.php');
 	echo '</div>';
-	require(dirname(__FILE__).'/includes/support-us.inc.php');
-	zing_support_us('bookings','bookings','bookings',BOOKINGS_VERSION,false);
+	
+	zing_support_us_bottom('bookings','bookings','bookings',BOOKINGS_VERSION,false);
+		
 	echo '</div>';
 }
 
@@ -179,10 +183,12 @@ function bookings_admin() {
 
 	if ( isset($_REQUEST['install']) ) echo '<div id="message" class="updated fade"><p><strong>'.$bookings_name.' settings updated.</strong></p></div>';
 	if ( isset($_REQUEST['error']) ) echo '<div id="message" class="updated fade"><p>The following error occured: <strong>'.$_REQUEST['error'].'</strong></p></div>';
-
+	require(dirname(__FILE__).'/includes/support-us.inc.php');
+	
 	?>
 <div class="wrap">
-<div id="cc-left" style="position: relative; float: left; width: 80%">
+<?php 	zing_support_us_top('bookings','bookings','bookings',BOOKINGS_VERSION,false);?>
+<div id="cc-left" style="position: relative; float: left; width: 100%">
 <h2><b><?php echo $bookings_name; ?></b></h2>
 
 	<?php
@@ -213,7 +219,6 @@ function bookings_admin() {
 	require(dirname(__FILE__).'/includes/help.inc.php');
 	?></div>
 <!-- end cc-left --> <?php
-require(dirname(__FILE__).'/includes/support-us.inc.php');
-zing_support_us('bookings','bookings','bookings',BOOKINGS_VERSION,false);
+zing_support_us_bottom('bookings','bookings','bookings',BOOKINGS_VERSION,false);
 }
 add_action('admin_menu', 'bookings_add_admin'); ?>

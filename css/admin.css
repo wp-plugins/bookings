@@ -27,3 +27,7 @@ div.nopermission {
 	color:white;
 	font-size:larger;
 }
+
+.zfaces-form {
+	max-width:1000px;
+}

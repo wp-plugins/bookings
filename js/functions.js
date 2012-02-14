@@ -137,7 +137,10 @@ function checkAdminForm() {
 	var f = document.forms[0];
 	for (var i=0; i< f.elements.length; i++) {
 		if ( (f.elements[i].type == "checkbox") && (f.elements[i].checked == true) )
-			return confirm('This will delete all reservations and permission information for the checked items!\nContinue?');
+			if (confirm('This will delete all reservations and permission information for the checked items!\nContinue?')) {
+				jQuery(".spinner").show();
+				return true;
+			} else return false;
 	}
 	alert("No boxes have been checked!");	
 	return false;
@@ -170,7 +173,9 @@ function checkAddResource(f) {
 		alert("You have the following errors:\n\n"+msg);
 		return false;
 	}
-	
+
+	jQuery(".spinner").show();
+
 	return true;
 }
 
@@ -192,6 +197,8 @@ function checkAddSchedule() {
 		return false;
 	}
 	
+	jQuery(".spinner").show();
+
 	return true;
 }
 
@@ -267,11 +274,22 @@ function isIE() {
 }
 
 function changeDate(month, year) {
-	var frm = isIE() ? document.changeMonth : document.forms['changeMonth'];
-	frm.newmonth.value = month;
-	frm.newyear.value = year;
-	
-	frm.submit();
+	//var frm = isIE() ? document.changeMonth : document.forms['changeMonth'];
+	//frm.newmonth.value = month;
+	//frm.newyear.value = year;
+	jQuery('#newmonth').attr('value',month);
+	jQuery('#newyear').attr('value',year);
+	jQuery('#changeMonth').submit();
+	//frm.submit();
+}
+
+function changeSelectedMonth() {
+//	document.forms['changeMonth'].month.value=document.forms['changeMonth'].monthselect.options[monthselect.selectedIndex].value; 
+	//document.forms['changeMonth'].submit();
+	var newMonth=jQuery('#monthselect').val();
+	jQuery('#newmonth').attr('value',newMonth);
+	jQuery('#changeMonth').submit();
+	//frm.submit();
 }
 
 // Function to change the Scheduler on selected date click
@@ -339,8 +357,22 @@ function msum(e)
 }
 
 function showsummary(object, e, text) {
- 
-        myLayer = document.getElementById(object);
+	var offset=jQuery('#summary').parent().offset();
+	var ww=jQuery(window).width();
+	var wh=jQuery(window).height();
+	var adjustTop=0;
+	//if ((e.pageY + 30) >= wh) adjustTop=-(e.PageY+30-wh);
+	console.log(adjustTop);
+	var top=e.pageY-offset.top+adjustTop+'px';
+	var adjustLeft=0;
+	//if ((e.pageX + 165) >= ww) adjustLeft=-(e.PageX+165-ww);
+	var left=e.pageX-offset.left+15+adjustLeft+'px';
+	
+	jQuery('#'+object).html(text);
+	jQuery('#'+object).css('z-index',1000);
+	jQuery('#'+object).css({ 'visibility': 'visible', "relative": "absolute", "top": top, "left": left });
+/*
+		myLayer = document.getElementById(object);
         myLayer.innerHTML = text;
  
         w = parseInt(myLayer.style.width) ;
@@ -379,6 +411,7 @@ function showsummary(object, e, text) {
     myLayer.style.left = parseInt(x1)+ "px";
     myLayer.style.top = parseInt(y1) + "px";
     myLayer.style.visibility = "visible";
+    */
 }
 
 function getAbsolutePosition(element) {
@@ -783,3 +816,19 @@ function cancelReservation(label, resid) {
 	}
 	return void(0);
 }
+
+jQuery(document).ready(function(){
+	jQuery(".spinonsubmit").click(function() {
+		jQuery(".spinner").show();
+     });
+	jQuery("#book2-submit").click(function() {
+		var total=0;
+		jQuery(".productqty select").each(function(e) {
+		    total=total+Number(jQuery(this).val());
+		});
+		if (total==0) {
+			alert('Please select one or more items you want to book');
+			return false;
+		} else return true;
+     });
+});
