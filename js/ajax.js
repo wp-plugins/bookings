@@ -28,10 +28,10 @@ function checkReservation(url, formid, txt) {
 	var f = document.getElementById(formid);
 	
 	url='admin.php?page=bookings&ajax=1&zb=' + url.replace('.php','');
-	
 	http_request = createRequestObject();	
 	http_request.onreadystatechange = showCheckResults;
-	http_request.open('POST', url + document.location.search.substring(0), true);
+	//http_request.open('POST', url + document.location.search.substring(0), true);
+	http_request.open('POST', url, true);
 	http_request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	
 	div.style.textAlign = "center";

@@ -1,3 +1,6 @@
+var bookingsDialog;
+var bookingsDialog2;
+
 function checkForm(f) {
 	var msg = "Please fix these errors:\n";
 	var errors = false;
@@ -59,7 +62,7 @@ function help(file) {
 		void(0);    
 }      
 
-function reserve(type, machid, start_date, resid, scheduleid, is_blackout, read_only, pending, starttime, endtime) {  
+function bookingsReserve(type, machid, start_date, resid, scheduleid, is_blackout, read_only, pending, starttime, endtime, event) {  
 		if (is_blackout == null) { is_blackout = 0; }
 		
 		if (is_blackout != 1) {
@@ -70,6 +73,7 @@ function reserve(type, machid, start_date, resid, scheduleid, is_blackout, read_
 			w = (type == 'r') ? 600 : 425;
 			h = (type == 'm') ? 460 : 420;
 		}
+		h=h+20;
 		
 		if (machid == null) { machid = ''; }
 		if (start_date == null) { start_date = ''; }
@@ -80,11 +84,36 @@ function reserve(type, machid, start_date, resid, scheduleid, is_blackout, read_
 		if (pending == null) { pending = ''; }
 		if (starttime == null) { starttime = ''; }
 		if (endtime == null) { endtime = ''; }
+		
+		if ((bookingsDialog2 instanceof jQuery) && bookingsDialog2.dialog('isOpen')) bookingsDialog2.dialog('close');
+		if ((bookingsDialog instanceof jQuery) && bookingsDialog.dialog('isOpen')) bookingsDialog.dialog('close');
+		nurl = "admin.php?page=bookings&ajax=2&zb=reserve&type=" + type + "&machid=" + machid + "&start_date=" + start_date + "&resid=" + resid + '&scheduleid=' + scheduleid + "&is_blackout=" + is_blackout + "&read_only=" + read_only + "&pending=" + pending + "&starttime=" + starttime + "&endtime=" + endtime;
+		
+		jQuery(".spinner").show();
 
-		nurl = "admin.php?page=bookings&ajax=1&zb=reserve&type=" + type + "&machid=" + machid + "&start_date=" + start_date + "&resid=" + resid + '&scheduleid=' + scheduleid + "&is_blackout=" + is_blackout + "&read_only=" + read_only + "&pending=" + pending + "&starttime=" + starttime + "&endtime=" + endtime;    
-		var resWindow = window.open(nurl,"reserve","width=" + w + ",height=" + h + ",scrollbars,resizable=no,status=no");     
-		resWindow.focus();
+		new jQuery.ajax({
+			url : nurl,
+			type : "get",
+			success : function(request) {
+				jQuery(".spinner").hide();
+				var jsRequest = eval("(" + request + ")");
+				bookingsDialog = jQuery('<div></div>')
+				bookingsDialog.html(jsRequest.body);
+				bookingsDialog.dialog({
+					"height": "auto",
+					"width" : w,
+					"modal" : true,
+					"draggable" : false
+				});
+			}
+		});
+
+
 		void(0);   
+}
+
+function bookingsCloseDialog() {
+	bookingsDialog.dialog('close');
 }
 
 function checkDate() {
@@ -156,8 +185,8 @@ function checkBoxes() {
 }
 
 function viewUser(user) {
-	window.open("admin.php?page=bookings&zb=userInfo&ajax=1&user="+user,"UserInfo","width=400,height=400,scrollbars,resizable=no,status=no");     
-		void(0);    
+	bookingsWindowOpen("admin.php?page=bookings&zb=userInfo&ajax=2&user="+user,"UserInfo","width=400,height=400,scrollbars,resizable=no,status=no");     
+	void(0);    
 }
 
 function checkAddResource(f) {
@@ -212,6 +241,23 @@ function checkAllBoxes(box) {
 
 	void(0);
 }
+function bookingsSubmitReservationForm(f) {
+	if (check_reservation_form(f)) {
+		jQuery(".spinner").show();
+		var form = jQuery('form#reserve');
+		jQuery.post(form.attr('action'),form.serialize()+'&ajax=2&btnSubmit=1',function(response){
+			jQuery(".spinner").hide();
+			var js = eval("(" + response + ")");
+			bookingsDialog.html(js.body);
+			var background=jQuery('#bookings');
+			jQuery.get(document.URL,'ajax=2',function(response){
+				var js = eval("(" + response + ")");
+				background.html(js.body);
+			});
+		});
+	}
+	return false;
+}
 
 function check_reservation_form(f) {
 	
@@ -247,7 +293,7 @@ function check_reservation_form(f) {
 		msg += "- Please select days to repeat on";
 	}
 	
-	if (msg != "")
+	if (msg != "") 
 		alert(msg);
 		
 	return (msg == "");
@@ -263,10 +309,29 @@ function toggle_fields(box) {
 }
 
 function search_user_lname(letter) {
+	/*
 	var frm = isIE() ? document.name_search : document.forms['name_search'];
 	frm.firstName.value = "";
 	frm.lastName.value=letter;
 	frm.submit();
+	*/
+	jQuery('#firstName').val('');
+	jQuery('#lastName').val(letter);
+	jQuery(".spinner").show();
+	var form = jQuery('form#name_search');
+	jQuery.get(form.attr('action'),form.serialize()+'&ajax=2&searchUsersBtn=1',function(response){
+		jQuery(".spinner").hide();
+		var js = eval("(" + response + ")");
+		bookingsDialog2.html(js.body);
+		/*
+		var background=jQuery('#bookings');
+		jQuery.get(document.URL,'ajax=2',function(response){
+			var js = eval("(" + response + ")");
+			background.html(js.body);
+		});
+		*/
+	});
+
 }
 
 function isIE() {
@@ -362,7 +427,6 @@ function showsummary(object, e, text) {
 	var wh=jQuery(window).height();
 	var adjustTop=0;
 	//if ((e.pageY + 30) >= wh) adjustTop=-(e.PageY+30-wh);
-	console.log(adjustTop);
 	var top=e.pageY-offset.top+adjustTop+'px';
 	var adjustLeft=0;
 	//if ((e.pageX + 165) >= ww) adjustLeft=-(e.PageX+165-ww);
@@ -638,12 +702,12 @@ function changeResCalendar(m, d, y, view, id, page) {
 }
 
 function selectUserForReservation(memberid, fname, lname, email) {
-	var doc = window.opener.document
-	doc.forms[0].memberid.value = memberid;
-	doc.getElementById('name').innerHTML = fname + " " + lname;
-	doc.getElementById('phone').innerHTML = "";
-	doc.getElementById('email').innerHTML = email;
-	window.close();
+	bookingsDialog2.dialog('close');
+	
+	jQuery('#memberid').val(memberid);
+	jQuery('#name').html(fname + " " + lname);
+	jQuery('#phone').html("");
+	jQuery('#email').html(email);
 }
 
 function adminRowClick(checkbox, row_id, count) {
@@ -712,16 +776,10 @@ function popGroupView(memberid) {
 }
 
 function showHere(parent, id) {
-	var element = document.getElementById(id);
-	var x;
-	var y;
-	
-	var offset = getOffset(parent);
-	x = offset[0];
-	y = offset[1];
-	element.style.left = parseInt(x) + "px";
-    element.style.top = parseInt(y - 34) + "px";
-	element.style.display = "inline";
+	var element = jQuery('#'+id);
+	element.show();
+	var offset = jQuery('#export_menu_button').offset();
+	element.offset(offset);
 }
 
 function getOffset(obj) {
@@ -815,6 +873,34 @@ function cancelReservation(label, resid) {
 		});
 	}
 	return void(0);
+}
+
+function bookingsWindowOpen(nurl,dest,params) {
+	jQuery(".spinner").show();
+
+	if ((bookingsDialog2 instanceof jQuery) && bookingsDialog2.dialog('isOpen')) bookingsDialog2.dialog('close');
+
+	new jQuery.ajax({
+		url : nurl,
+		type : "get",
+		success : function(request) {
+			jQuery(".spinner").hide();
+			var jsRequest = eval("(" + request + ")");
+			bookingsDialog2 = jQuery('<div></div>')
+			bookingsDialog2.html(jsRequest.body);
+			bookingsDialog2.dialog({
+				"height": "auto",
+				"width" : "500px",
+				"modal" : true,
+				"draggable" : false
+			});
+		}
+	});
+	
+}
+
+function bookingsWindowClose() {
+	if ((bookingsDialog2 instanceof jQuery) && bookingsDialog2.dialog('isOpen')) bookingsDialog2.dialog('close');
 }
 
 jQuery(document).ready(function(){

@@ -1,6 +1,6 @@
 <?php
 function bookings_options() {
-	global $bookings_name,$bookings_shortname,$cc_login_type,$current_user,$wp_roles;
+	global $bookings_name,$bookings_shortname,$cc_login_type,$current_user,$wp_roles,$bookingsRegions;
 	$bookings_name = "Bookings";
 	$bookings_shortname = "bookings";
 
@@ -16,9 +16,9 @@ function bookings_options() {
 			"id" => $bookings_shortname."_lic",
 			"type" => "text");
 	$regions=array();
-	if (file_exists(dirname(__FILE__).'/regions.php')) require(dirname(__FILE__).'/regions.php');
-	$regions['us1']='North America, South America & Asia Pacific';
-	$regions['eu1']='Europe & Africa';
+	foreach ($bookingsRegions as $r => $a) {
+		$regions[$r]=$a[0];
+	}
 	if (!get_option('bookings_region')) {
 		$bookings_options[] = array("name" => "Region",
 			"desc" => "Select the region you are located in. This can only be set once so make sure you select the right region.",

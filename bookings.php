@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.5.1
+ Version: 1.5.2
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.5.1");
+define("BOOKINGS_VERSION","1.5.2");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -33,6 +33,10 @@ define("BOOKINGS_USER_CAP",get_option('bookings_user_cap') ? get_option('booking
 define("BOOKINGS_ADMIN_CAP",get_option('bookings_admin_cap') ? get_option('bookings_admin_cap') : 'manage_options');
 
 define("BOOKINGS_URL", WP_CONTENT_URL . "/plugins/".BOOKINGS_PLUGIN."/");
+
+$bookingsRegions['us1']=array('North America, South America & Asia Pacific','http://bookings.zingiri.net/us1/');
+$bookingsRegions['eu1']=array('Europe & Africa','http://bookings-eu.zingiri.net/eu1/');
+if (file_exists(dirname(__FILE__).'/regions.php')) require(dirname(__FILE__).'/regions.php');
 
 $bookings_version=get_option("bookings_version");
 if ($bookings_version != BOOKINGS_VERSION) {
@@ -61,7 +65,6 @@ register_deactivation_hook(__FILE__,'bookings_deactivate');
 require_once(dirname(__FILE__) . '/includes/shared.inc.php');
 require_once(dirname(__FILE__) . '/includes/http.class.php');
 require_once(dirname(__FILE__) . '/controlpanel.php');
-if (!class_exists('simple_html_dom')) require(dirname(__FILE__).'/includes/simple_html_dom.php');
 
 function bookings_admin_notices() {
 	global $bookings;
@@ -266,7 +269,7 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 				echo $bookings['output']['head'];
 				echo '</head><body>';
 				echo $bookings['output']['body'];
-				echo '</body></hmtl>';
+				echo '</body></html>';
 			}
 			die();
 		} elseif ($ajax==2) {
@@ -312,6 +315,7 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 function bookings_parser($buffer) {
 	global $wp_version;
 	if (is_admin() && ($wp_version >= '3.3')) {
+		if (!class_exists('simple_html_dom')) require(dirname(__FILE__).'/includes/simple_html_dom.php');
 		$html = new simple_html_dom();
 		$html->load($buffer);
 		if ($textareas=$html->find('textarea[class=theEditor]')) {
@@ -346,13 +350,13 @@ function bookings_header() {
 	//if (isset($bookings['output']['head'])) echo $bookings['output']['head'];
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/functions.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/ajax.js"></script>';
-	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/calendar.js"></script>';
-	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/lang/calendar-en.js"></script>';
+	//echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/calendar.js"></script>';
+	//echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/lang/calendar-en.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/calendar-setup.js"></script>';
 
 	//if (isset($_REQUEST['zb']) && ($_REQUEST['zb']=='book2')) echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jquery-ui-1.7.3.custom.min.js"></script>';
 
-	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/jscalendar/calendar-blue-custom.css" media="screen" />';
+	//echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/jscalendar/calendar-blue-custom.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/client.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/integrated_view.css" media="screen" />';
@@ -372,7 +376,7 @@ function bookings_admin_header() {
 		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/admin.css" media="screen" />';
 		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
 		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/integrated_view.css" media="screen" />';
-		echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jquery-ui-1.7.3.custom.min.js"></script>';
+		//echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jquery-ui-1.7.3.custom.min.js"></script>';
 		if ($wp_version < '3.3') wp_tiny_mce( false, array( 'editor_selector' => 'theEditor' ) );
 	}
 }
@@ -475,13 +479,8 @@ function bookings_init() {
 		if ((isset($_GET['zb']) || !isset($_SESSION['bookings']['menus']))) {
 			$pg=isset($_GET['zb']) ? $_GET['zb'] : 'usage';
 			bookings_output($pg);
-			if ($pg=='form_edit') {
-				wp_enqueue_script('prototype');
-				wp_enqueue_script('scriptaculous');
-			}
 		}
 		if (isset($_REQUEST['page']) && ($_REQUEST['page']=='bookings'))  {
-
 			if ($wp_version < '3.3') {
 				wp_enqueue_script(array('editor', 'thickbox', 'media-upload'));
 				wp_enqueue_style('thickbox');
@@ -490,10 +489,11 @@ function bookings_init() {
 	}
 	wp_enqueue_script('jquery');
 	if (!is_admin() && isset($_REQUEST['zb'])) {
-		wp_enqueue_script( 'jquery-ui-core' );
-		wp_enqueue_script( 'jquery-datepicker', BOOKINGS_URL.'js/jquery-ui-1.8.17.datepicker.min.js', array('jquery', 'jquery-ui-core' ) );
-		wp_register_style('bookings', plugins_url('css/ui-lightness/jquery-ui-1.8.17.custom.css', __FILE__));
-		wp_enqueue_style('bookings');
+		wp_enqueue_script(array('jquery-ui-core','jquery-ui-dialog','jquery-ui-datepicker'));
+		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/flick/jquery-ui.css');
+	} elseif (is_admin() && isset($_REQUEST['page']) && ($_REQUEST['page']=='bookings')) {
+		wp_enqueue_script(array('jquery-ui-core','jquery-ui-dialog','jquery-ui-datepicker'));
+		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/flick/jquery-ui.css');
 	}
 
 }
@@ -509,7 +509,9 @@ function bookings_log($type=0,$msg='',$filename="",$linenum=0) {
 }
 
 function bookings_url($endpoint=true) {
-	if (substr(get_option('bookings_region'),0,2)=='eu') $url='http://bookings-eu.zingiri.net/'.get_option('bookings_region').'/';
+	global $bookingsRegions;
+	$r=get_option('bookings_region');
+	if (isset($bookingsRegions[$r])) $url=$bookingsRegions[$r][1];
 	else $url='http://bookings.zingiri.net/us1/';
 	if ($endpoint) $url.='api.php';
 	return $url;

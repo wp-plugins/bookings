@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 
 Bookings is a powerful reservations scheduler.
 
@@ -61,6 +61,16 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.5.2 =
+* Replaced admin reservation popup window with jQuery dialog
+* Replaced admin user selection and search popup window with jQuery dialog
+* Set no bullet points in front end registration form
+* Hide inactive resources from front end screens
+* Load simple_html_dom class only when required
+* Fixed wrong link to login details showing after activating calendar syncing
+* Replaced Prototype/Scriptaculous scripts by jQuery
+* Use WP default jQuery libraries
 
 = 1.5.1 =
 * Fixed packaging issue
