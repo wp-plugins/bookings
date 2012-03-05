@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.5.2
+ Version: 1.5.3
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.5.2");
+define("BOOKINGS_VERSION","1.5.3");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -350,7 +350,7 @@ function bookings_header() {
 	//if (isset($bookings['output']['head'])) echo $bookings['output']['head'];
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/functions.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/ajax.js"></script>';
-	//echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/calendar.js"></script>';
+	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/calendar.js"></script>';
 	//echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/lang/calendar-en.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/calendar-setup.js"></script>';
 
@@ -492,7 +492,7 @@ function bookings_init() {
 		wp_enqueue_script(array('jquery-ui-core','jquery-ui-dialog','jquery-ui-datepicker'));
 		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/flick/jquery-ui.css');
 	} elseif (is_admin() && isset($_REQUEST['page']) && ($_REQUEST['page']=='bookings')) {
-		wp_enqueue_script(array('jquery-ui-core','jquery-ui-dialog','jquery-ui-datepicker'));
+		wp_enqueue_script(array('jquery-ui-core','jquery-ui-dialog','jquery-ui-datepicker','jquery-ui-sortable'));
 		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/flick/jquery-ui.css');
 	}
 
