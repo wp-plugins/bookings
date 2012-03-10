@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.5.3
+ Version: 1.5.4
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.5.3");
+define("BOOKINGS_VERSION","1.5.4");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -30,9 +30,11 @@ if (!defined("BLOGUPLOADDIR")) {
 }
 
 define("BOOKINGS_USER_CAP",get_option('bookings_user_cap') ? get_option('bookings_user_cap') : 'edit_posts');
-define("BOOKINGS_ADMIN_CAP",get_option('bookings_admin_cap') ? get_option('bookings_admin_cap') : 'manage_options');
+define("BOOKINGS_ADMIN_CAP",get_option('bookings_admin_cap') ? get_option('bookings_admin_cap') : 'setup_bookings');
 
 define("BOOKINGS_URL", WP_CONTENT_URL . "/plugins/".BOOKINGS_PLUGIN."/");
+
+if (defined('BOOKINGS_LIVE')) require(dirname(__FILE__).'/live.php');
 
 $bookingsRegions['us1']=array('North America, South America & Asia Pacific','http://bookings.zingiri.net/us1/');
 $bookingsRegions['eu1']=array('Europe & Africa','http://bookings-eu.zingiri.net/eu1/');
@@ -44,7 +46,7 @@ if ($bookings_version != BOOKINGS_VERSION) {
 	update_option("bookings_version",BOOKINGS_VERSION);
 }
 
-if (get_option('bookings_region')) {
+if (get_option('bookings_region') && (!defined('BOOKINGS_LIVE') || get_option('bookings_siteurl'))) {
 	add_action("init","bookings_init");
 	if (isset($_GET['ajax']) && ($_GET['ajax'] == 1)) {
 		add_action("init","bookings_ajax");
@@ -87,7 +89,7 @@ function bookings_admin_notices() {
 	if (phpversion() < '5') $warnings[]="You are running PHP version ".phpversion().". We recommend you upgrade to PHP 5.3 or higher.";
 	if (ini_get("zend.ze1_compatibility_mode")) $warnings[]="You are running PHP in PHP 4 compatibility mode. We recommend you turn this option off.";
 	if (!function_exists('curl_init')) $errors[]="You need to have cURL installed. Contact your hosting provider to do so.";
-
+	
 	if (count($warnings) > 0) {
 		echo "<div id='zing-warning' style='background-color:greenyellow' class='updated fade'><p><strong>";
 		foreach ($warnings as $message) echo 'Bookings: '.$message.'<br />';
@@ -347,16 +349,8 @@ function bookings_header() {
 	echo '<script type="text/javascript">';
 	echo "var bookingsPageurl='".bookings_home()."';";
 	echo '</script>';
-	//if (isset($bookings['output']['head'])) echo $bookings['output']['head'];
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/functions.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/ajax.js"></script>';
-	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/calendar.js"></script>';
-	//echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/lang/calendar-en.js"></script>';
-	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jscalendar/calendar-setup.js"></script>';
-
-	//if (isset($_REQUEST['zb']) && ($_REQUEST['zb']=='book2')) echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jquery-ui-1.7.3.custom.min.js"></script>';
-
-	//echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/jscalendar/calendar-blue-custom.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/client.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/integrated_view.css" media="screen" />';
@@ -376,7 +370,6 @@ function bookings_admin_header() {
 		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/admin.css" media="screen" />';
 		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
 		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/integrated_view.css" media="screen" />';
-		//echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jquery-ui-1.7.3.custom.min.js"></script>';
 		if ($wp_version < '3.3') wp_tiny_mce( false, array( 'editor_selector' => 'theEditor' ) );
 	}
 }
@@ -409,7 +402,7 @@ function bookings_http($page="index") {
 	}
 	$wp['lic']=get_option('bookings_lic');
 	$wp['gmt_offset']=get_option('gmt_offset');
-	$wp['siteurl']=home_url();
+	$wp['siteurl']=get_option('bookings_siteurl') ? get_option('bookings_siteurl') : home_url();
 	$wp['sitename']=get_bloginfo('name');
 	$wp['pluginurl']=BOOKINGS_URL;
 	if (is_admin()) {
@@ -522,3 +515,4 @@ function bookings_admin_footer() {
 	global $bookings;
 	if (isset($bookings['output']['footer'])) echo $bookings['output']['footer'];
 }
+
