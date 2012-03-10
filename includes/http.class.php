@@ -1,5 +1,5 @@
 <?php
-//v2.02.19
+//v2.03.10
 //removed cc_whmcs_log call
 //need wpabspath for mailz
 //mailz returns full URL in case of redirection!!
@@ -25,6 +25,7 @@
 //improvide error management
 //v2.01.11: improved debugging
 //v2.02.19: increased depth of $_POST parsing by one level
+//v2.03.10: increased depth of $_POST parsing by one more level
 
 if (!class_exists('zHttpRequest')) {
 	class zHttpRequest
@@ -50,7 +51,7 @@ if (!class_exists('zHttpRequest')) {
 		var $follow=true; //whether to follow redirect links or not
 		var $noErrors=false; //whether to trigger an error in case of a curl error
 		var $errorMessage;
-		
+
 		// constructor
 		function __construct($url="",$sid='', $repost=false)
 		{
@@ -219,7 +220,7 @@ if (!class_exists('zHttpRequest')) {
 			if ($withHeaders) curl_setopt($ch, CURLOPT_HEADER, 1);
 
 			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:')); //avoid 417 errors
-			
+				
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER,1); // return into a variable
 			curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
 			curl_setopt($ch, CURLOPT_TIMEOUT, 60); // times out after 10s
@@ -283,9 +284,13 @@ if (!class_exists('zHttpRequest')) {
 									if ($post) $post.='&';
 									if (is_array($v3)) {
 										foreach ($v3 as $k4 => $v4) {
-											$apost[$k.'['.$k2.']'.'['.$k3.']'.'['.$k4.']']=stripslashes($v4);
+											if (is_array($v4)) {
+												foreach ($v4 as $k5 => $v5) {
+													$apost[$k.'['.$k2.']'.'['.$k3.']'.'['.$k4.']'.'['.$k5.']']=stripslashes($v5);
+												}
+											} else $apost[$k.'['.$k2.']'.'['.$k3.']'.'['.$k4.']']=stripslashes($v4);
 										}
-									} else { 
+									} else {
 										$post.=$k.'['.$k2.']'.'['.$k3.']'.'='.urlencode(stripslashes($v3));
 										$apost[$k.'['.$k2.']'.'['.$k3.']']=stripslashes($v3);
 									}
@@ -317,7 +322,7 @@ if (!class_exists('zHttpRequest')) {
 				$this->httpCode=curl_getinfo($ch,CURLINFO_HTTP_CODE);
 				if (($this->errno==22) && ($this->httpCode=='404')) {
 					$this->notify('HTTP Error:'.$this->errno.'/'.$this->error.' at '.$this->_url);
-					return false;					
+					return false;
 				}
 				else {
 					$this->error('HTTP Error:'.$this->errno.'/'.$this->error.' at '.$this->_url);
@@ -372,7 +377,7 @@ if (!class_exists('zHttpRequest')) {
 				//echo '<br />path='.$this->_path;
 				$redir=$headers['location'];
 				//echo '<br />redir1='.$redir;
-				if (strstr($redir,$this->_protocol.'://'.$this->_host.$this->_path)) { 
+				if (strstr($redir,$this->_protocol.'://'.$this->_host.$this->_path)) {
 					//do nothing
 				} elseif (strstr($this->_protocol.'://'.$this->_host.$redir,$this->_protocol.'://'.$this->_host.$this->_path)) {
 					$redir=$this->_protocol.'://'.$this->_host.$redir;
