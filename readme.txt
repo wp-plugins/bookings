@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.5.4
+Stable tag: 1.5.5
 
 Bookings is a powerful reservations scheduler.
 
@@ -37,8 +37,8 @@ The Pro version of the plugin additionaly offers:
 * Multiple configuration options: send admin confirmation email, currency, etc
 * Export reservations to your favorite calendar (Outlook, iCal, etc) from the admin back-end or your confirmation email
 * Possibility to search reservations by reservation ID
+* Possibility to define your own time spans
 * Priority support via our [Helpdesk](http://www.zingiri.com/portal "Helpdesk")
-* Removed reminder section from blackout pop-up
 
 == Installation ==
 
@@ -61,6 +61,14 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.5.5 =
+* Added possibility to define custom time spans
+* Fixed issue with +/- buttons on product form not working
+* Updated documentation and support links
+* Fixed issue with product time spans not working in certain cases
+* In products/resources templates, the sort order is now product name and then resource name
+* Removed date fromto element from forms
 
 = 1.5.4 =
 * Fixed issue with 'link' template
@@ -85,6 +93,7 @@ Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/booki
 * Fixed wrong link to login details showing after activating calendar syncing
 * Replaced Prototype/Scriptaculous scripts by jQuery
 * Use WP default jQuery libraries
+* Removed reminder section from blackout pop-up
 
 = 1.5.1 =
 * Fixed packaging issue

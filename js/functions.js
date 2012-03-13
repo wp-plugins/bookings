@@ -934,4 +934,11 @@ jQuery(document).ready(function(){
 			return false;
 		} else return true;
      });
+	
+	if (jQuery('#timespan-custom').length > 0) {
+		jQuery('#timespan').bind('change', this, function() {
+			if (jQuery('#timespan').val() == 0) jQuery('#timespan-custom').show();
+			else jQuery('#timespan-custom').hide();
+		});
+	}
 });
