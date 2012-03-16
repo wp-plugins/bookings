@@ -398,7 +398,7 @@ function changeScheduler(m, d, y, isPopup, scheduleid) {
 	if (isPopup)
 		window.opener.location = url + "?date=" + newDate + "&scheduleid=" + schedid + "&page=bookings&zb=" + pg;
 	else
-		document.location.href = url + "?date=" + newDate + "&scheduleid=" + schedid + "&page=bookings&zb=" + pg;
+		document.location.href = bookingsPageurl + "zb=" + pg + "&date=" + newDate + "&scheduleid=" + schedid;
 }
 
 // BUGFIX by Eric Maclot
@@ -697,7 +697,6 @@ function changeResCalendar(m, d, y, view, id, page) {
 	var p = (type == "s") ? "scheduleid" : "machid";
 	var id = type_id[1];
 	if (page == null) page='rescalendar'; 
-	//document.location.href = url + "?page=bookings&zb=rescalendar&date=" + m + "-" + d + "-" + y + "&view=" + view + "&" + p + "=" + id;
 	document.location.href = bookingsPageurl + "zb=" + page + "&date=" + m + "-" + d + "-" + y + "&view=" + view + "&" + p + "=" + id;
 }
 
