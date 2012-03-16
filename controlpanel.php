@@ -3,8 +3,6 @@ function bookings_options() {
 	global $bookings_name,$bookings_shortname,$cc_login_type,$current_user,$wp_roles,$bookingsRegions;
 	$bookings_name = "Bookings";
 	$bookings_shortname = "bookings";
-
-	if (defined('BOOKINGS_LIVE')) bookings_live_options($bookings_options);
 	
 	$bookings_options[100] = array(  "name" => "Settings",
             "type" => "heading",
@@ -87,19 +85,23 @@ function bookings_options() {
 	}
 	ksort($allCaps);
 	array_walk($allCaps,create_function('&$value,$key','$value=str_replace("_"," ",ucfirst($key));'));
-	$bookings_options[] = array(	"name" => "Admin capability",
+	$bookings_options[160] = array(	"name" => "Admin capability",
 			"desc" => "Choose the required capability for managing settings, schedules and resources. It is recommended to use an admin type of capability, such as 'Manage options'",
 			"id" => $bookings_shortname."_admin_cap",
 			"options" => $allCaps,
 			"std" => 'manage_options',
 			"type" => "selectwithkey");
-	$bookings_options[160] = array(	"name" => "User capability",
+	$bookings_options[161] = array(	"name" => "User capability",
 			"desc" => "Choose the required capability for managing bookings. It is recommended to use an editor type of capability, such as 'Edit posts'",
 			"id" => $bookings_shortname."_user_cap",
 			"options" => $allCaps,
 			"std" => 'edit_posts',
 			"type" => "selectwithkey");
 
+	if (defined('BOOKINGS_LIVE')) bookings_live_options($bookings_options);
+	
+	ksort($bookings_options);
+	
 	return $bookings_options;
 }
 
@@ -205,7 +207,6 @@ function bookings_admin() {
 	type="hidden" name="action" value="install"
 /></p>
 </form>
-<hr />
 	<?php
 	if ($bookings_version && get_option('bookings_debug')) {
 		echo '<h2 style="color: green;">Debug log</h2>';

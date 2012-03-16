@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.5.5
+ Version: 1.5.6
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.5.5");
+define("BOOKINGS_VERSION","1.5.6");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -29,8 +29,8 @@ if (!defined("BLOGUPLOADDIR")) {
 	define("BLOGUPLOADDIR",$upload['path']);
 }
 
-define("BOOKINGS_USER_CAP",get_option('bookings_user_cap') ? get_option('bookings_user_cap') : 'edit_posts');
-define("BOOKINGS_ADMIN_CAP",get_option('bookings_admin_cap') ? get_option('bookings_admin_cap') : 'setup_bookings');
+if (!defined("BOOKINGS_USER_CAP")) define("BOOKINGS_USER_CAP",get_option('bookings_user_cap') ? get_option('bookings_user_cap') : 'edit_posts');
+if (!defined("BOOKINGS_ADMIN_CAP")) define("BOOKINGS_ADMIN_CAP",get_option('bookings_admin_cap') ? get_option('bookings_admin_cap') : 'manage_options');
 
 define("BOOKINGS_URL", WP_CONTENT_URL . "/plugins/".BOOKINGS_PLUGIN."/");
 
@@ -396,8 +396,8 @@ function bookings_http($page="index") {
 	if (is_user_logged_in()) {
 		$wp['login']=$current_user->data->user_login;
 		$wp['email']=$current_user->data->user_email;
-		$wp['first_name']=isset($current_user->data->first_name) ? $current_user->data->first_name: $current_user->data->display_name;
-		$wp['last_name']=isset($current_user->data->last_name) ? $current_user->data->last_name : $current_user->data->display_name;
+		$wp['first_name']=get_user_meta($current_user->data->ID,'first_name',true) ? get_user_meta($current_user->data->ID,'first_name',true) : $current_user->data->display_name;
+		$wp['last_name']=get_user_meta($current_user->data->ID,'last_name',true) ? get_user_meta($current_user->data->ID,'last_name',true) : $current_user->data->display_name;
 		$wp['roles']=$current_user->roles;
 	}
 	$wp['lic']=get_option('bookings_lic');

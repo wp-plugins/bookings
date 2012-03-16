@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.5.5
+Stable tag: 1.5.6
 
 Bookings is a powerful reservations scheduler.
 
@@ -61,6 +61,17 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.5.6 =
+* Allow unlicensed users access to Products & Services feature
+* Added product details to reservation summary
+* Fixed issue with first name and last name not being prefilled correctly for logged in users
+* Added [PRODUCT] template tag for emails and confirmation messages
+* Added [CLIENTNAME] template tag for emails and confirmation messages
+* Disabled properties of system fields in form editor
+* Fixed issue with change of date on template schedule2 not working in some cases
+* Fixed issue with templates using daystoshow not showing reservations on days in the future
+* Updated German language prompts
 
 = 1.5.5 =
 * Added possibility to define custom time spans
