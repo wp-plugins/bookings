@@ -4,12 +4,18 @@ function bookings_options() {
 	$bookings_name = "Bookings";
 	$bookings_shortname = "bookings";
 	
+	if (!get_option('bookings_secret')) update_option('bookings_secret',bookings_create_secret());
+	
 	$bookings_options[100] = array(  "name" => "Settings",
             "type" => "heading",
 			"desc" => "This section customizes the way the Bookings plugin works.");
 	$bookings_options[110] = array("name" => "API Key",
-			"desc" => 'This is your API key, it is uniquely linked to your web site, make sure to keep it in a safe place.',
+			"desc" => 'This is your API key, it identifies your Bookings account, make sure to keep it in a safe place.',
 			"id" => $bookings_shortname."_key",
+			"type" => "text");
+	$bookings_options[111] = array("name" => "Secret",
+			"desc" => 'This is your secret or password, it is uniquely linked to your Bookings account, make sure to keep it in a safe place.',
+			"id" => $bookings_shortname."_secret",
 			"type" => "text");
 	$bookings_options[120] = array("name" => "License Key",
 			"desc" => 'If you wish to make use of the <strong>Bookings Pro</strong> features, enter your license key here. You can purchase a license key <a href="http://www.zingiri.com/portal/?ccce=cart&a=add&pid=121" target="blank">here</a>.<br />The Pro version provides additional functionality and has no limits to the number of bookings and schedules you can use.',

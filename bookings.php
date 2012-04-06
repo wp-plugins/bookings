@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.5.6
+ Version: 1.6.0
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.5.6");
+define("BOOKINGS_VERSION","1.6.0");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -63,6 +63,7 @@ add_action('admin_notices','bookings_admin_notices');
 
 register_activation_hook(__FILE__,'bookings_activate');
 register_deactivation_hook(__FILE__,'bookings_deactivate');
+register_uninstall_hook(__FILE__,'bookings_uninstall');
 
 require_once(dirname(__FILE__) . '/includes/shared.inc.php');
 require_once(dirname(__FILE__) . '/includes/http.class.php');
@@ -105,14 +106,20 @@ function bookings_admin_notices() {
 }
 
 function bookings_activate() {
-	update_option('bookings_key',md5(time().sprintf(mt_rand(),'%10d')));
-
+	update_option('bookings_key',bookings_create_api_key());
+	update_option('bookings_secret',bookings_create_secret());
 	update_option("bookings_version",BOOKINGS_VERSION);
-
 }
 
 function bookings_deactivate() {
 	bookings_output('deactivate');
+	unset($_SESSION['bookings']);
+	delete_option("bookings_ftp_user"); //legacy
+	delete_option("bookings_ftp_password"); //legacy
+}
+	
+function bookings_uninstall() {
+	bookings_output('uninstall');
 
 	unset($_SESSION['bookings']);
 
@@ -126,8 +133,6 @@ function bookings_deactivate() {
 	}
 	delete_option("bookings_http_referer");
 	delete_option("bookings_log");
-	delete_option("bookings_ftp_user"); //legacy
-	delete_option("bookings_ftp_password"); //legacy
 	delete_option("bookings_version");
 	delete_option("bookings_region");
 	delete_option('bookings-support-us');
@@ -384,7 +389,7 @@ function bookings_http($page="index") {
 		foreach ($_GET as $n => $v) {
 			if (!in_array($n,array('page','zb')))
 			{
-				$vars.= $and.$n.'='.cc_urlencode($v);
+				$vars.= $and.$n.'='.urlencode($v);
 				$and="&";
 			}
 		}
@@ -408,6 +413,7 @@ function bookings_http($page="index") {
 	if (is_admin()) {
 		$wp['mode']='b';
 		$wp['pageurl']=get_admin_url().'admin.php?page=bookings&';
+		$wp['secret']=get_option('bookings_secret');
 	} else {
 		$wp['mode']='f';
 		$wp['pageurl']=bookings_home();
@@ -421,10 +427,10 @@ function bookings_http($page="index") {
 	$wp['client_version']=BOOKINGS_VERSION;
 	if (current_user_can(BOOKINGS_ADMIN_CAP)) $wp['cap']='admin';
 	elseif (current_user_can(BOOKINGS_USER_CAP)) $wp['cap']='operator';
-
+	
 	$vars.=$and.'wp='.urlencode(base64_encode(json_encode($wp)));
 
-	if (get_option('bookings_http_referer')) $vars.='&http_referer='.cc_urlencode(get_option('bookings_http_referer'));
+	if (get_option('bookings_http_referer')) $vars.='&http_referer='.urlencode(get_option('bookings_http_referer'));
 
 	if ($vars) $http.=$vars;
 
@@ -485,7 +491,7 @@ function bookings_init() {
 		wp_enqueue_script(array('jquery-ui-core','jquery-ui-dialog','jquery-ui-datepicker'));
 		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/flick/jquery-ui.css');
 	} elseif (is_admin() && isset($_REQUEST['page']) && ($_REQUEST['page']=='bookings')) {
-		wp_enqueue_script(array('jquery-ui-core','jquery-ui-dialog','jquery-ui-datepicker','jquery-ui-sortable'));
+		wp_enqueue_script(array('jquery-ui-core','jquery-ui-dialog','jquery-ui-datepicker','jquery-ui-sortable','jquery-ui-tabs'));
 		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/flick/jquery-ui.css');
 	}
 

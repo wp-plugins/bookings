@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.5.6
+Stable tag: 1.6.0
 
 Bookings is a powerful reservations scheduler.
 
@@ -61,6 +61,18 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.6.0 =
+* Added support for multi-capacity reservations
+* Added load of jQuery UI tabs
+* Fixed issue with emails not being sent to admin in some cases
+* Keep settings on deactivation
+* Remove settings on uninstall
+* Added secret field to account settings
+* Fixed issue with date selector not showing on multi-day reservations
+* Fixed formatting issue with dates when Traditional Chinese or Japanese is chosen
+* Removed display of recurring or multi-day reservations in front-end calendar
+* Removed bullet point in front of name on front-end calendar
 
 = 1.5.6 =
 * Allow unlicensed users access to Products & Services feature
