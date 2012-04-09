@@ -308,28 +308,22 @@ function toggle_fields(box) {
 	document.forms[0].elements["table," + box.value + "[]"].disabled = (box.checked == true) ? false : "disabled";
 }
 
+function refreshDialog2(e) {
+	var url=jQuery(e).attr('href');
+	bookingsWindowOpen(url);
+	return false;
+}
 function search_user_lname(letter) {
-	/*
-	var frm = isIE() ? document.name_search : document.forms['name_search'];
-	frm.firstName.value = "";
-	frm.lastName.value=letter;
-	frm.submit();
-	*/
-	jQuery('#firstName').val('');
-	jQuery('#lastName').val(letter);
+	if (letter!=null) {
+		jQuery('#firstName').val('');
+		jQuery('#lastName').val(letter);
+	}
 	jQuery(".spinner").show();
 	var form = jQuery('form#name_search');
 	jQuery.get(form.attr('action'),form.serialize()+'&ajax=2&searchUsersBtn=1',function(response){
 		jQuery(".spinner").hide();
 		var js = eval("(" + response + ")");
 		bookingsDialog2.html(js.body);
-		/*
-		var background=jQuery('#bookings');
-		jQuery.get(document.URL,'ajax=2',function(response){
-			var js = eval("(" + response + ")");
-			background.html(js.body);
-		});
-		*/
 	});
 
 }
@@ -339,18 +333,12 @@ function isIE() {
 }
 
 function changeDate(month, year) {
-	//var frm = isIE() ? document.changeMonth : document.forms['changeMonth'];
-	//frm.newmonth.value = month;
-	//frm.newyear.value = year;
 	jQuery('#newmonth').attr('value',month);
 	jQuery('#newyear').attr('value',year);
 	jQuery('#changeMonth').submit();
-	//frm.submit();
 }
 
 function changeSelectedMonth() {
-//	document.forms['changeMonth'].month.value=document.forms['changeMonth'].monthselect.options[monthselect.selectedIndex].value; 
-	//document.forms['changeMonth'].submit();
 	var newMonth=jQuery('#monthselect').val();
 	jQuery('#newmonth').attr('value',newMonth);
 	jQuery('#changeMonth').submit();
@@ -877,15 +865,16 @@ function cancelReservation(label, resid) {
 function bookingsWindowOpen(nurl,dest,params) {
 	jQuery(".spinner").show();
 
-	if ((bookingsDialog2 instanceof jQuery) && bookingsDialog2.dialog('isOpen')) bookingsDialog2.dialog('close');
-
+	//if ((bookingsDialog2 instanceof jQuery) && bookingsDialog2.dialog('isOpen')) bookingsDialog2.dialog('close');
+	
 	new jQuery.ajax({
 		url : nurl,
 		type : "get",
 		success : function(request) {
 			jQuery(".spinner").hide();
 			var jsRequest = eval("(" + request + ")");
-			bookingsDialog2 = jQuery('<div></div>')
+			if (!(bookingsDialog2 instanceof jQuery)) bookingsDialog2 = jQuery('<div id="bookingsdialog2"></div>');
+			else bookingsDialog2.dialog('open');
 			bookingsDialog2.html(jsRequest.body);
 			bookingsDialog2.dialog({
 				"height": "auto",

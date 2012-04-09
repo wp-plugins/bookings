@@ -3,9 +3,9 @@ function bookings_options() {
 	global $bookings_name,$bookings_shortname,$cc_login_type,$current_user,$wp_roles,$bookingsRegions;
 	$bookings_name = "Bookings";
 	$bookings_shortname = "bookings";
-	
+
 	if (!get_option('bookings_secret')) update_option('bookings_secret',bookings_create_secret());
-	
+
 	$bookings_options[100] = array(  "name" => "Settings",
             "type" => "heading",
 			"desc" => "This section customizes the way the Bookings plugin works.");
@@ -37,7 +37,7 @@ function bookings_options() {
 			"id" => $regions[get_option($bookings_shortname."_region")],
 			"type" => "info");
 	}
-		$bookings_options[140] = array(	"name" => "Debug Mode",
+	$bookings_options[140] = array(	"name" => "Debug Mode",
 			"desc" => "If you have problems with the plugin, activate the debug mode to generate a debug log for our support team",
 			"id" => $bookings_shortname."_debug",
 			"type" => "checkbox");
@@ -105,9 +105,9 @@ function bookings_options() {
 			"type" => "selectwithkey");
 
 	if (defined('BOOKINGS_LIVE')) bookings_live_options($bookings_options);
-	
+
 	ksort($bookings_options);
-	
+
 	return $bookings_options;
 }
 
@@ -139,10 +139,10 @@ function bookings_add_admin() {
 		if (current_user_can(BOOKINGS_ADMIN_CAP)) {
 			add_menu_page($bookings_name, $bookings_name, BOOKINGS_USER_CAP, 'bookings','bookings_main');
 			add_submenu_page('bookings', $bookings_name.' - Setup', 'Setup', BOOKINGS_ADMIN_CAP, 'bookings', 'bookings_main');
-			add_submenu_page('bookings', $bookings_name.' - Stats', 'Stats', BOOKINGS_USER_CAP, 'bookings&zb=stats', 'bookings_main');
+			//add_submenu_page('bookings', $bookings_name.' - Stats', 'Stats', BOOKINGS_USER_CAP, 'bookings&zb=stats', 'bookings_main');
 		} else {
 			add_menu_page($bookings_name, $bookings_name, BOOKINGS_USER_CAP, 'bookings','bookings_main');
-			add_submenu_page('bookings', $bookings_name.' - Stats', 'Stats', BOOKINGS_USER_CAP, 'bookings', 'bookings_main');
+			//add_submenu_page('bookings', $bookings_name.' - Stats', 'Stats', BOOKINGS_USER_CAP, 'bookings', 'bookings_main');
 		}
 		if (!isset($bookings['output']['menus'])) {
 			$menus=isset($_SESSION['bookings']['menus']) ? $_SESSION['bookings']['menus'] : array();
@@ -163,11 +163,11 @@ function bookings_main() {
 	global $bookings;
 
 	if (!isset($_GET['zb'])) return bookings_admin();
-	
+
 	if (defined('BOOKINGS_LIVE') && !get_option('bookings_siteurl')) return bookings_admin();
-	
+
 	require(dirname(__FILE__).'/includes/support-us.inc.php');
-	
+
 	echo '<div class="wrap">';
 	zing_support_us_top('bookings','bookings','bookings',BOOKINGS_VERSION,false);
 	echo '<div id="bookings" style="position:relative;float:left;width:100%">';
@@ -178,12 +178,19 @@ function bookings_main() {
 		}
 		echo '</div>';
 	}
-	if (isset($bookings['output']['body'])) echo $bookings['output']['body'];
+	if ($bookings['output']['mimetype'] == 'text/plain') {
+		while (count(ob_get_status(true)) > 0) ob_end_clean();
+		header('Content-Type: ' . $bookings['output']['mimetype']);
+ 		header('Content-Disposition: attachment; filename="'.$bookings['output']['filename'].'"');
+		if (isset($bookings['output']['body'])) echo trim($bookings['output']['body']);
+		die();
+	} elseif (isset($bookings['output']['body'])) echo $bookings['output']['body'];
+
 	require(dirname(__FILE__).'/includes/help.inc.php');
 	echo '</div>';
-	
+
 	zing_support_us_bottom('bookings','bookings','bookings',BOOKINGS_VERSION,false);
-		
+
 	echo '</div>';
 }
 
@@ -196,10 +203,9 @@ function bookings_admin() {
 	if ( isset($_REQUEST['install']) ) echo '<div id="message" class="updated fade"><p><strong>'.$bookings_name.' settings updated.</strong></p></div>';
 	if ( isset($_REQUEST['error']) ) echo '<div id="message" class="updated fade"><p>The following error occured: <strong>'.$_REQUEST['error'].'</strong></p></div>';
 	require(dirname(__FILE__).'/includes/support-us.inc.php');
-	
+
 	?>
-<div class="wrap">
-<?php 	zing_support_us_top('bookings','bookings','bookings',BOOKINGS_VERSION,false);?>
+<div class="wrap"><?php 	zing_support_us_top('bookings','bookings','bookings',BOOKINGS_VERSION,false);?>
 <div id="cc-left" style="position: relative; float: left; width: 100%">
 <h2><b><?php echo $bookings_name; ?></b></h2>
 

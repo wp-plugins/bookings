@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 
 Bookings is a powerful reservations scheduler.
 
@@ -61,6 +61,14 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.6.1 =
+* Added option to download search results in XML, CSV and plain text formats
+* Fixed issue with user search form in back-end where searching by letter would not work on a second booking
+* Fixed issue with user search form where searching by name would redirect to the wrong page
+* Fixed pagination issue in user search form
+* Added class 'availability' to availability table displayed on front end
+* Updated Danish language file
 
 = 1.6.0 =
 * Added support for multi-capacity reservations
