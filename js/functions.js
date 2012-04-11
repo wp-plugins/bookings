@@ -572,7 +572,9 @@ function setSchedule(sid) {
 
 function changeSchedule(sel) {
 	var url = document.URL.split('?')[0];
-	document.location.href = url + "?page=bookings&zb=schedule&scheduleid=" + sel.options[sel.selectedIndex].value;
+	var par = document.URL.split('?')[1];
+	if (par.indexOf("blackout") != -1) document.location.href = url + "?page=bookings&zb=blackouts&scheduleid=" + sel.options[sel.selectedIndex].value;
+	else document.location.href = url + "?page=bookings&zb=schedule&scheduleid=" + sel.options[sel.selectedIndex].value;
 }
 
 function showHideCpanelTable(element) {
