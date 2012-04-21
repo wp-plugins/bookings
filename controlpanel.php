@@ -10,7 +10,7 @@ function bookings_options() {
             "type" => "heading",
 			"desc" => "This section customizes the way the Bookings plugin works.");
 	$bookings_options[110] = array("name" => "API Key",
-			"desc" => 'This is your API key, it identifies your Bookings account, make sure to keep it in a safe place.',
+			"desc" => 'This plugin uses remote web services to provide mailing list functionality. This API key has been automatically generated for you. Once you click on Install, the API key, in combination with your web site address <strong>".home_url()."</strong> will create an account on our servers allowing the plugin to access the remote web services.<br />The combination of API key and your web site address uniquely identifes you so please make sure to keep it in a safe place.',
 			"id" => $bookings_shortname."_key",
 			"type" => "text");
 	$bookings_options[111] = array("name" => "Secret",
@@ -18,7 +18,7 @@ function bookings_options() {
 			"id" => $bookings_shortname."_secret",
 			"type" => "text");
 	$bookings_options[120] = array("name" => "License Key",
-			"desc" => 'If you wish to make use of the <strong>Bookings Pro</strong> features, enter your license key here. You can purchase a license key <a href="http://www.zingiri.com/portal/?ccce=cart&a=add&pid=121" target="blank">here</a>.<br />The Pro version provides additional functionality and has no limits to the number of bookings and schedules you can use.',
+			"desc" => 'If you wish to make use of the <strong>Bookings Pro</strong> features, enter your license key here. You can purchase a license key <a href="http://www.zingiri.com/portal/?ccce=cart&a=add&pid=121" target="blank">here</a>. The Pro version provides additional functionality and has no limits to the number of bookings and schedules you can use.',
 			"id" => $bookings_shortname."_lic",
 			"type" => "text");
 	$regions=array();
@@ -61,7 +61,7 @@ function bookings_options() {
 		'ko'	=> array('ko([-_][[:alpha:]]{2})?|korean', 'ko_KR.lang.php', 'ko', 'Korean (&#54620;&#44397;&#50612;)'),
 		'hu'	=> array('hu([-_][[:alpha:]]{2})?|hungarian', 'hu.lang.php', 'hu', 'Magyar'),
 		'nl'	=> array('nl([-_][[:alpha:]]{2})?|dutch', 'nl.lang.php', 'nl', 'Nederlands'),
-		'no'	=> array('no([-_][[:alpha:]]{2})?|norwegian', 'no.lang.php', 'no', 'Norwegian'),
+		//'no'	=> array('no([-_][[:alpha:]]{2})?|norwegian', 'no.lang.php', 'no', 'Norwegian'),
 		'pl'	=> array('pl([-_][[:alpha:]]{2})|polish', 'pl.lang.php', 'pl', 'Polski'),
 		'pt_PT'	=> array('pr([-_]PT)|portuguese', 'pt_PT.lang.php', 'pt', 'Portugu&ecirc;s'),
 		'pt_BR'	=> array('pr([-_]BR)|portuguese', 'pt_BR.lang.php', 'pt', 'Portugu&ecirc;s Brasileiro'),
@@ -78,7 +78,7 @@ function bookings_options() {
 		$options[$lang]=$desc[3];
 	}
 	$bookings_options[150] = array(	"name" => "Language",
-			"desc" => "Bookings supports multiple languages, here you can select the language of your choice.<br />The language will affect related settings such as the date format used to display dates. <br />If you see blank screens after changing the language from English, please contact us as some of the language files have some encoding issues.<br />If you see missing translations, please send us the translations and we'll incorporate them into a new version.<br /> And if you can't see your language but are interested to add it, contact us so we can see how we can work something out.",
+			"desc" => "Bookings supports multiple languages, here you can select the language of your choice. The language will affect related settings such as the date format used to display dates. If you see blank screens after changing the language from English, please contact us as some of the language files have some encoding issues. If you see missing translations, please send us the translations and we'll incorporate them into a new version. And if you can't see your language but are interested to add it, contact us so we can see how we can work something out.",
 			"id" => $bookings_shortname."_lang",
 			"options" => $options,
 			"std" => get_locale(),
@@ -106,6 +106,13 @@ function bookings_options() {
 
 	if (defined('BOOKINGS_LIVE')) bookings_live_options($bookings_options);
 
+	$bookings_options[999]=array(  "name" => "Before you install",
+            "type" => "heading",
+			"desc" => '<div style="text-decoration:underline;display:inline;font-weight:bold">IMPORTANT:</div> Bookings uses web services stored on Zingiri\'s servers. In doing so, personal data is collected and stored on our servers. 
+					This data includes amongst others your admin email address as this is used, together with the API key as a unique identifier for your account on Zingiri\'s servers.
+					We have a very strict <a href="http://www.zingiri.com/privacy-policy/" target="_blank">privacy policy</a> as well as <a href="http://www.zingiri.com/terms/" target="_blank">terms & conditions</a> governing data stored on our servers.
+					<div style="font-weight:bold;display:inline">By installing this plugin you accept these terms & conditions.</div>');
+	
 	ksort($bookings_options);
 
 	return $bookings_options;
@@ -178,7 +185,7 @@ function bookings_main() {
 		}
 		echo '</div>';
 	}
-	if ($bookings['output']['mimetype'] == 'text/plain') {
+	if (isset($bookings['output']['mimetype']) && ($bookings['output']['mimetype'] == 'text/plain')) {
 		while (count(ob_get_status(true)) > 0) ob_end_clean();
 		header('Content-Type: ' . $bookings['output']['mimetype']);
  		header('Content-Disposition: attachment; filename="'.$bookings['output']['filename'].'"');
@@ -206,7 +213,7 @@ function bookings_admin() {
 
 	?>
 <div class="wrap"><?php 	zing_support_us_top('bookings','bookings','bookings',BOOKINGS_VERSION,false);?>
-<div id="cc-left" style="position: relative; float: left; width: 100%">
+<div id="cc-left" style="position: relative; float: left; width:100%">
 <h2><b><?php echo $bookings_name; ?></b></h2>
 
 	<?php

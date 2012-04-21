@@ -286,7 +286,11 @@ if (!class_exists('zHttpRequest')) {
 										foreach ($v3 as $k4 => $v4) {
 											if (is_array($v4)) {
 												foreach ($v4 as $k5 => $v5) {
-													$apost[$k.'['.$k2.']'.'['.$k3.']'.'['.$k4.']'.'['.$k5.']']=stripslashes($v5);
+													if (is_array($v5)) {
+														foreach ($v5 as $k6 => $v6) {
+															$apost[$k.'['.$k2.']'.'['.$k3.']'.'['.$k4.']'.'['.$k5.']'.'['.$k6.']']=stripslashes($v6);
+														}
+													} else $apost[$k.'['.$k2.']'.'['.$k3.']'.'['.$k4.']'.'['.$k5.']']=stripslashes($v5);
 												}
 											} else $apost[$k.'['.$k2.']'.'['.$k3.']'.'['.$k4.']']=stripslashes($v4);
 										}

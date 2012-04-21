@@ -1,10 +1,10 @@
 === Bookings ===
 Contributors: zingiri
 Donate link: http://www.zingiri.com/donations
-Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling
+Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.6.2
+Stable tag: 1.6.3
 
 Bookings is a powerful reservations scheduler.
 
@@ -23,6 +23,7 @@ This WordPress plugin allows you to provide online booking services for your sit
 * Reservations can be set to be approved or not
 * Supports multiple languages: English (US & GB), German, French, Spanish, Italian, Hungarian, Dutch, Finnish, Swedish, Turkish, Arabic, Bulgarian, Chinese (Traditional & Simplified), Czech, Danish, Greek, Japanese, Korean, Polish, Portuguese, Slovak and Slovenian.
 * Community support via our [Forums](http://forums.zingiri.net "Forums") 
+* Limited to 1 schedule and 25 bookings per month
 
 The Pro version of the plugin additionaly offers:
 
@@ -40,6 +41,8 @@ The Pro version of the plugin additionaly offers:
 * Possibility to define your own time spans
 * Priority support via our [Helpdesk](http://www.zingiri.com/portal "Helpdesk")
 
+Note: Bookings uses web services stored on Zingiri's servers, read more in the plugin's FAQ about what that means.
+
 == Installation ==
 
 1. Upload the `bookings` folder to the `/wp-content/plugins/` directory
@@ -50,17 +53,43 @@ Please visit [Zingiri](http://wiki.zingiri.com/index.php?title=Bookings:Main "Zi
 
 == Frequently Asked Questions ==
 
-Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay.php?fid=60 "Zingiri Support Forum") or [Wiki](http://wiki.zingiri.com/index.php?title=Bookings:Main "Wiki") for more information and support.
+= This plugin uses web services, what exactly does that mean? =
+Web services are simple way of delivering software solutions. Basically it means that the software & data is hosted on our secure servers and that you can access it from anywhere in the world. 
+No need to worry about backing up your data, managing systems, we do it for you.
 
-= Available front-end style classes =
+= What about data privacy? =
+Bookings uses web services stored on Zingiri's servers. In doing so, personal data is collected and stored on our servers. 
+This data includes amongst others your admin email address as this is used, together with the API key as a unique identifier for your account on Zingiri's servers. 
+We have a very strict [privacy policy](http://www.zingiri.com/privacy-policy/ "privacy policy") as well as [terms & conditions](http://www.zingiri.com/terms/ "terms & conditions") governing data stored on our servers.
 
-.bookingsCalendarBody : class for div containing the calendar
+Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay.php?fid=60 "Zingiri Support Forum") or download our [Documentation](http://www.zingiri.com/portal/?ccce=downloads&action=displaycat&catid=6 "Documentation") for more information and support.
 
 == Screenshots ==
 
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.6.3 =
+* Added new compact1 template displaying date selector to the left and time selector the right on the front end calendar screen
+* In default, buttons and compact1 templates skip first screen if only 1 resource to select (if [bookings] short code variable skip is set to 'yes')
+* In schedule1, schedule2 and hotel templates, skip the first screen displaying the 'Next' button (if [bookings] short code variable skip is set to 'yes')
+* Updated readme.txt and settings page regarding the use of web services and data privacy policy
+* Removed inline styles from back-end schedule calendar
+* Only allocate new API key and secret if none exist
+* Fixed rendering of UTF-8 characters in field labels 
+* Added BOOKINGURL as a template variable representing the URL to the website page where the customer can manage their booking
+* Updated css to force removal of bullets in form display
+* Disabled Norwegian as it's not completely translated
+* Fixed issue with open bookings not showing in front end after user cancels a booking
+* Fixed issue with booking cancellation in front end not working when not using permalinks but page_id instead
+* Fixed issue with booking form configuration being reset after upgrade
+* Added "form" [bookings] variable to select bookings form
+* Added support for multiple forms
+* Fixed issue with display of multiple reservations for same resource, same time in back end schedule
+* Improved display of reservations in back end schedule
+* Fixed overflow display in schedule2 template
+* Resource are now ordered by name in front end screen
 
 = 1.6.2 =
 * Fixed issue when switching schedules in blackouts redirecting to the schedule calendar instead of blackouts

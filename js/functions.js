@@ -853,6 +853,8 @@ function cascadeSelect(parent, child)
 function cancelReservation(label, resid) {
 	if (confirm(label+'?') == true) {
 		var url = document.URL.split('?')[0]+'?zb=ctrlpnl&action=cancel&ajax=3&resid='+resid;
+		var pageId=jQuery(document).getUrlParam("page_id");
+		if (pageId != null) url+='&page_id='+pageId;
 		new jQuery.ajax({
 			url : url,
 			type : "get",

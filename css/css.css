@@ -139,6 +139,7 @@ td.cellColor1, .cellColor1 td, .cellColor1
 
 /*****************************************/
 
+
 .r0 td, .ro0 td
 {
     padding: 2px;
@@ -230,6 +231,10 @@ td.scheduleDateCurrent {
 
 td.scheduleDate, td.scheduleDateHeader a {
 	color: #FFFFFF;
+}
+
+tr.r0 td {
+	overflow:hidden;
 }
 /*
 Resource name cell for the scheduler
@@ -546,12 +551,6 @@ div.textbox, div.blur_textbox {
 
 div.blur_textbox {
 	background-color: #EEEEEE;
-}
-
-div.inlineSummary{
-	width:100%;
-	overflow:hidden;
-	height:13px;
 }
 
 /* spinner */

@@ -9,7 +9,7 @@
 	
 	if ($value['type'] == "text" || $value['type'] == "password") { ?>
 
-	<tr align="left">
+	<tr align="left"">
 		<th scope="row"><?php echo $value['name']; ?>:</th>
 		<td><input name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>"
 			type="<?php echo $value['type']; ?>"
@@ -18,8 +18,8 @@
 		/></td>
 
 	</tr>
-	<tr>
-		<td colspan=2><small><?php echo $value['desc']; ?> </small>
+	<tr">
+		<td colspan=2"><div style="width:800px;font-size:smaller;"><?php echo $value['desc']; ?> </div>
 		<hr />
 		</td>
 	</tr>
@@ -32,7 +32,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan=2><small><?php echo $value['desc']; ?> </small>
+		<td colspan=2"><div style="width:800px;font-size:smaller;"><?php echo $value['desc']; ?> </div>
 		<hr />
 		</td>
 	</tr>
@@ -49,7 +49,7 @@
 
 	</tr>
 	<tr>
-		<td colspan=2><small><?php echo $value['desc']; ?> </small>
+		<td colspan=2"><div style="width:800px;font-size:smaller;"><?php echo $value['desc']; ?> </div>
 		<hr />
 		</td>
 	</tr>
@@ -68,7 +68,7 @@
 
 	</tr>
 	<tr>
-		<td colspan=2><small><?php echo $value['desc']; ?> </small>
+		<td colspan=2"><div style="width:800px;font-size:smaller;"><?php echo $value['desc']; ?> </div>
 		<hr />
 		</td>
 	</tr>
@@ -85,7 +85,7 @@
 
 	</tr>
 	<tr>
-		<td colspan=2><small><?php echo $value['desc']; ?> </small>
+		<td colspan=2"><div style="width:800px;font-size:smaller;"><?php echo $value['desc']; ?> </div>
 		<hr />
 		</td>
 	</tr>
@@ -107,7 +107,8 @@
 
 	</tr>
 	<tr>
-		<td colspan=2><small><?php echo $value['desc']; ?> </small><hr /></td>
+		<td colspan=2"><div style="width:800px;font-size:smaller;"><?php echo $value['desc']; ?> </div>
+		<hr />
 	</tr>
 
 	<?php } elseif ($value['type'] == "heading") { ?>
@@ -118,9 +119,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan=2><small>
-		<p style="color: red; margin: 0 0;"><?php echo $value['desc']; ?></P>
-		</small>
+		<td colspan=2"><div style="width:800px;font-size:smaller;color:red;"><?php echo $value['desc']; ?> </div>
 		<hr />
 		</td>
 	</tr>

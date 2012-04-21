@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.6.2
+ Version: 1.6.3
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.6.2");
+define("BOOKINGS_VERSION","1.6.3");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -106,8 +106,8 @@ function bookings_admin_notices() {
 }
 
 function bookings_activate() {
-	update_option('bookings_key',bookings_create_api_key());
-	update_option('bookings_secret',bookings_create_secret());
+	if (!get_option('bookings_key')) update_option('bookings_key',bookings_create_api_key());
+	if (!get_option('bookings_secret')) update_option('bookings_secret',bookings_create_secret());
 	update_option("bookings_version",BOOKINGS_VERSION);
 }
 
@@ -162,7 +162,7 @@ function bookings_shortcode( $atts, $content=null, $code="" ) {
 		}
 	}
 
-	$defaults=array('template' => '','scheduleid' => '', 'calendar' => '');
+	$defaults=array('template' => '','scheduleid' => '', 'calendar' => '', 'form' => 'form1');
 	extract( shortcode_atts( $defaults, $atts ) );
 	$pg=isset($_REQUEST['zb']) ? $_REQUEST['zb'] : 'book1';
 	if ($pg=='book1') {
@@ -172,7 +172,6 @@ function bookings_shortcode( $atts, $content=null, $code="" ) {
 				$postVars[$id]=$value;
 			}
 		}
-		//if ($postVars[$id]=='fromto2') return 'nothing';
 		bookings_output($pg,$postVars);
 		$output='<div id="bookings">';
 		$output.=$bookings['output']['body'];
@@ -186,58 +185,6 @@ function bookings_shortcode( $atts, $content=null, $code="" ) {
 		return $output;
 	}
 }
-
-/*
- function bookings_content($content) {
- global $bookings;
-
- if (!is_page() && !is_single()) return '';
-
- if (preg_match_all('/\[bookings(.*)\]/',$content,$matches)) {
- $pg=isset($_REQUEST['zb']) ? $_REQUEST['zb'] : 'book1';
- if ($pg=='book1') {
- foreach ($matches[0] as $id => $match) {
- $postVars=array();
- if ($matches[1][$id]) {
- $vars=explode(',',$matches[1][$id]);
- foreach ($vars as $var) {
- $t=explode('=',$var);
- $n=trim($t[0]);
- $v=isset($t[1]) ? trim($t[1]) : 1;
- if (strtolower($n)=='template') $postVars['template']=$v;
- elseif (strtolower($n)=='resource') $postVars['machid']=$v;
- elseif (strtolower($n)=='schedule') $postVars['scheduleid']=$v;
- elseif (strtolower($n)=='product') $postVars['productid']=$v;
- elseif (strtolower($n)=='daystoshow') $postVars['daystoshow']=$v;
- elseif (strtolower($n)=='calendar') $postVars['calendar']=$v;
- else echo '<br />Unknown variable '.$n;
- }
- }
- bookings_output($pg,$postVars);
- $output='<div id="bookings">';
- $output.=$bookings['output']['body'];
- $output.='</div>';
- $content=str_replace($match,$output,$content);
- }
- } else {
- bookings_output($pg);
- $output='<div id="bookings">';
- $output.=$bookings['output']['body'];
- $output.='</div>';
- $content=$output;
-
- }
- return $content;
- } elseif (isset($_REQUEST['page']) && ($_REQUEST['page']=='bookings') && isset($_REQUEST['zb']) && $_REQUEST['zb']) {
- bookings_output($_REQUEST['zb']);
- $output='<div id="bookings">';
- $output.=$bookings['output']['body'];
- $output.='</div>';
- $content=str_replace($match,$output,$content);
- return $content;
- } else return $content;
- }
- */
 
 function bookings_output($bookings_to_include='',$postVars=array()) {
 	global $post,$bookings;
@@ -356,6 +303,7 @@ function bookings_header() {
 	echo '</script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/functions.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/ajax.js"></script>';
+	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jquery.getUrlParam.js"></script>';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/client.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/integrated_view.css" media="screen" />';
@@ -507,7 +455,7 @@ function bookings_log($type=0,$msg='',$filename="",$linenum=0) {
 	}
 }
 
-function bookings_url($endpoint=true) {
+function bookings_url($endpoint=true) { //URL end point for web services stored on Zingiri servers
 	global $bookingsRegions;
 	$r=get_option('bookings_region');
 	if (isset($bookingsRegions[$r])) $url=$bookingsRegions[$r][1];

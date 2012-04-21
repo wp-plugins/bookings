@@ -296,5 +296,58 @@ table.availability tr.product a {
 
 /* Booking form */
 li.zfli {
-	list-style-type:none;
+	list-style-type: none !important;
 }
+
+#bookings td.navMonthStyle {
+	width: 33%;
+}
+
+#bookings td.MyCalCellColorEmpty a {
+	text-align:center;
+}
+#bookings td.MyCalCellColorEmpty p {
+	display:inline
+}
+#bookings .mycal_div {
+	width: 200px;
+}
+#bookings .resourceName {
+	vertical-align:top;
+}
+#bookings .MyCalCellColor {
+	vertical-align:top;
+}
+#bookings .MyCalCellColorEmpty {
+	vertical-align:top;
+}
+#bookings .selectedDay {
+	text-align:center;
+}
+
+#compact1Template div#left {
+	float:left;
+	width:35%;
+	font-size:smaller;
+}
+#compact1Template div#right {
+	float:right;
+	padding-left:5%;
+	width:60%;
+	font-size:smaller;
+}
+
+#compact1Template .dayNamesStyle {
+	font-weight:bold;
+	color:red;
+}
+
+#compact1Template div#left table, #compact1Template div#left table tr td {
+	border: 0px !important;
+}
+
+table.dayReservations {
+	table-layout:fixed; 
+	overflow:hidden;
+	white-space: nowrap;
+} 
