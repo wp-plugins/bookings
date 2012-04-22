@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.6.3
+Stable tag: 1.6.4
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,11 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.6.4 =
+* Added possibility to create a user during reservation creation in back-end
+* Removed sending of user registration confirmation to user
+* Fixed issue with multi-capacity slots showing available and overlapping with blackouts
 
 = 1.6.3 =
 * Added new compact1 template displaying date selector to the left and time selector the right on the front end calendar screen

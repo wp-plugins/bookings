@@ -313,6 +313,7 @@ function refreshDialog2(e) {
 	bookingsWindowOpen(url);
 	return false;
 }
+
 function search_user_lname(letter) {
 	if (letter!=null) {
 		jQuery('#firstName').val('');
@@ -325,7 +326,16 @@ function search_user_lname(letter) {
 		var js = eval("(" + response + ")");
 		bookingsDialog2.html(js.body);
 	});
+}
 
+function bookings_create_user() {
+	jQuery(".spinner").show();
+	var form = jQuery('form#register');
+	jQuery.post(form.attr('action'),form.serialize()+'&ajax=2&register=1',function(response){
+		jQuery(".spinner").hide();
+		var js = eval("(" + response + ")");
+		bookingsDialog2.html(js.body);
+	});
 }
 
 function isIE() {
@@ -690,12 +700,12 @@ function changeResCalendar(m, d, y, view, id, page) {
 	document.location.href = bookingsPageurl + "zb=" + page + "&date=" + m + "-" + d + "-" + y + "&view=" + view + "&" + p + "=" + id;
 }
 
-function selectUserForReservation(memberid, fname, lname, email) {
+function selectUserForReservation(memberid, fname, lname, email, phone) {
 	bookingsDialog2.dialog('close');
 	
 	jQuery('#memberid').val(memberid);
 	jQuery('#name').html(fname + " " + lname);
-	jQuery('#phone').html("");
+	jQuery('#phone').html(phone);
 	jQuery('#email').html(email);
 }
 
