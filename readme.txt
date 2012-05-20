@@ -3,8 +3,8 @@ Contributors: zingiri
 Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
-Tested up to: 3.3.1
-Stable tag: 1.6.4
+Tested up to: 3.3.2
+Stable tag: 1.6.5
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,12 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.6.5 =
+* Fixed issue with activation of Form Editor
+* Added new currencies: NZD, AUD, CAD
+* Fixed issue with saving form throwing an error
+* Checked compatibility with Wordpress version 3.3.2
 
 = 1.6.4 =
 * Added possibility to create a user during reservation creation in back-end
