@@ -70,6 +70,11 @@ Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/booki
 
 == Changelog ==
 
+= 1.6.7 =
+* Updated allowed extensions to 'jpg','bmp','png','zip','pdf','gif','doc','xls','wav','jpeg','docx','ppt','pptx','mp3'
+* If not using SMTP email and admin email alert activated, the email address is added to the list of recipients as BCC is not working in this case
+* Added MXN currency
+
 = 1.6.6 =
 * Fixed issue with US vs Europe date formats for date field
 * Added time picker widget to Time element type
