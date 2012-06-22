@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.4
-Stable tag: 1.6.9
+Stable tag: 1.7.0
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,22 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.7.0 =
+* Added multi slot booking possibility
+* Fixed issue where reserved slots are not shown when selected dates are chosen for days to view
+* Added possibility to capture number of participants/units to book in case of multi-capacity bookings
+* Fixed issue with phone number not being captured for users who already had reservations registered
+* Fixed issue where first name and last name are not being updated during new bookings
+* Changed the way admin emails are being sent, instead of a Bcc, a new email is sent to the admin if requested to do so
+* Changed title of admin email to distinguish it better from the customer email
+* Added client phone as parameter in confirmation messages and emails
+* Added possibility to use custom form fields defined in registration form in the confirmation messages and emails
+* Fixed issue where total price not calculated properly when booking multiple days
+* Added highlight of selected day in front end calendar
+* Show name of selected product in second and third screen of bookings process
+* Added product name in confirmation message and email
+* Added new template pr2
 
 = 1.6.9 =
 * Fixed issue with front end calendar not showing correctly in Japanese

@@ -352,7 +352,7 @@ function changeSelectedMonth() {
 	var newMonth=jQuery('#monthselect').val();
 	jQuery('#newmonth').attr('value',newMonth);
 	jQuery('#changeMonth').submit();
-	//frm.submit();
+	// frm.submit();
 }
 
 // Function to change the Scheduler on selected date click
@@ -424,56 +424,33 @@ function showsummary(object, e, text) {
 	var ww=jQuery(window).width();
 	var wh=jQuery(window).height();
 	var adjustTop=0;
-	//if ((e.pageY + 30) >= wh) adjustTop=-(e.PageY+30-wh);
+	// if ((e.pageY + 30) >= wh) adjustTop=-(e.PageY+30-wh);
 	var top=e.pageY-offset.top+adjustTop+'px';
 	var adjustLeft=0;
-	//if ((e.pageX + 165) >= ww) adjustLeft=-(e.PageX+165-ww);
+	// if ((e.pageX + 165) >= ww) adjustLeft=-(e.PageX+165-ww);
 	var left=e.pageX-offset.left+15+adjustLeft+'px';
 	
 	jQuery('#'+object).html(text);
 	jQuery('#'+object).css('z-index',1000);
 	jQuery('#'+object).css({ 'visibility': 'visible', "relative": "absolute", "top": top, "left": left });
 /*
-		myLayer = document.getElementById(object);
-        myLayer.innerHTML = text;
- 
-        w = parseInt(myLayer.style.width) ;
-        h = parseInt(myLayer.style.height);
- 
-        if (e != '') {
-            if (isIE()) {
-                  x = e.clientX;
-                  y = e.clientY;
-                  browserX = document.body.offsetWidth - 25;
-                  if (isIE7()) {
-                     // IE 7
-                    x += document.documentElement.scrollLeft - document.body.clientLeft ;
-                    y += document.documentElement.scrollTop - document.body.clientTop;
-                 } else {
-                    // IE6, and previous version
-                    x += document.body.scrollLeft ;                        // Adjust for scrolling on IE
-                    y += document.body.scrollTop ;
-                }
- 
-            }
-            if (!isIE()) {
-            x = e.pageX;
-            y = e.pageY;
-            browserX = window.innerWidth - 35;
-            }
-    }
- 
-        x1 = x + 20;                // Move out of mouse pointer
-        y1 = y + 20;
- 
-        // Keep box from going off screen
-        if (x1 + w > browserX){
-                x1 = browserX - w;
-        }
-    myLayer.style.left = parseInt(x1)+ "px";
-    myLayer.style.top = parseInt(y1) + "px";
-    myLayer.style.visibility = "visible";
-    */
+ * myLayer = document.getElementById(object); myLayer.innerHTML = text;
+ * 
+ * w = parseInt(myLayer.style.width) ; h = parseInt(myLayer.style.height);
+ * 
+ * if (e != '') { if (isIE()) { x = e.clientX; y = e.clientY; browserX =
+ * document.body.offsetWidth - 25; if (isIE7()) { // IE 7 x +=
+ * document.documentElement.scrollLeft - document.body.clientLeft ; y +=
+ * document.documentElement.scrollTop - document.body.clientTop; } else { //
+ * IE6, and previous version x += document.body.scrollLeft ; // Adjust for
+ * scrolling on IE y += document.body.scrollTop ; } } if (!isIE()) { x =
+ * e.pageX; y = e.pageY; browserX = window.innerWidth - 35; } }
+ * 
+ * x1 = x + 20; // Move out of mouse pointer y1 = y + 20; // Keep box from going
+ * off screen if (x1 + w > browserX){ x1 = browserX - w; } myLayer.style.left =
+ * parseInt(x1)+ "px"; myLayer.style.top = parseInt(y1) + "px";
+ * myLayer.style.visibility = "visible";
+ */
 }
 
 function getAbsolutePosition(element) {
@@ -503,7 +480,11 @@ function moveSummary(object, e) {
                     y += document.documentElement.scrollTop - document.body.clientTop;
    } else {
    // IE6, and previous version
-                    x += document.body.scrollLeft ;                        // Adjust for scrolling on IE
+                    x += document.body.scrollLeft ;                        // Adjust
+																			// for
+																			// scrolling
+																			// on
+																			// IE
                     y += document.body.scrollTop ;
    }
         }
@@ -845,19 +826,27 @@ function updateEnd(startDrop)
 	endDrop.selectedIndex = (endDrop.options.length-1 > index) ? index + 1 : index;	
 }
 
-function cascadeSelect(parent, child)
+function cascadeSelect(parent, child, mode)
 {
-	 var childOptions = child.find('option:not(.static)');
-	 child.data('options',childOptions);
+	var type;
+	if (mode==1) type='option';
+	else type='tr';
+	var childOptions = child.find(type+':not(.static)');
+	child.data('options',childOptions);
+	parent.change(function(){
+	 		childOptions.remove();
+	 		child
+	 		.append(child.data('options').filter('.sub_' + this.value))
+	 		.change();
+	});
 	 
-	 parent.change(function(){
-	  childOptions.remove();
-	  child
-	   .append(child.data('options').filter('.sub_' + this.value))
-	   .change();
-	 });
-	 
-	 childOptions.not('.static, .sub_' + parent.val()).remove();
+	childOptions.not('.static, .sub_' + parent.val()).remove();
+	child.show();
+}
+
+function bookingsCascadeSelectProduct(productid) {
+	jQuery('#productid').val(productid);
+	return false;
 }
 
 function cancelReservation(label, resid) {
@@ -879,7 +868,8 @@ function cancelReservation(label, resid) {
 function bookingsWindowOpen(nurl,dest,params) {
 	jQuery(".spinner").show();
 
-	//if ((bookingsDialog2 instanceof jQuery) && bookingsDialog2.dialog('isOpen')) bookingsDialog2.dialog('close');
+	// if ((bookingsDialog2 instanceof jQuery) &&
+	// bookingsDialog2.dialog('isOpen')) bookingsDialog2.dialog('close');
 	
 	new jQuery.ajax({
 		url : nurl,
@@ -903,6 +893,43 @@ function bookingsWindowOpen(nurl,dest,params) {
 
 function bookingsWindowClose() {
 	if ((bookingsDialog2 instanceof jQuery) && bookingsDialog2.dialog('isOpen')) bookingsDialog2.dialog('close');
+}
+
+function bookingsCaptureQuantity(e,label,submit,available,max) {
+	var href=jQuery(e).attr('href');
+	var html='';
+	html+='<form method="post" id="quantitySelect" action="'+href+'">';
+	if (max='') {
+		html+='<select style="display:inline" name="quantity">';
+		for (i=1;i<=available;i++) {
+			html+='<option value="'+i+'">'+i+'</option>';
+		}
+		html+='</select>';
+	} else {
+		html+='<input type="text" name="quantity" size="4" maxlength="3" />';
+	}
+	html+='<br />';
+	html+='<input onclick="return bookingsGetQuantity();" type="submit" class="button" value="'+submit+'" />';
+	html+='</form>';
+	if ((bookingsDialog instanceof jQuery) && bookingsDialog.dialog('isOpen')) bookingsDialog.dialog('close');
+	bookingsDialog = jQuery('<div title="'+label+'"></div>');
+	bookingsDialog.html(html);
+	bookingsDialog.dialog({
+		"height": "auto",
+		"width" : 200,
+		"modal" : true,
+		"draggable" : false
+	});
+
+	return false;
+}
+
+function bookingsGetQuantity() {
+	var q=jQuery('#quantitySelect').find('select').val();
+	var href=jQuery('#quantitySelect').attr('action');
+	href+='&quantity='+q;
+	if ((bookingsDialog instanceof jQuery) && bookingsDialog.dialog('isOpen')) bookingsDialog.dialog('close');
+	return true;
 }
 
 Calendar = function () {

@@ -159,7 +159,7 @@ div.availability .resource a {
 }
 
 /* product availability */
-#product table.availability  {
+table.availability  {
 	width:100%;
 	clear: both;
 }
@@ -350,4 +350,15 @@ table.dayReservations {
 	table-layout:fixed; 
 	overflow:hidden;
 	white-space: nowrap;
-} 
+}
+
+.bookings-step2 input.button {
+	float:right;
+}
+
+#compact1Template div#left table .selectedDayBoxStyle, .selectedDayBoxStyle {
+	font-size: smaller;
+	border: solid 4px #DDCAF6 !important;
+	text-align: center;
+}
+
