@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.4
-Stable tag: 1.7.0
+Stable tag: 1.7.1
 
 Bookings is a powerful reservations scheduler.
 
@@ -70,6 +70,12 @@ Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/booki
 
 == Changelog ==
 
+= 1.7.1 =
+* Added high light of selected day in back-end calendar
+* Added possibility to subscribe to Bookings calendars from Google Calendar
+* Fixed user login conflict occuring in certain circumstances
+* Fixed issue with format of times in schedule1 template
+
 = 1.7.0 =
 * Added multi slot booking possibility
 * Fixed issue where reserved slots are not shown when selected dates are chosen for days to view
@@ -84,7 +90,7 @@ Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/booki
 * Added highlight of selected day in front end calendar
 * Show name of selected product in second and third screen of bookings process
 * Added product name in confirmation message and email
-* Added new template pr2
+* Added new template rp2
 
 = 1.6.9 =
 * Fixed issue with front end calendar not showing correctly in Japanese
