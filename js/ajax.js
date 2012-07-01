@@ -27,7 +27,7 @@ function checkReservation(url, formid, txt) {
 	var div = document.getElementById("checkDiv");
 	var f = document.getElementById(formid);
 	
-	url='admin.php?page=bookings&ajax=1&zb=' + url.replace('.php','');
+	url=bookingsAjaxUrl+'ajax=1&zb=' + url.replace('.php','');
 	http_request = createRequestObject();	
 	http_request.onreadystatechange = showCheckResults;
 	//http_request.open('POST', url + document.location.search.substring(0), true);

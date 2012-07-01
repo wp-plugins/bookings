@@ -10,7 +10,7 @@ function bookings_options() {
             "type" => "heading",
 			"desc" => "This section customizes the way the Bookings plugin works.");
 	$bookings_options[110] = array("name" => "API Key",
-			"desc" => 'This plugin uses remote web services to provide mailing list functionality. This API key has been automatically generated for you. Once you click on Install, the API key, in combination with your web site address <strong>".home_url()."</strong> will create an account on our servers allowing the plugin to access the remote web services.<br />The combination of API key and your web site address uniquely identifes you so please make sure to keep it in a safe place.',
+			"desc" => 'This plugin uses remote web services to provide mailing list functionality. This API key has been automatically generated for you. Once you click on Install, the API key, in combination with your web site address <strong>'.home_url().'</strong> will create an account on our servers allowing the plugin to access the remote web services.<br />The combination of API key and your web site address uniquely identifes you so please make sure to keep it in a safe place.',
 			"id" => $bookings_shortname."_key",
 			"type" => "text");
 	$bookings_options[111] = array("name" => "Secret",
@@ -37,6 +37,12 @@ function bookings_options() {
 			"id" => $regions[get_option($bookings_shortname."_region")],
 			"type" => "info");
 	}
+		$p=parse_url(home_url());
+	
+	$bookings_options[135] = array(	"name" => "Showcase Your Site",
+			"desc" => "If you choose to participate in our showcase, we will list your site <strong style=\"color:blue\">http://".$p['host']."</strong> with the description '<strong style=\"color:blue\">".get_bloginfo('name').' - '.get_bloginfo('description')."</strong>' on our site. This is a way to show your support for this plugin and a bit of free advertising for you. Please don't join the program until your site is ready.",
+			"id" => $bookings_shortname."_showcase",
+			"type" => "checkbox");
 	$bookings_options[140] = array(	"name" => "Debug Mode",
 			"desc" => "If you have problems with the plugin, activate the debug mode to generate a debug log for our support team",
 			"id" => $bookings_shortname."_debug",
@@ -127,6 +133,7 @@ function bookings_add_admin() {
 	if (isset($_GET['page']) && ($_GET['page'] == "bookings")) {
 
 		if ( isset($_REQUEST['action']) && 'install' == $_REQUEST['action'] ) {
+			unset($_SESSION['bookings']['menus']);
 			delete_option('bookings_log');
 			foreach ($bookings_options as $value) {
 				if( isset( $_REQUEST[ $value['id'] ] ) ) {

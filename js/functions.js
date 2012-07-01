@@ -1,5 +1,6 @@
 var bookingsDialog;
 var bookingsDialog2;
+var bookings=new Object();
 
 function checkForm(f) {
 	var msg = "Please fix these errors:\n";
@@ -87,7 +88,8 @@ function bookingsReserve(type, machid, start_date, resid, scheduleid, is_blackou
 		
 		if ((bookingsDialog2 instanceof jQuery) && bookingsDialog2.dialog('isOpen')) bookingsDialog2.dialog('close');
 		if ((bookingsDialog instanceof jQuery) && bookingsDialog.dialog('isOpen')) bookingsDialog.dialog('close');
-		nurl = "admin.php?page=bookings&ajax=2&zb=reserve&type=" + type + "&machid=" + machid + "&start_date=" + start_date + "&resid=" + resid + '&scheduleid=' + scheduleid + "&is_blackout=" + is_blackout + "&read_only=" + read_only + "&pending=" + pending + "&starttime=" + starttime + "&endtime=" + endtime;
+		//nurl = "admin.php?page=bookings&ajax=2&zb=reserve&type=" + type + "&machid=" + machid + "&start_date=" + start_date + "&resid=" + resid + '&scheduleid=' + scheduleid + "&is_blackout=" + is_blackout + "&read_only=" + read_only + "&pending=" + pending + "&starttime=" + starttime + "&endtime=" + endtime;
+		nurl = bookingsAjaxUrl+"ajax=2&zb=reserve&type=" + type + "&machid=" + machid + "&start_date=" + start_date + "&resid=" + resid + '&scheduleid=' + scheduleid + "&is_blackout=" + is_blackout + "&read_only=" + read_only + "&pending=" + pending + "&starttime=" + starttime + "&endtime=" + endtime;
 		
 		jQuery(".spinner").show();
 
@@ -107,7 +109,6 @@ function bookingsReserve(type, machid, start_date, resid, scheduleid, is_blackou
 				});
 			}
 		});
-
 
 		void(0);   
 }
@@ -633,21 +634,17 @@ function showHideMinMax(chk) {
 }
 
 function moveSelectItems(from, to) {
-	from_select = document.getElementById(from);
-	to_select = document.getElementById(to);
-	
-	for (i = 0; i < from_select.options.length; i++) {
-		if (from_select.options[i].selected) {
-			if (isIE()) {
-				var option = new Option(from_select.options[i].text, from_select.options[i].value);
-				to_select.options.add(option);
-				from_select.options.remove(i);
-				to_select.options[0].selected = true;
-			}
-			else {
-				to_select.options.add(from_select.options[i]);
-			}
-			i--;	
+	from_select = jQuery('#'+from).find('option');
+	to_select = jQuery('#'+to);
+	for (i = 0; i < from_select.length; i++) {
+		option=jQuery(from_select[i]);
+		if (option.attr('selected')=='selected') {
+			newOption=jQuery('<option></option>');
+			newOption.attr('value',option.attr('value'));
+			newOption.attr('selected',option.attr('selected'));
+			newOption.html(option.html());
+			to_select.append(newOption);
+			option.remove();
 		}
 	}
 }
@@ -895,6 +892,7 @@ function bookingsWindowClose() {
 	if ((bookingsDialog2 instanceof jQuery) && bookingsDialog2.dialog('isOpen')) bookingsDialog2.dialog('close');
 }
 
+/*
 function bookingsCaptureQuantity(e,label,submit,available,max) {
 	var href=jQuery(e).attr('href');
 	var html='';
@@ -931,7 +929,71 @@ function bookingsGetQuantity() {
 	if ((bookingsDialog instanceof jQuery) && bookingsDialog.dialog('isOpen')) bookingsDialog.dialog('close');
 	return true;
 }
+*/
 
+function bookingsAdditionalInfo(e,machid,dt,st,et,title,used) {
+	var w = 600;
+	var h = 440;
+	
+	bookings.id=jQuery(e).attr('id');
+	if ((bookingsDialog2 instanceof jQuery) && bookingsDialog2.dialog('isOpen')) bookingsDialog2.dialog('close');
+	if ((bookingsDialog instanceof jQuery) && bookingsDialog.dialog('isOpen')) bookingsDialog.dialog('close');
+	var nurl = bookingsAjaxUrl+"ajax=2&zb=reservation&machid="+machid+'&start_date='+dt+'&starttime='+st+'&endtime='+et+'&used='+used;
+	jQuery(".spinner").show();
+
+	new jQuery.ajax({
+		url : nurl,
+		type : "get",
+		success : function(request) {
+			jQuery(".spinner").hide();
+			var jsRequest = eval("(" + request + ")");
+			bookingsDialog = jQuery('<div title="'+title+'"></div>');
+			bookingsDialog.html(jsRequest.body);
+			bookingsDialog.dialog({
+				"height": "auto",
+				"width" : w,
+				"modal" : true,
+				"draggable" : false
+			});
+		}
+	});
+
+	return false;
+	void(0);
+}
+
+function bookingsAdditionalInfoSave() {
+	var add=jQuery('#reserve').serialize();
+	console.log(add);
+	var html=bookingsDialog.html();
+	if ((bookingsDialog instanceof jQuery) && bookingsDialog.dialog('isOpen')) bookingsDialog.dialog('close');
+	
+	var div=jQuery('#temp_bookingsAdditionalInfo');
+	if (div.length > 0) div.remove();
+	div=jQuery(document.createElement("div"));
+	div.attr('id','temp_bookingsAdditionalInfo');
+	
+	div.html(html);
+	//div.hide();
+	//jQuery("#bookingsAdditionalInfo").append(div);
+	
+	action=jQuery('.bookings-step2').attr('action');
+	jQuery('.bookings-step2').attr('action',action+'&'+add);
+	console.log(jQuery('.bookings-step2').serialize());
+	jQuery('.bookings-step2').submit();
+	return true;
+}
+
+function bookingsCheckSlots(message) {
+	var selected=false;
+	var select = jQuery('.multislot');
+	for (i = 0; i < select.length; i++) {
+		slot=jQuery(select[i]);
+		if (slot.prop('checked')) selected=true;
+	}
+	if (!selected) alert(message);
+	return selected;
+}
 Calendar = function () {
 };
 

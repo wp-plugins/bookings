@@ -246,10 +246,22 @@ table.availability tr.product a {
 .bookings-resource {
 	font-weight:bold;
 	padding: 10px;
+	margin-bottom: 0px;
+}
+
+.bookings-accessory {
+	font-weight:bold;
+	padding: 10px;
+	margin-bottom: 0px;
 }
 
 .bookings-reservationdates {
 	float: left;
+}
+
+.bookings-price {
+	padding: 10px;
+	margin-bottom: 0px;
 }
 
 /* Button */
@@ -362,3 +374,13 @@ table.dayReservations {
 	text-align: center;
 }
 
+#additionalinfo-quantity {
+	margin-bottom: 10px;
+}
+	
+#bookings-select-accessories {
+	text-align: center;
+	vertical-align: center;
+	margin-top: auto;
+	margin-bottom: auto;
+}

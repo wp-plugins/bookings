@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.7.1
+ Version: 1.7.2
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.7.1");
+define("BOOKINGS_VERSION","1.7.2");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -90,7 +90,7 @@ function bookings_admin_notices() {
 	if (phpversion() < '5') $warnings[]="You are running PHP version ".phpversion().". We recommend you upgrade to PHP 5.3 or higher.";
 	if (ini_get("zend.ze1_compatibility_mode")) $warnings[]="You are running PHP in PHP 4 compatibility mode. We recommend you turn this option off.";
 	if (!function_exists('curl_init')) $errors[]="You need to have cURL installed. Contact your hosting provider to do so.";
-	
+
 	if (count($warnings) > 0) {
 		echo "<div id='zing-warning' style='background-color:greenyellow' class='updated fade'><p><strong>";
 		foreach ($warnings as $message) echo 'Bookings: '.$message.'<br />';
@@ -117,7 +117,7 @@ function bookings_deactivate() {
 	delete_option("bookings_ftp_user"); //legacy
 	delete_option("bookings_ftp_password"); //legacy
 }
-	
+
 function bookings_uninstall() {
 	bookings_output('uninstall');
 
@@ -300,6 +300,7 @@ function bookings_header() {
 
 	echo '<script type="text/javascript">';
 	echo "var bookingsPageurl='".bookings_home()."';";
+	echo "var bookingsAjaxUrl='".bookings_home()."';";
 	echo '</script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/functions.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/ajax.js"></script>';
@@ -316,6 +317,7 @@ function bookings_admin_header() {
 		if (isset($bookings['output']['head'])) echo $bookings['output']['head'];
 		echo '<script type="text/javascript">';
 		echo "var bookingsPageurl='admin.php?page=bookings&';";
+		echo "var bookingsAjaxUrl='".get_admin_url()."admin.php?page=bookings&';";
 		echo "var aphpsAjaxURL='".get_admin_url().'admin.php?page=bookings&zb=ajax&ajax=1&form='."';";
 		echo "var aphpsURL='".bookings_url(false).'aphps/fwkfor/'."';";
 		echo "var wsCms='gn';";
@@ -337,8 +339,15 @@ function bookings_http($page="index") {
 		foreach ($_GET as $n => $v) {
 			if (!in_array($n,array('page','zb')))
 			{
-				$vars.= $and.$n.'='.urlencode($v);
-				$and="&";
+				if (is_array($v)) {
+					foreach ($v as $w) {
+						$vars.= $and.$n.'[]='.urlencode($w);
+						$and="&";
+					}
+				} else {
+					$vars.= $and.$n.'='.urlencode($v);
+					$and="&";
+				}
 			}
 		}
 	}
@@ -368,6 +377,10 @@ function bookings_http($page="index") {
 		if (isset($post) && isset($bookings_shortcode_id)) $wp['sid']=$post->ID.'-'.$bookings_shortcode_id;
 	}
 
+	if (get_option('bookings_showcase')) {
+		$wp['desc']=get_bloginfo('description');
+		$wp['showcase']=1;
+	}
 	$wp['time_format']=get_option('time_format');
 	$wp['admin_email']=get_option('admin_email');
 	$wp['key']=get_option('bookings_key');
@@ -406,6 +419,7 @@ function bookings_home() {
 
 function bookings_ajax() {
 	global $bookings;
+	return;
 	//	print_r($bookings);
 	die('Problem loading - contact support');
 	die();
