@@ -3,8 +3,8 @@ Contributors: zingiri
 Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
-Tested up to: 3.4
-Stable tag: 1.7.2
+Tested up to: 3.4.1
+Stable tag: 1.7.3
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,11 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.7.3 =
+* Removed console logging messages
+* Added pricing unit to products & services pricing
+* Fixed issue with some template fields not being available for multi slot reservations
 
 = 1.7.2 =
 * Added option to participate in show case

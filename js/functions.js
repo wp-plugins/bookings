@@ -964,7 +964,6 @@ function bookingsAdditionalInfo(e,machid,dt,st,et,title,used) {
 
 function bookingsAdditionalInfoSave() {
 	var add=jQuery('#reserve').serialize();
-	console.log(add);
 	var html=bookingsDialog.html();
 	if ((bookingsDialog instanceof jQuery) && bookingsDialog.dialog('isOpen')) bookingsDialog.dialog('close');
 	
@@ -979,7 +978,6 @@ function bookingsAdditionalInfoSave() {
 	
 	action=jQuery('.bookings-step2').attr('action');
 	jQuery('.bookings-step2').attr('action',action+'&'+add);
-	console.log(jQuery('.bookings-step2').serialize());
 	jQuery('.bookings-step2').submit();
 	return true;
 }
