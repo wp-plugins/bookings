@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.4.1
-Stable tag: 1.7.3
+Stable tag: 1.7.4
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,16 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.7.4 =
+* Fixed issue with parsing of [PRODUCT] template variable
+* Fixed issue where [LOCATION] displayed the site name instead of the resource location in case of multi-slot bookings
+* Fixed issue with formatting of Paypal amounts
+* Fixed issue with Google Calendar sync links containing underscores in some cases which is not accepted as a valid URL by Google
+* Fixed issue with resource name NAME template field not being filled correctly in certain cases
+* Fixed issue with quantity not being applied to total price
+* Allow admin users to override minimum break time between bookings when making bookings or entering blackouts in the back end
+* Black out break times in between bookings if set
 
 = 1.7.3 =
 * Removed console logging messages

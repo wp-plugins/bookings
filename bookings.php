@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.7.3
+ Version: 1.7.4
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.7.3");
+define("BOOKINGS_VERSION","1.7.4");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -208,7 +208,7 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 		bookings_log('Error','A HTTP Error occured');
 		return "A HTTP Error occured";
 	} else {
-		if ($ajax==1) {
+		if (($ajax==1) && ($_REQUEST['form']!='form_field')) {
 			ob_end_clean();
 			$buffer=$news->DownloadToString();
 			$bookings['output']=json_decode($buffer,true);
@@ -226,7 +226,13 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 				echo '</body></html>';
 			}
 			die();
-		} elseif ($ajax==2) {
+		} elseif (($ajax==1) && ($_REQUEST['form']=='form_field')) {
+			ob_end_clean();
+			$buffer=$news->DownloadToString();
+			$output=json_decode($buffer,true);
+			echo $output['body'];
+			die();
+		} elseif (($ajax==2) || (($ajax==1) && ($_REQUEST['form']=='form_field'))) {
 			ob_end_clean();
 			$output=$news->DownloadToString();
 			foreach (array('content-disposition','content-type') as $i) {
