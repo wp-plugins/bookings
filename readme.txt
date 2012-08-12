@@ -79,6 +79,7 @@ Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/booki
 * Fixed issue with quantity not being applied to total price
 * Allow admin users to override minimum break time between bookings when making bookings or entering blackouts in the back end
 * Black out break times in between bookings if set
+* Added more Swedish translations
 
 = 1.7.3 =
 * Removed console logging messages
