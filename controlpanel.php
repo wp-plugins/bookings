@@ -37,8 +37,8 @@ function bookings_options() {
 			"id" => $regions[get_option($bookings_shortname."_region")],
 			"type" => "info");
 	}
-		$p=parse_url(home_url());
-	
+	$p=parse_url(home_url());
+
 	$bookings_options[135] = array(	"name" => "Showcase Your Site",
 			"desc" => "If you choose to participate in our showcase, we will list your site <strong style=\"color:blue\">http://".$p['host']."</strong> with the description '<strong style=\"color:blue\">".get_bloginfo('name').' - '.get_bloginfo('description')."</strong>' on our site. This is a way to show your support for this plugin and a bit of free advertising for you. Please don't join the program until your site is ready.",
 			"id" => $bookings_shortname."_showcase",
@@ -67,7 +67,7 @@ function bookings_options() {
 		'ko'	=> array('ko([-_][[:alpha:]]{2})?|korean', 'ko_KR.lang.php', 'ko', 'Korean (&#54620;&#44397;&#50612;)'),
 		'hu'	=> array('hu([-_][[:alpha:]]{2})?|hungarian', 'hu.lang.php', 'hu', 'Magyar'),
 		'nl'	=> array('nl([-_][[:alpha:]]{2})?|dutch', 'nl.lang.php', 'nl', 'Nederlands'),
-		//'no'	=> array('no([-_][[:alpha:]]{2})?|norwegian', 'no.lang.php', 'no', 'Norwegian'),
+	//'no'	=> array('no([-_][[:alpha:]]{2})?|norwegian', 'no.lang.php', 'no', 'Norwegian'),
 		'pl'	=> array('pl([-_][[:alpha:]]{2})|polish', 'pl.lang.php', 'pl', 'Polski'),
 		'pt_PT'	=> array('pr([-_]PT)|portuguese', 'pt_PT.lang.php', 'pt', 'Portugu&ecirc;s'),
 		'pt_BR'	=> array('pr([-_]BR)|portuguese', 'pt_BR.lang.php', 'pt', 'Portugu&ecirc;s Brasileiro'),
@@ -118,7 +118,7 @@ function bookings_options() {
 					This data includes amongst others your admin email address as this is used, together with the API key as a unique identifier for your account on Zingiri\'s servers.
 					We have a very strict <a href="http://www.zingiri.com/privacy-policy/" target="_blank">privacy policy</a> as well as <a href="http://www.zingiri.com/terms/" target="_blank">terms & conditions</a> governing data stored on our servers.
 					<div style="font-weight:bold;display:inline">By installing this plugin you accept these terms & conditions.</div>');
-	
+
 	ksort($bookings_options);
 
 	return $bookings_options;
@@ -153,10 +153,8 @@ function bookings_add_admin() {
 		if (current_user_can(BOOKINGS_ADMIN_CAP)) {
 			add_menu_page($bookings_name, $bookings_name, BOOKINGS_USER_CAP, 'bookings','bookings_main');
 			add_submenu_page('bookings', $bookings_name.' - Setup', 'Setup', BOOKINGS_ADMIN_CAP, 'bookings', 'bookings_main');
-			//add_submenu_page('bookings', $bookings_name.' - Stats', 'Stats', BOOKINGS_USER_CAP, 'bookings&zb=stats', 'bookings_main');
 		} else {
 			add_menu_page($bookings_name, $bookings_name, BOOKINGS_USER_CAP, 'bookings','bookings_main');
-			//add_submenu_page('bookings', $bookings_name.' - Stats', 'Stats', BOOKINGS_USER_CAP, 'bookings', 'bookings_main');
 		}
 		if (!isset($bookings['output']['menus'])) {
 			$menus=isset($_SESSION['bookings']['menus']) ? $_SESSION['bookings']['menus'] : array();
@@ -164,10 +162,22 @@ function bookings_add_admin() {
 			$menus=$bookings['output']['menus'];
 			$_SESSION['bookings']['menus']=$bookings['output']['menus'];
 		}
+		$first=true;
 		if (count($menus) > 0) {
 			foreach ($menus as $menu) {
-				if ($menu[3]=='manage_options') add_submenu_page($menu[0],$menu[1],$menu[2],BOOKINGS_ADMIN_CAP,$menu[4],$menu[5]);
-				else add_submenu_page($menu[0],$menu[1],$menu[2],BOOKINGS_USER_CAP,$menu[4],$menu[5]);
+				if (current_user_can(BOOKINGS_ADMIN_CAP)) {
+					if ($menu[3]=='manage_options') add_submenu_page($menu[0],$menu[1],$menu[2],BOOKINGS_ADMIN_CAP,$menu[4],$menu[5]);
+					else add_submenu_page($menu[0],$menu[1],$menu[2],BOOKINGS_USER_CAP,$menu[4],$menu[5]);
+				} else {
+					if ($menu[3]!='manage_options')  {
+						if ($first) {
+							$first=false;
+							//continue;
+						}
+						add_submenu_page($menu[0],$menu[1],$menu[2],BOOKINGS_USER_CAP,$menu[4],$menu[5]);
+					}
+
+				}
 			}
 		}
 	}
@@ -183,7 +193,7 @@ function bookings_main() {
 	require(dirname(__FILE__).'/includes/support-us.inc.php');
 
 	echo '<div class="wrap">';
-	zing_support_us_top('bookings','bookings','bookings',BOOKINGS_VERSION,false);
+	if (!get_option('bookings_lic')) zing_support_us_top('bookings','bookings','bookings',BOOKINGS_VERSION,false);
 	echo '<div id="bookings" style="position:relative;float:left;width:100%">';
 	if (isset($bookings['output']['messages']) && is_array($bookings['output']['messages']) && (count($bookings['output']['messages']) > 0)) {
 		echo '<div class="error">';
@@ -195,7 +205,7 @@ function bookings_main() {
 	if (isset($bookings['output']['mimetype']) && ($bookings['output']['mimetype'] == 'text/plain')) {
 		while (count(ob_get_status(true)) > 0) ob_end_clean();
 		header('Content-Type: ' . $bookings['output']['mimetype']);
- 		header('Content-Disposition: attachment; filename="'.$bookings['output']['filename'].'"');
+		header('Content-Disposition: attachment; filename="'.$bookings['output']['filename'].'"');
 		if (isset($bookings['output']['body'])) echo trim($bookings['output']['body']);
 		die();
 	} elseif (isset($bookings['output']['body'])) echo $bookings['output']['body'];
@@ -219,37 +229,45 @@ function bookings_admin() {
 	require(dirname(__FILE__).'/includes/support-us.inc.php');
 
 	?>
-<div class="wrap"><?php 	zing_support_us_top('bookings','bookings','bookings',BOOKINGS_VERSION,false);?>
-<div id="cc-left" style="position: relative; float: left; width:100%">
-<h2><b><?php echo $bookings_name; ?></b></h2>
+<div class="wrap">
+<?php 	zing_support_us_top('bookings','bookings','bookings',BOOKINGS_VERSION,false);?>
+	<div id="cc-left" style="position: relative; float: left; width: 100%">
+		<h2>
+			<b><?php echo $bookings_name; ?> </b>
+		</h2>
 
-	<?php
-	$bookings_version=get_option("bookings_version");
-	$submit='Update';
-	?>
-<form method="post"><?php require(dirname(__FILE__).'/includes/cpedit.inc.php')?>
+		<?php
+		$bookings_version=get_option("bookings_version");
+		$submit='Update';
+		?>
+		<form method="post">
+		<?php require(dirname(__FILE__).'/includes/cpedit.inc.php')?>
 
-<p class="submit"><input name="install" type="submit" value="<?php echo $submit;?>" /> <input
-	type="hidden" name="action" value="install"
-/></p>
-</form>
-	<?php
-	if ($bookings_version && get_option('bookings_debug')) {
-		echo '<h2 style="color: green;">Debug log</h2>';
-		echo '<textarea rows=10 cols=80>';
-		$r=get_option('bookings_log');
-		if ($r) {
-			$v=$r;
-			foreach ($v as $m) {
-				echo date('H:i:s',$m[0]).' '.$m[1].chr(13).chr(10);
-				echo $m[2].chr(13).chr(10);
+			<p class="submit">
+				<input name="install" type="submit" value="<?php echo $submit;?>" /> <input type="hidden"
+					name="action" value="install"
+				/>
+			</p>
+		</form>
+		<?php
+		if ($bookings_version && get_option('bookings_debug')) {
+			echo '<h2 style="color: green;">Debug log</h2>';
+			echo '<textarea rows=10 cols=80>';
+			$r=get_option('bookings_log');
+			if ($r) {
+				$v=$r;
+				foreach ($v as $m) {
+					echo date('H:i:s',$m[0]).' '.$m[1].chr(13).chr(10);
+					echo $m[2].chr(13).chr(10);
+				}
 			}
+			echo '</textarea><hr />';
 		}
-		echo '</textarea><hr />';
-	}
-	require(dirname(__FILE__).'/includes/help.inc.php');
-	?></div>
-<!-- end cc-left --> <?php
-zing_support_us_bottom('bookings','bookings','bookings',BOOKINGS_VERSION,false);
+		require(dirname(__FILE__).'/includes/help.inc.php');
+		?>
+	</div>
+	<!-- end cc-left -->
+	<?php
+	zing_support_us_bottom('bookings','bookings','bookings',BOOKINGS_VERSION,false);
 }
 add_action('admin_menu', 'bookings_add_admin'); ?>

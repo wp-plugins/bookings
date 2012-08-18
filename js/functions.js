@@ -982,14 +982,22 @@ function bookingsAdditionalInfoSave() {
 	return true;
 }
 
-function bookingsCheckSlots(message) {
+function bookingsCheckSlots(message,max,maxMessage) {
 	var selected=false;
+	var count=0;
 	var select = jQuery('.multislot');
 	for (i = 0; i < select.length; i++) {
 		slot=jQuery(select[i]);
-		if (slot.prop('checked')) selected=true;
+		if (slot.prop('checked')) { 
+			selected=true;
+			count++;
+		}
 	}
 	if (!selected) alert(message);
+	if (selected && max > 0 && count > max) { 
+		alert(maxMessage);
+		return false;
+	}
 	return selected;
 }
 Calendar = function () {

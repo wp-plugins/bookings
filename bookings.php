@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.7.4
+ Version: 1.7.5
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.7.4");
+define("BOOKINGS_VERSION","1.7.5");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -53,8 +53,11 @@ if (get_option('bookings_region') && (!defined('BOOKINGS_LIVE') || get_option('b
 	} else {
 		add_action('wp_head','bookings_header');
 	}
-	//add_filter('the_content', 'bookings_content', 10, 3);
 	add_shortcode( 'bookings', 'bookings_shortcode' );
+	add_shortcode( 'bookings1', 'bookings_shortcode_pages' );
+	add_shortcode( 'bookings2', 'bookings_shortcode_pages' );
+	add_shortcode( 'bookings3', 'bookings_shortcode_pages' );
+	add_shortcode( 'bookings4', 'bookings_shortcode_pages' );
 }
 
 add_action('admin_head','bookings_admin_header');
@@ -184,6 +187,27 @@ function bookings_shortcode( $atts, $content=null, $code="" ) {
 		$output.='</div>';
 		return $output;
 	}
+}
+
+function bookings_shortcode_pages( $atts, $content=null, $code="" ) {
+	if (!is_page() && !is_single()) return '';
+
+	$step=isset($_REQUEST['zb']) ? $_REQUEST['zb'] : 'book1';
+	switch ($code) {
+		case 'bookings1':
+			if ($step=='book1') return $content;
+			break;
+		case 'bookings2':
+			if ($step=='book2') return $content;
+			break;
+		case 'bookings3':
+			if ($step=='book3') return $content;
+			break;
+		case 'bookings4':
+			if ($step=='book4') return $content;
+			break;
+	}
+	return '';
 }
 
 function bookings_output($bookings_to_include='',$postVars=array()) {
@@ -394,7 +418,7 @@ function bookings_http($page="index") {
 	$wp['client_version']=BOOKINGS_VERSION;
 	if (current_user_can(BOOKINGS_ADMIN_CAP)) $wp['cap']='admin';
 	elseif (current_user_can(BOOKINGS_USER_CAP)) $wp['cap']='operator';
-	
+
 	$vars.=$and.'wp='.urlencode(base64_encode(json_encode($wp)));
 
 	if (get_option('bookings_http_referer')) $vars.='&http_referer='.urlencode(get_option('bookings_http_referer'));
@@ -441,7 +465,7 @@ function bookings_init() {
 	session_start();
 	if (is_admin()) {
 		if (isset($_GET['page']) && $_GET['page']=='bookings' && !current_user_can(BOOKINGS_ADMIN_CAP) && !isset($_GET['zb'])) {
-			$_GET['zb']='stats';
+			$_GET['zb']='schedule';
 		}
 		if ((isset($_GET['zb']) || !isset($_SESSION['bookings']['menus']))) {
 			$pg=isset($_GET['zb']) ? $_GET['zb'] : 'usage';

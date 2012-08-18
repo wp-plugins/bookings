@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.4.1
-Stable tag: 1.7.4
+Stable tag: 1.7.5
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,21 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.7.5 =
+* Added reminder function (Pro)
+* Added new [bookings1], [bookings2], [bookings3], [bookings4] short codes to enable display of specific text on every single bookings process page
+* Added Moneybookers payment gateway (Pro)
+* Fixed issue with approvals not being available in free version
+* Fixed issue with non breaking space appearing as &nbsp in product summary
+* Added option to select schedule by admin email in [bookings] short code
+* Removed loading of Twitter and Facebook buttons on all pages except configuration page
+* Changed default page to Schedule Calendar
+* Fixed formatting issue of amounts in hotel1 template
+* Fixed issue with double display of currency in checkout
+* Fixed issue with add to calendar link
+* Fixed issue with payment gateway fields not being hidden automatically (formfield.jquery.js not loaded)
+* Fixed issue with resources not being refreshed when editing products (repeatable.jquery.js, not loaded)
 
 = 1.7.4 =
 * Fixed issue with parsing of [PRODUCT] template variable
