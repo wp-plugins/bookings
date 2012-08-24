@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.7.5
+ Version: 1.7.6
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.7.5");
+define("BOOKINGS_VERSION","1.7.6");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -274,7 +274,7 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 			$buffer=$news->DownloadToString();
 			if ($news->error) {
 				$bookings['output']=array();
-				if (is_admin()) $bookings['output']['body']='An error occured when connecting to the Bookings service:<br /><div style="width:100%;overflow:scroll">'.$news->errorMsg.'</div><br />If you need help with this, please contact our technical support service.';
+				if (is_admin()) $bookings['output']['body']='An error occured when connecting to the Bookings service.<br />If you need help with this, please contact our <a href="http://go.zingiri.com" target="_blank">technical support service</a>.';
 				else $bookings['output']['body']='The service is currently not available, please try again later.';
 				return false;
 			}
@@ -335,7 +335,10 @@ function bookings_header() {
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/functions.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/ajax.js"></script>';
 	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jquery.getUrlParam.js"></script>';
-	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/client.css" media="screen" />';
+		$pg=isset($_REQUEST['zb']) ? $_REQUEST['zb'] : 'book1';
+	if (in_array($pg,array('myschedule'))) {
+		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/css-client.css" media="screen" />';
+	}
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/integrated_view.css" media="screen" />';
 

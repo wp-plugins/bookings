@@ -193,7 +193,7 @@ function bookings_main() {
 	require(dirname(__FILE__).'/includes/support-us.inc.php');
 
 	echo '<div class="wrap">';
-	if (!get_option('bookings_lic')) zing_support_us_top('bookings','bookings','bookings',BOOKINGS_VERSION,false);
+	//zing_support_us_top('bookings','bookings','bookings',BOOKINGS_VERSION,false);
 	echo '<div id="bookings" style="position:relative;float:left;width:100%">';
 	if (isset($bookings['output']['messages']) && is_array($bookings['output']['messages']) && (count($bookings['output']['messages']) > 0)) {
 		echo '<div class="error">';
