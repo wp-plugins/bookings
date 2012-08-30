@@ -36,4 +36,8 @@ table.dayReservations {
 	table-layout:fixed; 
 	overflow:hidden;
 	white-space: nowrap;
-} 
+}
+
+#pnl_additional {
+	font-size:11px;
+}

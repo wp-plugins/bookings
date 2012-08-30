@@ -971,10 +971,7 @@ function bookingsAdditionalInfoSave() {
 	if (div.length > 0) div.remove();
 	div=jQuery(document.createElement("div"));
 	div.attr('id','temp_bookingsAdditionalInfo');
-	
 	div.html(html);
-	//div.hide();
-	//jQuery("#bookingsAdditionalInfo").append(div);
 	
 	action=jQuery('.bookings-step2').attr('action');
 	jQuery('.bookings-step2').attr('action',action+'&'+add);

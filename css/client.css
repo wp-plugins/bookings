@@ -249,10 +249,19 @@ table.availability tr.product a {
 	margin-bottom: 0px;
 }
 
-.bookings-accessory {
+.bookings-accessory-title {
 	font-weight:bold;
 	padding: 10px;
 	margin-bottom: 0px;
+}
+
+.bookings-accessory {
+	padding-left: 20px;
+	margin-bottom: 0px;
+}
+
+.bookings-accessory-price {
+	text-align:right;
 }
 
 .bookings-reservationdates {
@@ -385,3 +394,13 @@ table.dayReservations {
 	margin-bottom: auto;
 }
 
+#pnl_additional {
+	width:100%; 
+	position: relative;
+	/*height:400px;
+	overflow:scroll;*/
+}
+
+#pnl_additional table {
+	font-size:smaller;
+}
