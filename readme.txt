@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.4.1
-Stable tag: 1.7.7
+Stable tag: 1.7.8
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,19 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.7.8 =
+* Don't allow change of time when approving a reservation
+* When using 'daystoshow' don't show more dates than available
+* Fixed issue with date selector not working when days to show is set to specific dates
+* Added DKK currency
+* Fixed issue with reservation template not being parsed in combination with multiple slot bookings
+* Fixed issue with unavailability message not showing correct start and end times
+* Fixed issue with prices not tallying when using hour units on product level
+* Fixed issue with products+resources template not auto refreshing resource list when changing product
+* Added option to select all resources from all schedules in templates products+resources and resources+products [bookings template=products+resources schedule=*]
+* Ajaxified date selector on calendar page
+* Fixed encoding issue with Portuguese language files
 
 = 1.7.7 =
 * Show currency symbol instead of ISO code if known

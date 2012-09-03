@@ -668,14 +668,44 @@ function changeMyCal(m, d, y, view) {
 	document.location.href = url + "?date=" + m + "-" + d + "-" + y + "&view=" + view;
 }
 
-function changeResCalendar(m, d, y, view, id, page) {
+function changeResCalendar(m, d, y, view, id, page, action) {
+	
 	var url = document.URL.split('?')[0];
 	var type_id = id.split("|");
 	var type = type_id[0];
 	var p = (type == "s") ? "scheduleid" : "machid";
 	var id = type_id[1];
 	if (page == null) page='rescalendar'; 
-	document.location.href = bookingsPageurl + "zb=" + page + "&date=" + m + "-" + d + "-" + y + "&view=" + view + "&" + p + "=" + id;
+	//document.location.href = bookingsPageurl + "zb=" + page + "&date=" + m + "-" + d + "-" + y + "&view=" + view + "&" + p + "=" + id;
+	var nurl = bookingsPageurl + "ajax=2&spinner=1&zb=" + page + "&date=" + m + "-" + d + "-" + y + "&view=" + view + "&" + p + "=" + id;
+	if (action!=null) nurl+='&action='+action;
+	var slots=new Array();
+	var select = jQuery('.multislot');
+	for (i = 0; i < select.length; i++) {
+		slot=jQuery(select[i]);
+		if (slot.prop('checked')) {
+			slots.push(slot.attr('id'));
+		}
+	}
+	console.log(slots);
+	
+	jQuery(".spinner").show();
+	new jQuery.ajax({
+		url : nurl,
+		type : "get",
+		success : function(request) {
+			jQuery(".spinner").hide();
+			var jsRequest = eval("(" + request + ")");
+			jQuery('#bookings').html(jsRequest.body);
+			for (i = 0; i < slots.length; i++) {
+				console.log(slots[i]);
+				jQuery('#'+slots[i]).prop('checked',true);
+			}
+		}
+	});
+
+//	return false;
+
 }
 
 function selectUserForReservation(memberid, fname, lname, email, phone) {

@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.7.7
+ Version: 1.7.8
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.7.7");
+define("BOOKINGS_VERSION","1.7.8");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
