@@ -88,7 +88,6 @@ function bookingsReserve(type, machid, start_date, resid, scheduleid, is_blackou
 		
 		if ((bookingsDialog2 instanceof jQuery) && bookingsDialog2.dialog('isOpen')) bookingsDialog2.dialog('close');
 		if ((bookingsDialog instanceof jQuery) && bookingsDialog.dialog('isOpen')) bookingsDialog.dialog('close');
-		//nurl = "admin.php?page=bookings&ajax=2&zb=reserve&type=" + type + "&machid=" + machid + "&start_date=" + start_date + "&resid=" + resid + '&scheduleid=' + scheduleid + "&is_blackout=" + is_blackout + "&read_only=" + read_only + "&pending=" + pending + "&starttime=" + starttime + "&endtime=" + endtime;
 		nurl = bookingsAjaxUrl+"ajax=2&zb=reserve&type=" + type + "&machid=" + machid + "&start_date=" + start_date + "&resid=" + resid + '&scheduleid=' + scheduleid + "&is_blackout=" + is_blackout + "&read_only=" + read_only + "&pending=" + pending + "&starttime=" + starttime + "&endtime=" + endtime;
 		
 		jQuery(".spinner").show();
@@ -111,6 +110,31 @@ function bookingsReserve(type, machid, start_date, resid, scheduleid, is_blackou
 		});
 
 		void(0);   
+}
+
+function bookingsReserveWithoutPopup(type, machid, start_date, resid, scheduleid, is_blackout, read_only, pending, starttime, endtime, event) {
+	var result=confirm('Sure?');
+	if (type=='a') fn='approve';
+	else if (type=='d') fn='delete';
+	nurl = bookingsAjaxUrl+"ajax=2&zb=reserve";
+	
+	jQuery(".spinner").show();
+
+	new jQuery.ajax({
+		url : nurl,
+		type : "post",
+		data : { 
+			'btnSubmit' : 1,
+			'fn': fn,
+			'resid' : resid
+		},
+		success : function(request) {
+			jQuery(".spinner").hide();
+			alert(request);
+		}
+	});
+	if (result) location.reload();
+	void(0);
 }
 
 function bookingsCloseDialog() {

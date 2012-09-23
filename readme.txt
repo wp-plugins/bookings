@@ -3,8 +3,8 @@ Contributors: zingiri
 Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
-Tested up to: 3.4.1
-Stable tag: 1.7.8
+Tested up to: 3.4.2
+Stable tag: 1.7.9
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,15 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.7.9 =
+* Added [ADDTOCALENDAR] variable in email templates
+* Verified compatibility with Wordpress version 3.4.2
+* Fixed issue where when using selected dates, reservations on first day are not shown
+* Removed display of user who made the reservation in front end calendar when in admin mode
+* Hide date selection boxes when using selected dates and all dates are displayed using the [bookings] daystoshow attribute
+* Replaced email and text template new lines with html line break in emails and texts  
+* Added possibility to link to Wordpress user profile
 
 = 1.7.8 =
 * Don't allow change of time when approving a reservation
