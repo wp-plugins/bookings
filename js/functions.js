@@ -112,28 +112,38 @@ function bookingsReserve(type, machid, start_date, resid, scheduleid, is_blackou
 		void(0);   
 }
 
-function bookingsReserveWithoutPopup(type, machid, start_date, resid, scheduleid, is_blackout, read_only, pending, starttime, endtime, event) {
-	var result=confirm('Sure?');
-	if (type=='a') fn='approve';
-	else if (type=='d') fn='delete';
-	nurl = bookingsAjaxUrl+"ajax=2&zb=reserve";
+function bookingsReserveWithoutPopup(type, machid, start_date, resid, pending) {
+	if (type=='a') text='approve';
+	else if (type=='d') text='cancel';
+	else if (type=='c') text='cancel';
+	var result=confirm('Are you sure you want to '+text+' this meeting?');
+	if (result) { 
+		if (type=='a') fn='approve';
+		else if ((type=='d') && (pending==1)) fn='delete_req';
+		else if (type=='d') fn='delete';
+		else if ((type=='c') && (pending==1)) fn='cancel_req';
+		else if (type=='c') fn='cancel';
+		nurl = bookingsAjaxUrl+"ajax=2&zb=reserve";
 	
-	jQuery(".spinner").show();
-
-	new jQuery.ajax({
-		url : nurl,
-		type : "post",
-		data : { 
-			'btnSubmit' : 1,
-			'fn': fn,
-			'resid' : resid
-		},
-		success : function(request) {
-			jQuery(".spinner").hide();
-			alert(request);
-		}
-	});
-	if (result) location.reload();
+		jQuery(".spinner").show();
+		new jQuery.ajax({
+			url : nurl,
+			type : "post",
+			data : { 
+				'btnSubmit' : 1,
+				'fn': fn,
+				'resid' : resid
+			},
+			success : function(request) {
+				//jQuery(".spinner").hide();
+				location.reload();
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				jQuery(".spinner").hide();
+				alert('An error occurred!');
+			}
+		});
+	}
 	void(0);
 }
 
@@ -381,7 +391,7 @@ function changeSelectedMonth() {
 }
 
 // Function to change the Scheduler on selected date click
-function changeScheduler(m, d, y, isPopup, scheduleid) {
+function changeScheduler(m, d, y, isPopup, scheduleid, machid) {
 	newDate = m + '-' + d + '-' + y;
 	keys = new Array();
 	vals = new Array();
@@ -421,7 +431,7 @@ function changeScheduler(m, d, y, isPopup, scheduleid) {
 	if (isPopup)
 		window.opener.location = url + "?date=" + newDate + "&scheduleid=" + schedid + "&page=bookings&zb=" + pg;
 	else
-		document.location.href = bookingsPageurl + "zb=" + pg + "&date=" + newDate + "&scheduleid=" + schedid;
+		document.location.href = bookingsPageurl + "zb=" + pg + "&date=" + newDate + "&scheduleid=" + schedid + (machid!=null ? "&machid="+machid : "");
 }
 
 // BUGFIX by Eric Maclot

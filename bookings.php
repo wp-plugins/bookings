@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.7.9
+ Version: 1.8.0
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.7.9");
+define("BOOKINGS_VERSION","1.8.0");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -423,6 +423,8 @@ function bookings_http($page="index") {
 	if (current_user_can(BOOKINGS_ADMIN_CAP)) $wp['cap']='admin';
 	elseif (current_user_can(BOOKINGS_USER_CAP)) $wp['cap']='operator';
 
+	$wp=apply_filters('bookings_http_call', $wp);
+
 	$vars.=$and.'wp='.urlencode(base64_encode(json_encode($wp)));
 
 	if (get_option('bookings_http_referer')) $vars.='&http_referer='.urlencode(get_option('bookings_http_referer'));
@@ -468,9 +470,11 @@ function bookings_init() {
 	ob_start();
 	session_start();
 	if (!is_admin() && isset($_REQUEST['zb']) && ($_REQUEST['zb']=='wp-user-profile')) {
-		$userid=get_user_id_from_string($_REQUEST['email']);
-		header('Location:'.home_url().'/?author='.$userid);
-		die();
+		$userid=email_exists($_REQUEST['email']);
+		if ($userid) {
+			header('Location:'.home_url().'/?author='.$userid);
+			die();
+		}
 	}
 	if (is_admin()) {
 		if (isset($_GET['page']) && $_GET['page']=='bookings' && !current_user_can(BOOKINGS_ADMIN_CAP) && !isset($_GET['zb'])) {

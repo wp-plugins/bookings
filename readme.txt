@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 1.7.9
+Stable tag: 1.8.0
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,13 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.8.0 =
+* Fixed issue with link to Wordpress user profile
+* Don't send email when email template defined and content is empty
+* Don't send email admin in case of modification, deletion or approval
+* Added custom filter 'bookings_http_call'
+* Fixed issue with forms editor not displaying forms in certain cases
 
 = 1.7.9 =
 * Added [ADDTOCALENDAR] variable in email templates
