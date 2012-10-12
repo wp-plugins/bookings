@@ -721,7 +721,6 @@ function changeResCalendar(m, d, y, view, id, page, action) {
 			slots.push(slot.attr('id'));
 		}
 	}
-	console.log(slots);
 	
 	jQuery(".spinner").show();
 	new jQuery.ajax({
@@ -732,7 +731,6 @@ function changeResCalendar(m, d, y, view, id, page, action) {
 			var jsRequest = eval("(" + request + ")");
 			jQuery('#bookings').html(jsRequest.body);
 			for (i = 0; i < slots.length; i++) {
-				console.log(slots[i]);
 				jQuery('#'+slots[i]).prop('checked',true);
 			}
 		}

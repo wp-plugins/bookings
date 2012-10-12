@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 1.8.0
+Stable tag: 1.8.1
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,21 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.8.1 =
+* Fixed issue with total pricing when using hotel1 template
+* Added option to hide unavailable slots
+* In case products/services are used and a time slot is set, the calendar will show start and end times based on the selected time slot
+* Fixed issues with formatting of amounts when trying to pay after a payment abort
+* Added option to pay on customer's reservations control panel
+* Set reservations to status unapproved until payment is received in cases where a payment is due
+* Added CHF and NOK to list of currencies
+* Fixed issue when using upper case user names in Wordpress
+* Added new template variable [DETAILS] showing reservation details in case of multiple slot or multiple product/service bookings
+* Added new [bookings] short code parameter 'shownames' allowing to display names of users having made reservations
+* Fixed issue with schedule1 template where reservations not saved correctly (missing schedule ID)
+* Fixed issue with blank admin emails being sent
+* Fixed issue with changing dates not working after 1.8.0 upgrade caused by obsolete debugging instructions
 
 = 1.8.0 =
 * Fixed issue with link to Wordpress user profile

@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.8.0
+ Version: 1.8.1
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.8.0");
+define("BOOKINGS_VERSION","1.8.1");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -48,6 +48,7 @@ if ($bookings_version != BOOKINGS_VERSION) {
 
 if (get_option('bookings_region') && (!defined('BOOKINGS_LIVE') || get_option('bookings_siteurl'))) {
 	add_action("init","bookings_init");
+	//add_action("init","bookings_sync");
 	if (isset($_GET['ajax']) && ($_GET['ajax'] == 1)) {
 		add_action("init","bookings_ajax");
 	} else {
@@ -363,7 +364,7 @@ function bookings_admin_header() {
 	}
 }
 
-function bookings_http($page="index") {
+function bookings_http($page="index",$params=array()) {
 	global $current_user,$post,$bookings_shortcode_id;
 
 	$vars="";
@@ -423,6 +424,8 @@ function bookings_http($page="index") {
 	if (current_user_can(BOOKINGS_ADMIN_CAP)) $wp['cap']='admin';
 	elseif (current_user_can(BOOKINGS_USER_CAP)) $wp['cap']='operator';
 
+	$wp=array_merge($wp,$params);
+
 	$wp=apply_filters('bookings_http_call', $wp);
 
 	$vars.=$and.'wp='.urlencode(base64_encode(json_encode($wp)));
@@ -464,6 +467,34 @@ function bookings_ajax() {
 	die();
 }
 
+function bookings_sync() {
+	global $current_user;
+	
+	if (!isset($_GET['page']) || ($_GET['page']!='bookings') || !isset($_GET['sync']) || !$_GET['sync']) return;
+	
+	if (!is_admin()) return;
+
+	if (!isset($current_user) || !$current_user || ($current_user->data->user_login!='admin')) return;
+	
+	$users=get_users();
+	foreach ($users as $u) {
+		$user = new WP_User( $u->ID );
+		$wp=array();
+		$wp['login']=$user->data->user_login;
+		$wp['email']=$user->data->user_email;
+		$wp['first_name']=get_user_meta($user->data->ID,'first_name',true) ? get_user_meta($user->data->ID,'first_name',true) : $user->data->display_name;
+		$wp['last_name']=get_user_meta($user->data->ID,'last_name',true) ? get_user_meta($user->data->ID,'last_name',true) : $user->data->display_name;
+		$wp['roles']=$user->roles;
+				
+		$http=bookings_http('myschedule',$wp);
+		$news = new zHttpRequest($http,'bookings');
+		$news->noErrors=true;
+		if ($news->curlInstalled() && $news->live()) {
+			$buffer=$news->DownloadToString();
+		}
+	}
+}
+
 function bookings_init() {
 	global $wp_version;
 
@@ -490,6 +521,10 @@ function bookings_init() {
 				wp_enqueue_style('thickbox');
 			}
 		}
+	}
+	if (is_user_logged_in() && !isset($_GET['zb']) && !isset($_SESSION['bookings']['connected'])) {
+		bookings_output('myschedule');
+		$_SESSION['bookings']['connected']=true;
 	}
 	wp_enqueue_script('jquery');
 	if (!is_admin() && isset($_REQUEST['zb'])) {
