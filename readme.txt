@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 1.8.1
+Stable tag: 1.8.2
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,14 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.8.2 =
+* Added tiered pricing
+* Added pricing on resource level
+* Added seasonal pricing
+* Added accessories new feature
+* Updated links to support departments
+* Fixed issue with reservation summary not showing when viewing reservation but only when modifying or approving
 
 = 1.8.1 =
 * Fixed issue with total pricing when using hotel1 template
