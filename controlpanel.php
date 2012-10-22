@@ -225,7 +225,7 @@ function bookings_admin() {
 	$controlpanelOptions=bookings_options();
 
 	if ( isset($_REQUEST['install']) ) echo '<div id="message" class="updated fade"><p><strong>'.$bookings_name.' settings updated.</strong></p></div>';
-	if ( isset($_REQUEST['error']) ) echo '<div id="message" class="updated fade"><p>The following error occured: <strong>'.$_REQUEST['error'].'</strong></p></div>';
+	if ( isset($_REQUEST['error']) ) echo '<div id="message" class="updated fade"><p>The following error occured: <strong>'.bookings_sanitize($_REQUEST['error']).'</strong></p></div>';
 	require(dirname(__FILE__).'/includes/support-us.inc.php');
 
 	?>
