@@ -4,11 +4,11 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 1.8.4
+ Version: 1.8.5
  Author URI: http://www.zingiri.com/
  */
 
-define("BOOKINGS_VERSION","1.8.4");
+define("BOOKINGS_VERSION","1.8.5");
 
 // Pre-2.6 compatibility for wp-content folder location
 if (!defined("WP_CONTENT_URL")) {
@@ -54,11 +54,14 @@ if (get_option('bookings_region') && (!defined('BOOKINGS_LIVE') || get_option('b
 	} else {
 		add_action('wp_head','bookings_header');
 	}
+	add_action('wp_footer','bookings_footer');
 	add_shortcode( 'bookings', 'bookings_shortcode' );
 	add_shortcode( 'bookings1', 'bookings_shortcode_pages' );
 	add_shortcode( 'bookings2', 'bookings_shortcode_pages' );
 	add_shortcode( 'bookings3', 'bookings_shortcode_pages' );
 	add_shortcode( 'bookings4', 'bookings_shortcode_pages' );
+	//remove auto loading rel=next post link in header
+	remove_action('wp_head', 'adjacent_posts_rel_link_wp_head');
 }
 
 add_action('admin_head','bookings_admin_header');
@@ -143,7 +146,7 @@ function bookings_uninstall() {
 }
 
 function bookings_shortcode( $atts, $content=null, $code="" ) {
-	global $bookings,$bookings_shortcode_id;
+	global $bookings,$bookings_shortcode_id,$post;
 
 	if (!is_page() && !is_single()) return '';
 
@@ -343,7 +346,6 @@ function bookings_header() {
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/client.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/integrated_view.css" media="screen" />';
-
 }
 
 function bookings_admin_header() {
@@ -469,13 +471,13 @@ function bookings_ajax() {
 
 function bookings_sync() {
 	global $current_user;
-	
+
 	if (!isset($_GET['page']) || ($_GET['page']!='bookings') || !isset($_GET['sync']) || !$_GET['sync']) return;
-	
+
 	if (!is_admin()) return;
 
 	if (!isset($current_user) || !$current_user || ($current_user->data->user_login!='admin')) return;
-	
+
 	$users=get_users();
 	foreach ($users as $u) {
 		$user = new WP_User( $u->ID );
@@ -485,7 +487,7 @@ function bookings_sync() {
 		$wp['first_name']=get_user_meta($user->data->ID,'first_name',true) ? get_user_meta($user->data->ID,'first_name',true) : $user->data->display_name;
 		$wp['last_name']=get_user_meta($user->data->ID,'last_name',true) ? get_user_meta($user->data->ID,'last_name',true) : $user->data->display_name;
 		$wp['roles']=$user->roles;
-				
+
 		$http=bookings_http('myschedule',$wp);
 		$news = new zHttpRequest($http,'bookings');
 		$news->noErrors=true;
@@ -496,8 +498,10 @@ function bookings_sync() {
 }
 
 function bookings_init() {
-	global $wp_version;
+	global $wp_version,$bookingsScriptsLoaded;
 
+	$bookingsScriptsLoaded=false;
+	
 	ob_start();
 	session_start();
 	if (!is_admin() && isset($_REQUEST['zb']) && ($_REQUEST['zb']=='wp-user-profile')) {
@@ -528,9 +532,11 @@ function bookings_init() {
 	}
 	wp_enqueue_script('jquery');
 	if (!is_admin() && isset($_REQUEST['zb'])) {
+		$bookingsScriptsLoaded=true;
 		wp_enqueue_script(array('jquery-ui-core','jquery-ui-dialog','jquery-ui-datepicker'));
 		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/flick/jquery-ui.css');
 	} elseif (is_admin() && isset($_REQUEST['page']) && ($_REQUEST['page']=='bookings')) {
+		$bookingsScriptsLoaded=true;
 		wp_enqueue_script(array('jquery-ui-core','jquery-ui-dialog','jquery-ui-datepicker','jquery-ui-sortable','jquery-ui-tabs'));
 		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/flick/jquery-ui.css');
 	}
@@ -562,3 +568,17 @@ function bookings_admin_footer() {
 	if (isset($bookings['output']['footer'])) echo $bookings['output']['footer'];
 }
 
+function bookings_footer() {
+	global $bookings,$bookingsScriptsLoaded;
+	$ext='.css';
+	if (isset($bookings['output']['template']) && file_exists(dirname(__FILE__).'/css/templates/'.$bookings['output']['template'].$ext))  echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/templates/'.$bookings['output']['template'].$ext.'" media="screen" />';
+	if (isset($bookings['output']['calendar']) && file_exists(dirname(__FILE__).'/css/calendars/'.$bookings['output']['calendar'].$ext))  echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/calendars/'.$bookings['output']['calendar'].$ext.'" media="screen" />';
+	if (!$bookingsScriptsLoaded && isset($bookings['output']['template'])) {
+		wp_enqueue_script(array('jquery-ui-core','jquery-ui-dialog','jquery-ui-datepicker'));
+		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/flick/jquery-ui.css');
+	}
+	//	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/less.js"></script>';
+	//echo '<div id="stylist">';
+	//echo '<p class="dayNamesStyle">dayNamesStyle</p>';
+	//echo '</div>';
+}

@@ -710,7 +710,6 @@ function changeResCalendar(m, d, y, view, id, page, action) {
 	var p = (type == "s") ? "scheduleid" : "machid";
 	var id = type_id[1];
 	if (page == null) page='rescalendar'; 
-	//document.location.href = bookingsPageurl + "zb=" + page + "&date=" + m + "-" + d + "-" + y + "&view=" + view + "&" + p + "=" + id;
 	var nurl = bookingsPageurl + "ajax=2&spinner=1&zb=" + page + "&date=" + m + "-" + d + "-" + y + "&view=" + view + "&" + p + "=" + id;
 	if (action!=null) nurl+='&action='+action;
 	var slots=new Array();

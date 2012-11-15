@@ -78,9 +78,21 @@ td.scheduleTimes,.scheduleTimes td {
 
 .bookingsCalendarBody table, #changeMonth {
 	max-width: 300px;
-		text-align:center;
+	text-align:center;
 	margin-left:auto;
 	margin-right:auto;
+}
+
+.bookingsCalendarBody table, .bookingsCalendarBody table tr, .bookingsCalendarBody table td {
+	border: 0px !important;
+}
+
+.bookingsCalendarBody table td {
+	padding: 2px;
+}
+
+table.bookingsCalendarsBody, table.bookingsCalendarsBody tr, table.bookingsCalendarsBody td {
+	border: 0px !important;
 }
 
 .viewdays {
@@ -271,6 +283,14 @@ table.availability tr.product a {
 .bookings-price {
 	padding: 10px;
 	margin-bottom: 0px;
+	text-align:right;
+}
+
+.bookings-totalprice {
+	padding: 10px;
+	margin-bottom: 0px;
+	text-align:right;
+	font-weight: bold; 
 }
 
 /* Button */
@@ -343,28 +363,7 @@ li.zfli {
 	vertical-align:top;
 }
 #bookings .selectedDay {
-	text-align:center;
-}
-
-#compact1Template div#left {
-	float:left;
-	width:35%;
-	font-size:smaller;
-}
-#compact1Template div#right {
-	float:right;
-	padding-left:5%;
-	width:60%;
-	font-size:smaller;
-}
-
-#compact1Template .dayNamesStyle {
-	font-weight:bold;
-	color:red;
-}
-
-#compact1Template div#left table, #compact1Template div#left table tr td {
-	border: 0px !important;
+	text-align: center;
 }
 
 table.dayReservations {
@@ -417,4 +416,14 @@ table.dayReservations {
 	overflow: auto;
 	width: 100px; /* width of the spinner gif */
 	height: 102px; /*hight of the spinner gif +2px to fix IE8 issue */
+}
+
+table.date_text, table.date_text td {
+	border: 0px none !important;
+}
+
+#stylist {
+	position: fixed;
+	top: 200px;
+	left: 10px;
 }

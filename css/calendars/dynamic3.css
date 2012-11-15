@@ -1,0 +1,76 @@
+/*
+Calendar settings
+*/
+.monthNameStyle {
+	font-size: 11px;
+	text-align: center;
+}
+.dayBoxStyle {
+	font-size: 10px;
+	background-color: #F0F0F0;
+	text-align: center;
+	width: 25px;
+	height: 25px;
+}
+.currentDayBoxStyle {
+	width: 25px;
+	height: 25px;
+	font-size: 10px;
+	background-color: #FFFFFF;
+	text-align: center;
+}
+.emptyDayStyle {
+	background-color: #D5D8D3;
+}
+.dayNamesStyle {
+	font-size: 11px;
+	text-align: center;
+	height: 25px;
+	background-color: #DDCAF6;
+}
+.navMonthStyle {
+	font-size: 11px;
+	color: #000000;
+}
+.selectBoxStyle {
+	font-size: 11px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.bookingsCalendarsBody {
+	width:100%;
+}
+
+.bookingsCalendarBody table td {
+	vertical-align: baseline;
+}
+
+.bookingsCalendarBody {
+	float:left;
+	width:31.3%;
+	padding:1%;
+}
+
+table.availability td {
+	padding: 0px;
+}
+
+table.availability td.resourceName {
+	text-align:right;
+	padding: 0px 10px 0px 0px;
+}
+
+div.MyCalCellColorEmpty, div.MyCalCellColor {
+	padding: 0px 3px 3px 3px;
+}
+
+table.availability td.scheduleDateHeader {
+	padding: 0px 5px;
+}
+
+.bookings-step2 table.availability {
+	font-size: smaller;
+	table-layout:fixed;
+	width: inherit;
+	margin: auto;
+}

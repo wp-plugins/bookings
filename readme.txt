@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 1.8.4
+Stable tag: 1.8.5
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,17 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.8.5 =
+* Fixed issue with capitalised domain names and syncing
+* Fixed issue with characters in French emails
+* Ordered resources by schedule ID in resources list
+* Auto blackout days that are not within the range Weekday Start + Days to Show
+* Remove auto loading rel=next post link in header
+* Go directly to calendar on hotel1, schedule1 and schedule2 templates
+* Fixed issue with template rp3 when using schedule other than default
+* Removed debug code
+* Added new calendar templates
 
 = 1.8.4 =
 * Fixed issue with Bulgarian language encoding

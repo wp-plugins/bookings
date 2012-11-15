@@ -1,0 +1,33 @@
+.bookingsCalendarDateSelector {
+	float:left;
+	width:35%;
+	font-size:smaller;
+}
+
+h3.selectedDay {
+	display:none;
+}
+
+form.bookings-step2 {
+	float:right;
+	position: relative;
+	/*width:60%;*/
+	font-size:smaller;
+}
+
+tr.dayNamesStyle {
+	font-weight:bold;
+	color:red;
+}
+
+div.bookingsCalendarBody table, div.bookingsCalendarBody table tr td {
+	border: 0px !important;
+}
+
+table.availability td.MyCalCellColorEmpty, table.availability td.resourceName {
+	padding: 0px;
+}
+
+table.availability td.MyCalCellColorEmpty p {
+	margin: 0px;
+}

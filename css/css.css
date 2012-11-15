@@ -233,7 +233,7 @@ td.scheduleDate, td.scheduleDateHeader a {
 	color: #FFFFFF;
 }
 
-tr.r0 td {
+tr.r0 td, tr.r1 td {
 	overflow:hidden;
 }
 /*
