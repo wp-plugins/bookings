@@ -3,7 +3,7 @@ Contributors: zingiri
 Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
-Tested up to: 3.4.2
+Tested up to: 3.5
 Stable tag: 1.8.5
 
 Bookings is a powerful reservations scheduler.
@@ -69,6 +69,20 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 1.8.6 =
+* Fixed issue with Google Calendar subscriptions and empty messages
+* Fixed issue with [ADDTOCALENDAR] template code
+* Cosmetic changes to schedule3 template
+* Changed behaviour of month drop down in front end calendar to take the user to next year depending on chosen month
+* Added ZAR currency
+* Fixed issue with adding accessories error
+* Verified compatibility with Wordpress version 3.5
+* Fixed issue with date jump on schedule2 template not going to next year
+* Added multiple choice type of field to form editor
+* Improved use of dropdown field type in form editor
+* Replace field drop down by a field list in form editor
+* Improved general usability when creating a form
 
 = 1.8.5 =
 * Fixed issue with capitalised domain names and syncing

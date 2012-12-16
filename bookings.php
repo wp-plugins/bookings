@@ -345,7 +345,8 @@ function bookings_header() {
 	}
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/client.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
-	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/integrated_view.css" media="screen" />';
+	echo '<link rel="stylesheet" type="text/css" href="' . bookings_url(false) . 'aphps/fwkfor/css/integrated_view.css" media="screen" />';
+	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/forms.css" media="screen" />';
 }
 
 function bookings_admin_header() {
@@ -361,7 +362,8 @@ function bookings_admin_header() {
 		echo '</script>';
 		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/admin.css" media="screen" />';
 		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
-		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/integrated_view.css" media="screen" />';
+		echo '<link rel="stylesheet" type="text/css" href="' . bookings_url(false) . 'aphps/fwkfor/css/integrated_view.css" media="screen" />';
+		//echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/integrated_view.css" media="screen" />';
 		if ($wp_version < '3.3') wp_tiny_mce( false, array( 'editor_selector' => 'theEditor' ) );
 	}
 }

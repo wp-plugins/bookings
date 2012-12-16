@@ -1,0 +1,15 @@
+.zing_ws_page {
+	width:100%;
+}
+
+.zfaces-form {
+	background-color:#F8F8F8; 
+	border-radius: 12px;
+	-moz-border-radius: 12px;
+	width: 100%;
+	float:left;	
+}
+
+.mceContentBody p, .zfaces-form input[type="text"],.zfaces-form textarea {
+	background-color:white; 
+}

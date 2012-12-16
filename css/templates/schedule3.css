@@ -8,3 +8,6 @@ table.products, table.products td {
 /*
 page 2
 */
+#bookings h3.selectedDay {
+	clear:both;
+}
