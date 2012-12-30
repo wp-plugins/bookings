@@ -415,8 +415,6 @@ function changeScheduler(m, d, y, isPopup, scheduleid, machid) {
 			vals[vals.length] = value;		
 		}
 	}
-	console.log(vals);
-	console.log(keys);
 	for (i = 0; i < keys.length; i++) {
 		if (keys[i] == "scheduleid") {
 			schedid = vals[i];
