@@ -220,7 +220,7 @@ if (!class_exists('zHttpRequest')) {
 			if ($withHeaders) curl_setopt($ch, CURLOPT_HEADER, 1);
 
 			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:')); //avoid 417 errors
-				
+
 			//curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0); //avoids error 18 - transfer closed with outstanding read data remaining
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER,1); // return into a variable
 			curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);

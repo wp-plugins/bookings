@@ -338,13 +338,17 @@ Calendar settings
 	width: 25px;
 	height: 25px;
 }
-.currentDayBoxStyle {
+.currentDayBoxStyle,.selectedDayBoxStyle {
 	width: 25px;
 	height: 25px;
 	font-size: 10px;
 	background-color: #FFFFFF;
 	text-align: center;
 }
+.selectedDayBoxStyle {
+	background-color: #DDCAF6;
+}
+
 .emptyDayStyle {
 	background-color: #D5D8D3;
 }
@@ -554,7 +558,7 @@ div.blur_textbox {
 }
 
 /* spinner */
-#bookings .spinner {
+.bookingsSpinner {
 	position: fixed;
 	top: 50%;
 	left: 50%;

@@ -134,6 +134,7 @@ function bookings_add_admin() {
 
 		if ( isset($_REQUEST['action']) && 'install' == $_REQUEST['action'] ) {
 			unset($_SESSION['bookings']['menus']);
+			$_SESSION['bookings']['force_license_check']=true;
 			delete_option('bookings_log');
 			foreach ($bookings_options as $value) {
 				if( isset( $_REQUEST[ $value['id'] ] ) ) {

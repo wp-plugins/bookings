@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.5
-Stable tag: 1.8.7
+Stable tag: 2.0.0
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,19 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 2.0.0 =
+* Added SMS notifications
+* Added possibility to define template at schedule level
+* Added daily, monthly and new weekly view in back-end calendar
+* Added possibility to choose between 'compact' and 'normal' calendar layout at schedule level
+* Added weekly view to front end calendar and possibility to switch between weekly and daily views
+* Added option to enable/disable syncing of blackouts
+* Fixed conflict with Wordpress .spinner class
+* Changed order of additional fields in back-end to display in same order as defined on registration form
+* Fixed issue with line breaks between additional fields in confirmation email
+* Fixed issue with date selector in back end calender defaulting to 2001
+* Fixed issue with calendar pop up on hotel1 and schedule1 templates
 
 = 1.8.7 =
 * Fixed issue with error when adding a dropdown field to the registration form

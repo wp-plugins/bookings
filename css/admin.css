@@ -41,3 +41,54 @@ table.dayReservations {
 #pnl_additional {
 	font-size:11px;
 }
+
+.bookingsCalendarDateSelector {
+	clear: both;
+}
+
+.bookingsCalendarsBody {
+	width: 100%;
+	margin: 10px;
+	clear: both;
+	min-height: 225px;
+}
+
+.bookingsCalendar3Body .bookingsCalendarBody {
+	width: 33%;
+}
+
+.bookingsCalendar2Body .bookingsCalendarBody {
+	width: 50%;
+}
+
+.bookingsCalendarBody {
+	float: left;
+	text-align: center;
+}
+
+.bookingsCalendarBody table {
+	margin: auto;
+}
+
+.selectedDay {
+	font-size: 18px;
+	clear: both;
+	text-align: center;
+	margin: 20px;
+}
+
+.viewLinks {
+	width: 50%;
+	float: right;
+}
+
+.resourceJumpLinks, .scheduleJumpLinks {
+	float: left;
+}
+.resourceJumpLinks select, .scheduleJumpLinks select {
+	display: inline;
+}	 
+.resourceJumpLinks p,.scheduleJumpLinks p {
+	display: inline;
+	font-weight: bold;
+}

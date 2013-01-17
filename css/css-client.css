@@ -465,7 +465,7 @@ div.blur_textbox {
 }
 
 /* spinner */
-#bookings .spinner {
+.bookingsSpinner {
 	position: fixed;
 	top: 50%;
 	left: 50%;

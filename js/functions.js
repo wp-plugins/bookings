@@ -1,3 +1,5 @@
+<<<<<<< .mine
+=======
 var bookingsDialog;
 var bookingsDialog2;
 var bookings=new Object();
@@ -1096,3 +1098,4 @@ jQuery(document).ready(function(){
 		});
 	}
 });
+>>>>>>> .r652901
