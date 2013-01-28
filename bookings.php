@@ -148,11 +148,9 @@ function bookings_uninstall() {
 }
 
 function bookings_shortcode( $atts, $content=null, $code="" ) {
-	global $bookings,$bookings_shortcode_id,$post;
+	global $bookings,$bookings_shortcode_id,$post,$bookings_shortcode_processed,$bookings_shortcode_counter;
 
 	if (!is_page() && !is_single()) return '';
-
-	$bookings_shortcode_id=isset($bookings_shortcode_id) ? $bookings_shortcode_id+1 : 1;
 
 	//support old style, comma delimited format
 	$attString='';
@@ -171,10 +169,14 @@ function bookings_shortcode( $atts, $content=null, $code="" ) {
 		}
 	}
 
+	$bookings_shortcode_counter=isset($bookings_shortcode_counter) ? $bookings_shortcode_counter+1 : 1;
+	
 	$defaults=array('template' => '','scheduleid' => '', 'calendar' => '', 'form' => 'form1');
 	extract( shortcode_atts( $defaults, $atts ) );
 	$pg=isset($_REQUEST['zb']) ? $_REQUEST['zb'] : 'book1';
 	if ($pg=='book1') {
+		$bookings_shortcode_id=$bookings_shortcode_counter;
+		unset($_SESSION['bookings']['sid']);
 		$postVars=array();
 		if (is_array($atts) && count($atts) > 0) {
 			foreach($atts as $id => $value) {
@@ -185,13 +187,18 @@ function bookings_shortcode( $atts, $content=null, $code="" ) {
 		$output='<div id="bookings">';
 		$output.=$bookings['output']['body'];
 		$output.='</div>';
-		return $output;
+		return $content.$output;
 	} else {
+		if ($bookings_shortcode_processed) return;
+		if (isset($_REQUEST['bookingssid'])) $bookings_shortcode_id=$_SESSION['bookings']['sid']=$_REQUEST['bookingssid'];
+		elseif (isset($_SESSION['bookings']['sid'])) $bookings_shortcode_id=$_SESSION['bookings']['sid'];
+		if ($bookings_shortcode_id && ($bookings_shortcode_id != $bookings_shortcode_counter)) return;
+		$bookings_shortcode_processed=true;
 		bookings_output($pg);
 		$output='<div id="bookings">';
 		$output.=$bookings['output']['body'];
 		$output.='</div>';
-		return $output;
+		return $content.$output;
 	}
 }
 

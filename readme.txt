@@ -3,7 +3,7 @@ Contributors: zingiri
 Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
-Tested up to: 3.5
+Tested up to: 3.5.1
 Stable tag: 2.0.1
 
 Bookings is a powerful reservations scheduler.
@@ -69,6 +69,19 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 2.0.3 =
+* Added option to auto scroll page to bookings section
+* Improved use of multiple [bookings] short codes on same page
+* Fixed issue in schedule3 when selecting time range wider than 3 months
+* Verified compatibility with Wordpress 3.5.1
+
+= 2.0.2 =
+* Added sync type to settings allowing to choose whether to sync schedules or resources
+* Fixed issue with accessories not displaying
+* Fixed issue with first availability date not displaying correctly if no availability in selected month(s)
+* Added possibility to skip first page when passing a resource in URL parameters
+* Improved compatiblity with older versions of jQuery (.button)
 
 = 2.0.1 =
 * Fixed performance issues when displaying available dates only in calendar
