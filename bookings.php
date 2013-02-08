@@ -4,7 +4,7 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 2.0.3
+ Version: 2.0.4
  Author URI: http://www.zingiri.com/
  */
 
@@ -354,8 +354,6 @@ function bookings_header() {
 	}
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/client.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
-	//V2	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/client-fixed.css" media="screen" />';
-	//V2	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/client-flick.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . bookings_url(false) . 'aphps/fwkfor/css/integrated_view.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/forms.css" media="screen" />';
 	
@@ -556,6 +554,7 @@ function bookings_init() {
 	} elseif (is_admin() && isset($_REQUEST['page']) && ($_REQUEST['page']=='bookings')) {
 		$bookingsScriptsLoaded=true;
 		wp_enqueue_script(array('jquery-ui-core','jquery-ui-dialog','jquery-ui-datepicker','jquery-ui-sortable','jquery-ui-tabs'));
+		if (version_compare($wp_version,'3.2.1','<=')) wp_enqueue_script('datepicker',bookings_url(false).'js/datepicker/jquery-ui-1.9.2.custom.min.js',array('jquery-ui-core'));
 		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/flick/jquery-ui.css');
 	}
 
