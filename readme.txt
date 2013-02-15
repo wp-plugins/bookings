@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 2.0.4
+Stable tag: 2.0.5
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,12 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 2.0.5 =
+* Fixed issue with use of home_url() in assigning unique ID
+* Added contents of summary field to CSV export
+* Added management of sessions
+* Fixed issue with calendar types set at schedule level
 
 = 2.0.4 =
 * Fixed issue with display of products in template rp2 when only 1 resource is active
