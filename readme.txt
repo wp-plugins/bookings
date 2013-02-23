@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 2.0.5
+Stable tag: 2.0.6
 
 Bookings is a powerful reservations scheduler.
 
@@ -25,7 +25,7 @@ This WordPress plugin allows you to provide online booking services for your sit
 * Community support via our [Forums](http://forums.zingiri.net "Forums") 
 * Limited to 1 schedule and 25 bookings per month
 
-The Pro version of the plugin additionaly offers:
+The Pro and Expert versions of the plugin additionaly offer:
 
 * Unlimited bookings
 * Unlimited schedules
@@ -39,7 +39,7 @@ The Pro version of the plugin additionaly offers:
 * Export reservations to your favorite calendar (Outlook, iCal, etc) from the admin back-end or your confirmation email
 * Possibility to search reservations by reservation ID
 * Possibility to define your own time spans
-* Priority support via our [Helpdesk](http://www.zingiri.com/portal "Helpdesk")
+* Priority support via our [Helpdesk](http://www.zingiri.com/portal "Helpdesk") and by phone
 
 Note: Bookings uses web services stored on Zingiri's servers, read more in the plugin's FAQ about what that means.
 
@@ -69,6 +69,10 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 2.0.6 =
+* Added 'resourcerequired' bookings short code parameter
+* Removed link in session expired message
 
 = 2.0.5 =
 * Fixed issue with use of home_url() in assigning unique ID
