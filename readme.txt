@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 2.0.6
+Stable tag: 2.0.7
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,11 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 2.0.7 =
+* Improved memory handling of simple_html_dom library
+* Fixed issue with iOS syncing
+* If sync per resource then customer name is displayed in calendar instead of resource name
 
 = 2.0.6 =
 * Added 'resourcerequired' bookings short code parameter

@@ -4,7 +4,7 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 2.0.6
+ Version: 2.0.7
  Author URI: http://www.zingiri.com/
  */
 
@@ -323,10 +323,10 @@ function bookings_parser($buffer) {
 				$textarea->outertext=$editor;
 			}
 		}
-		return $html->__toString();
+		$buffer=$html->__toString();
+		$html->clear();
+		unset($html);
 	}
-	return $buffer;
-
 	return $buffer;
 }
 
