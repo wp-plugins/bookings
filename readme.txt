@@ -74,6 +74,7 @@ Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/booki
 * Improved memory handling of simple_html_dom library
 * Fixed issue with iOS syncing
 * If sync per resource then customer name is displayed in calendar instead of resource name
+* Updated instructions for setup of sync on iCal
 
 = 2.0.6 =
 * Added 'resourcerequired' bookings short code parameter
