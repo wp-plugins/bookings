@@ -75,6 +75,7 @@ Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/booki
 * Fixed issue with resource phone number not appearing in email
 * Fixed issue with [DATES] template variable not being parsed correctly
 * In case product pricing is nil, check if pricing defined on resource level
+* Added minimum duration in days when using full day schedules
 
 = 2.0.7 =
 * Improved memory handling of simple_html_dom library
