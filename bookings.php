@@ -4,7 +4,7 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 2.0.8
+ Version: 2.1.0
  Author URI: http://www.zingiri.com/
  */
 
@@ -245,7 +245,7 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 		bookings_log('Error','A HTTP Error occured');
 		return "A HTTP Error occured";
 	} else {
-		if (($ajax==1) && ($_REQUEST['form']!='form_field')) {
+		if (($ajax==1) && !in_array($_REQUEST['form'],array('form_field','form'))) {
 			while (count(ob_get_status(true)) > 0) ob_end_clean();
 			$buffer=$news->DownloadToString();
 			$bookings['output']=json_decode($buffer,true);
@@ -263,7 +263,7 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 				echo '</body></html>';
 			}
 			die();
-		} elseif (($ajax==1) && ($_REQUEST['form']=='form_field')) {
+		} elseif (($ajax==1) && in_array($_REQUEST['form'],array('form_field','form'))) {
 			while (count(ob_get_status(true)) > 0) ob_end_clean();
 			$buffer=$news->DownloadToString();
 			$output=json_decode($buffer,true);
@@ -346,8 +346,7 @@ function bookings_header() {
 	echo "var bookingsAjaxUrl='".bookings_home()."';";
 	echo '</script>';
 	echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/functions.js"></script>';
-	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/ajax.js"></script>';
-	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/jquery.getUrlParam.js"></script>';
+	echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/jquery.getUrlParam.js"></script>';
 	$pg=isset($_REQUEST['zb']) ? $_REQUEST['zb'] : 'book1';
 	if (in_array($pg,array('myschedule'))) {
 		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/css-client.css" media="screen" />';

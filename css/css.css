@@ -50,6 +50,7 @@ Error box settings
 	border: solid #8B0000 2px;
 	padding: 5px;
 	margin-bottom: 5px;
+	color: white;
 	font-size: 11px;
 }
 /*
@@ -558,7 +559,7 @@ div.blur_textbox {
 }
 
 /* spinner */
-.bookingsSpinner {
+.aphpsSpinner {
 	position: fixed;
 	top: 50%;
 	left: 50%;

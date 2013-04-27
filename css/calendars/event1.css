@@ -1,0 +1,9 @@
+.quantity {
+	float: left;
+	width: 30%;
+}
+
+.bookit {
+	float: left;
+	width: 70%;
+}

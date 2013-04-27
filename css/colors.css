@@ -47,6 +47,7 @@ td.available:hover
 	margin:10px auto;
 	float:left;
 	text-align:center;
+	width: 100%;
 }
 
 div.color_key {
