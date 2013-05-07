@@ -1,7 +1,6 @@
-.bookingsCalendarBody table, .bookingsCalendarBody table tr, .bookingsCalendarBody table td {
-	border: 0px !important;
-}
-
+/*
+Calendar settings
+*/
 .monthNameStyle {
 	font-size: 11px;
 	text-align: center;
@@ -51,7 +50,7 @@
 
 .bookingsCalendarBody {
 	float:left;
-	width:31.3%;
+	width: 48%; /*31.3%;*/
 	padding:1%;
 }
 
@@ -85,4 +84,17 @@ table.availability td.scheduleDateHeader {
 
 #bookingsCalendarNext {
 	min-height: 30px;
+}
+
+.bookingsCalendarBody table td.dayBoxStyle, .bookingsCalendarBody table td.currentDayBoxStyle {
+	border: 1px solid black;
+}
+	
+.bookingsCalendarCellDate {
+	text-align:right;
+	font-weight: bold;
+}
+	
+.bookingsCalendarCellData {
+	text-align:right;
 }

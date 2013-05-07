@@ -71,22 +71,20 @@ td.scheduleTimes,.scheduleTimes td {
 }
 
 .bookingsCalendarBody {
-	/*max-width: 300px;*/
 	text-align:center;
 	width:100%;
 }
 
 .bookingsCalendarBody table, #changeMonth {
-	max-width: 300px;
 	text-align:center;
 	margin-left:auto;
 	margin-right:auto;
 }
 
-.bookingsCalendarBody table, .bookingsCalendarBody table tr, .bookingsCalendarBody table td {
-	border: 0px !important;
+#changeMonth {
+	max-width: 300px;
 }
-
+	
 .bookingsCalendarBody table td {
 	padding: 2px;
 }

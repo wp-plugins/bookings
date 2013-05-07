@@ -1,3 +1,8 @@
+.bookingsCalendarBody table, .bookingsCalendarBody table tr, .bookingsCalendarBody table td {
+	border: 0px !important;
+	max-width: 300px;
+}
+
 table.availability td.scheduleDateHeader:first-child {
 	width: 20%;
 }
