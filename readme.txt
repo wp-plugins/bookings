@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 2.2.0
+Stable tag: 2.2.2
 
 Bookings is a powerful reservations scheduler.
 
@@ -70,11 +70,16 @@ Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/booki
 
 == Changelog ==
 
+= 2.2.2 =
+* Added support for setting up products and services occuring on predefined times which can be used for classes, events, etc (alpha release)
+
+= 2.2.1 =
+* Added alert in template parser when using fields STARTDATE, STARTTIME, etc in combination with multi slot reservations
+ 
 = 2.2.0 =
 * Added possibility to define own payment methods (for bank transfers and cheques for example)
 * Fixed issue with date pop-ups not working when editing a reservation a second time
 * Add size attribute to email field and set default size to 30 characters
-* Added support for setting up products and services occuring on predefined times which can be used for classes, events, etc (alpha release)
 
 = 2.1.0 =
 * Removed obsolete java scripts
