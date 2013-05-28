@@ -58,3 +58,7 @@ td.MyCalCellColorEmpty, td.MyCalCellColor {
 div.bookingsCalendarBody div.viewdays {
 	margin: 0 auto;
 }
+
+a.bookingsMoveForward, a.bookingsMoveBack {
+	text-decoration:none;
+}

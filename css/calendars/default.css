@@ -6,3 +6,7 @@
 table.availability td.scheduleDateHeader:first-child {
 	width: 20%;
 }
+
+a.bookingsMoveForward, a.bookingsMoveBack {
+	text-decoration:none;
+}

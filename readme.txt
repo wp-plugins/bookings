@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 2.2.2
+Stable tag: 2.2.3
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,10 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 2.2.3 =
+* Changed long date format for Dutch
+* Added option to view products with predefined dates in default calendar views
 
 = 2.2.2 =
 * Added support for setting up products and services occuring on predefined times which can be used for classes, events, etc (alpha release)

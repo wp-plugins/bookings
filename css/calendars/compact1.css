@@ -31,3 +31,7 @@ table.availability td.MyCalCellColorEmpty, table.availability td.resourceName {
 table.availability td.MyCalCellColorEmpty p {
 	margin: 0px;
 }
+
+a.bookingsMoveForward, a.bookingsMoveBack {
+	text-decoration:none;
+}
