@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 2.2.3
+Stable tag: 3.0.0
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,14 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 3.0.0 =
+* Added hotel2 template
+* Added setting to disable online booking part, showing availability only
+* Added user management to Expert version
+* Added support for setting up products and services occuring on predefined times which can be used for classes, events, etc
+* Added new TOTALPRICE custom template field
+* When using products, only display quantity of reserved items if quantity is more than one
 
 = 2.2.3 =
 * Changed long date format for Dutch

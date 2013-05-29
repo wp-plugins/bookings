@@ -98,3 +98,11 @@ table.availability td.scheduleDateHeader {
 .bookingsCalendarCellData {
 	text-align:right;
 }
+
+a.bookingsMoveForward, a.bookingsMoveBack {
+	text-decoration:none;
+}
+
+#bookings_date_span {
+	clear: both;
+}
