@@ -112,6 +112,11 @@ function bookings_options() {
 
 	if (defined('BOOKINGS_LIVE')) bookings_live_options($bookings_options);
 
+	$bookings_options[170] = array(	"name" => "Custom styles",
+			"desc" => "You can use css custom styles here to overwrite the Bookings styles.",
+			"id" => $bookings_shortname."_css",
+			"type" => "textarea");
+	
 	$bookings_options[999]=array(  "name" => "Before you install",
             "type" => "heading",
 			"desc" => '<div style="text-decoration:underline;display:inline;font-weight:bold">IMPORTANT:</div> Bookings uses web services stored on Zingiri\'s servers. In doing so, personal data is collected and stored on our servers. 

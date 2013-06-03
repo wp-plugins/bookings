@@ -4,7 +4,7 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 3.0.0
+ Version: 3.0.1
  Author URI: http://www.zingiri.com/
  */
 
@@ -590,14 +590,12 @@ function bookings_footer() {
 	$ext='.css';
 	if (isset($bookings['output']['template']) && file_exists(dirname(__FILE__).'/css/templates/'.$bookings['output']['template'].$ext))  echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/templates/'.$bookings['output']['template'].$ext.'" media="screen" />';
 	if (isset($bookings['output']['calendar']) && file_exists(dirname(__FILE__).'/css/calendars/'.$bookings['output']['calendar'].$ext))  echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/calendars/'.$bookings['output']['calendar'].$ext.'" media="screen" />';
+	
 	if (!$bookingsScriptsLoaded && isset($bookings['output']['template'])) {
 		wp_enqueue_script(array('jquery-ui-core','jquery-ui-dialog','jquery-ui-datepicker'));
 		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/flick/jquery-ui.css');
 	}
-	//	echo '<script type="text/javascript" src="' . BOOKINGS_URL . 'js/less.js"></script>';
-	//echo '<div id="stylist">';
-	//echo '<p class="dayNamesStyle">dayNamesStyle</p>';
-	//echo '</div>';
+	if (get_option('bookings_css')) echo '<style type="text/css">'.get_option('bookings_css').'</style>';
 }
 
 function bookings_version($tag = 'Stable tag') {

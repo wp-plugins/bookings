@@ -55,17 +55,13 @@
 	</tr>
 
 
-	<?php } elseif ($value['type'] == "textarea") { ?>
+	<?php } elseif ($value['type'] == "textarea") { 
+		if ( get_option( $value['id'] ) != "") $textarea=stripslashes(get_option( $value['id'] )); 
+		elseif (isset($value['std'])) $textarea=$value['std'];
+		?>
 	<tr align="left">
 		<th scope="row"><?php echo $value['name']; ?>:</th>
-		<td><textarea name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>" cols="50"
-			rows="8"
-		/>
-		<?php if ( get_option( $value['id'] ) != "") { echo stripslashes (get_option( $value['id'] )); }
-		elseif (isset($value['std'])) { echo $value['std'];
-		} ?>
-</textarea></td>
-
+		<td><textarea name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>" cols="50" rows="8"><?php echo $textarea;?></textarea></td>
 	</tr>
 	<tr>
 		<td colspan=2"><div style="width:800px;font-size:smaller;"><?php echo $value['desc']; ?> </div>
@@ -123,7 +119,6 @@
 		<hr />
 		</td>
 	</tr>
-
 	<?php } 
 } //end foreach
 ?>
