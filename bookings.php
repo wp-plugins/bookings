@@ -609,22 +609,18 @@ function bookings_version($tag = 'Stable tag') {
  */
 add_action('wp_ajax_bookings_ajax_backend', 'bookings_ajax_backend_callback');
 add_action('wp_ajax_bookings_ajax_frontend', 'bookings_ajax_frontend_callback');
-add_action('wp_ajax_nopriv__frontend', 'bookings_ajax_frontend_callback');
+add_action('wp_ajax_nopriv_bookings_ajax_frontend', 'bookings_ajax_frontend_callback');
 
 function bookings_ajax_backend_callback() {
 	define('BOOKINGS_AJAX_ORIGIN',"b");
 	$pg=isset($_REQUEST['zb']) ? $_REQUEST['zb']: '';
-	//	$http=bookings_http($pg);
 	bookings_output($pg);
-	//echo 'http='.$http;
 	die();
 }
 
 function bookings_ajax_frontend_callback() {
 	define('BOOKINGS_AJAX_ORIGIN',"f");
 	$pg=isset($_REQUEST['zb']) ? $_REQUEST['zb']: '';
-	//	$http=bookings_http($pg);
 	bookings_output($pg);
-	//echo 'http='.$http;
 	die();
 }
