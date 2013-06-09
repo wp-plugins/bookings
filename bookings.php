@@ -4,7 +4,7 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 3.0.2
+ Version: 3.1.0
  Author URI: http://www.zingiri.com/
  */
 
@@ -49,11 +49,11 @@ if ($bookings_version != BOOKINGS_VERSION) {
 }
 
 if (get_option('bookings_region') && (!defined('BOOKINGS_LIVE') || get_option('bookings_siteurl'))) {
-	add_action("init","bookings_init");
 	//add_action("init","bookings_sync");
-	if (isset($_GET['ajax']) && ($_GET['ajax'] == 1)) {
-		add_action("init","bookings_ajax");
-	} else {
+	if (!isset($_REQUEST['action']) || !in_array($_REQUEST['action'],array('bookings_ajax_frontend','bookings_ajax_backend'))) {
+		add_action("init","bookings_init");
+	}
+	if (!isset($_GET['ajax']) || ($_GET['ajax'] != 1)) {
 		add_action('wp_head','bookings_header');
 	}
 	add_action('wp_footer','bookings_footer');
@@ -170,7 +170,7 @@ function bookings_shortcode( $atts, $content=null, $code="" ) {
 	}
 
 	$bookings_shortcode_counter=isset($bookings_shortcode_counter) ? $bookings_shortcode_counter+1 : 1;
-	
+
 	$defaults=array('template' => '','scheduleid' => '', 'calendar' => '', 'form' => 'form1', 'resourcerequired' => 'no');
 	extract( shortcode_atts( $defaults, $atts ) );
 	$pg=isset($_REQUEST['zb']) ? $_REQUEST['zb'] : 'book1';
@@ -275,7 +275,7 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 			foreach (array('content-disposition','content-type') as $i) {
 				if (isset($news->headers[$i])) header($i.':'.$news->headers[$i]);
 			}
-			echo $news->body;
+			if (isset($news->body)) echo $news->body;
 			die();
 		} elseif ($ajax==3) {
 			while (count(ob_get_status(true)) > 0) ob_end_clean();
@@ -339,11 +339,13 @@ function bookings_replace($match) {
 }
 
 function bookings_header() {
-	global $bookings;
+	global $bookings,$post;
 
 	echo '<script type="text/javascript">';
 	echo "var bookingsPageurl='".bookings_home()."';";
-	echo "var bookingsAjaxUrl='".bookings_home()."';";
+	//echo "var bookingsAjaxUrl='".bookings_home()."';";
+	echo "var bookingsAjaxUrl='".admin_url('admin-ajax.php')."?action=bookings_ajax_frontend&bookingspid=".$post->ID."&';";
+
 	echo '</script>';
 	echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/functions.js"></script>';
 	echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/jquery.getUrlParam.js"></script>';
@@ -355,7 +357,7 @@ function bookings_header() {
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . bookings_url(false) . 'aphps/fwkfor/css/integrated_view.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/forms.css" media="screen" />';
-	
+
 }
 
 function bookings_admin_header() {
@@ -364,8 +366,10 @@ function bookings_admin_header() {
 		if (isset($bookings['output']['head'])) echo $bookings['output']['head'];
 		echo '<script type="text/javascript">';
 		echo "var bookingsPageurl='admin.php?page=bookings&';";
-		echo "var bookingsAjaxUrl='".get_admin_url()."admin.php?page=bookings&';";
+		//echo "var bookingsAjaxUrl='".get_admin_url()."admin.php?page=bookings&';";
+		echo "var bookingsAjaxUrl=ajaxurl+'?action=bookings_ajax_backend&';";
 		echo "var aphpsAjaxURL='".get_admin_url().'admin.php?page=bookings&zb=ajax&ajax=1&form='."';";
+		//echo "var aphpsAjaxURL=ajaxurl+'?action=abookings_ajax&form=';";
 		echo "var aphpsURL='".bookings_url(false).'aphps/fwkfor/'."';";
 		echo "var wsCms='gn';";
 		echo '</script>';
@@ -385,7 +389,7 @@ function bookings_http($page="index",$params=array()) {
 	$and="&";
 	if (count($_GET) > 0) {
 		foreach ($_GET as $n => $v) {
-			if (!in_array($n,array('page','zb')))
+			if (!in_array($n,array('page','zb','bookingsasid')))
 			{
 				if (is_array($v)) {
 					foreach ($v as $w) {
@@ -416,14 +420,18 @@ function bookings_http($page="index",$params=array()) {
 	$wp['sitename']=get_bloginfo('name');
 	$wp['pluginurl']=BOOKINGS_URL;
 	$wp['client']='wordpress';
-	if (is_admin()) {
+	if (defined('BOOKINGS_AJAX_ORIGIN') && (BOOKINGS_AJAX_ORIGIN=='f')) {
+		$wp['mode']='f';
+		$wp['pageurl']=bookings_home();
+		$wp['sid']=$_REQUEST['bookingspid'].'-'.(isset($_REQUEST['bookingssid']) ? $_REQUEST['bookingssid'] : '1');
+	} elseif (!is_admin()) {
+		$wp['mode']='f';
+		$wp['pageurl']=bookings_home();
+		$wp['sid']=$post->ID.'-'.(isset($bookings_shortcode_id) ? $bookings_shortcode_id : '1');
+	} else {
 		$wp['mode']='b';
 		$wp['pageurl']=get_admin_url().'admin.php?page=bookings&';
 		$wp['secret']=get_option('bookings_secret');
-	} else {
-		$wp['mode']='f';
-		$wp['pageurl']=bookings_home();
-		if (isset($post)) $wp['sid']=$post->ID.'-'.(isset($bookings_shortcode_id) ? $bookings_shortcode_id : '1');
 	}
 
 	if (get_option('bookings_showcase')) {
@@ -435,7 +443,7 @@ function bookings_http($page="index",$params=array()) {
 	$wp['key']=get_option('bookings_key');
 	$wp['lang']=get_option('bookings_lang') ? get_option('bookings_lang') : 'en_US'; //get_bloginfo('language');
 	$wp['client_version']=BOOKINGS_VERSION;
-	if (isset($_SESSION['bookings']['force_license_check'])) { 
+	if (isset($_SESSION['bookings']['force_license_check'])) {
 		$wp['force_license_check']=true;
 		unset($_SESSION['bookings']['force_license_check']);
 	}
@@ -458,7 +466,7 @@ function bookings_http($page="index",$params=array()) {
 function bookings_home() {
 	global $post,$page_id;
 
-	$pageID = $page_id;
+	$pageID = isset($_REQUEST['bookingspid']) ? $_REQUEST['bookingspid'] : $page_id;
 
 	if (get_option('permalink_structure')){
 		$homePage = get_option('home');
@@ -474,45 +482,41 @@ function bookings_home() {
 	return $home;
 }
 
-function bookings_ajax() {
-	return;
-}
-
 /*
-function bookings_sync() {
-	global $current_user;
+ function bookings_sync() {
+ global $current_user;
 
-	if (!isset($_GET['page']) || ($_GET['page']!='bookings') || !isset($_GET['sync']) || !$_GET['sync']) return;
-	
-	if (!is_admin()) return;
+ if (!isset($_GET['page']) || ($_GET['page']!='bookings') || !isset($_GET['sync']) || !$_GET['sync']) return;
 
-	if (!isset($current_user) || !$current_user || ($current_user->data->user_login!='admin')) return;
-	
-	$users=get_users();
-	foreach ($users as $u) {
-		$user = new WP_User( $u->ID );
-		$wp=array();
-		$wp['login']=$user->data->user_login;
-		$wp['email']=$user->data->user_email;
-		$wp['first_name']=get_user_meta($user->data->ID,'first_name',true) ? get_user_meta($user->data->ID,'first_name',true) : $user->data->display_name;
-		$wp['last_name']=get_user_meta($user->data->ID,'last_name',true) ? get_user_meta($user->data->ID,'last_name',true) : $user->data->display_name;
-		$wp['roles']=$user->roles;
-				
-		$http=bookings_http('myschedule',$wp);
-		$news = new zHttpRequest($http,'bookings');
-		$news->noErrors=true;
-		if ($news->curlInstalled() && $news->live()) {
-			$buffer=$news->DownloadToString();
-		}
-	}
-}
-*/
+ if (!is_admin()) return;
+
+ if (!isset($current_user) || !$current_user || ($current_user->data->user_login!='admin')) return;
+
+ $users=get_users();
+ foreach ($users as $u) {
+ $user = new WP_User( $u->ID );
+ $wp=array();
+ $wp['login']=$user->data->user_login;
+ $wp['email']=$user->data->user_email;
+ $wp['first_name']=get_user_meta($user->data->ID,'first_name',true) ? get_user_meta($user->data->ID,'first_name',true) : $user->data->display_name;
+ $wp['last_name']=get_user_meta($user->data->ID,'last_name',true) ? get_user_meta($user->data->ID,'last_name',true) : $user->data->display_name;
+ $wp['roles']=$user->roles;
+
+ $http=bookings_http('myschedule',$wp);
+ $news = new zHttpRequest($http,'bookings');
+ $news->noErrors=true;
+ if ($news->curlInstalled() && $news->live()) {
+ $buffer=$news->DownloadToString();
+ }
+ }
+ }
+ */
 
 function bookings_init() {
 	global $wp_version,$bookingsScriptsLoaded;
 
 	$bookingsScriptsLoaded=false;
-	
+
 	ob_start();
 	session_start();
 	if (!is_admin() && isset($_REQUEST['zb']) && ($_REQUEST['zb']=='wp-user-profile')) {
@@ -585,7 +589,7 @@ function bookings_footer() {
 	$ext='.css';
 	if (isset($bookings['output']['template']) && file_exists(dirname(__FILE__).'/css/templates/'.$bookings['output']['template'].$ext))  echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/templates/'.$bookings['output']['template'].$ext.'" media="screen" />';
 	if (isset($bookings['output']['calendar']) && file_exists(dirname(__FILE__).'/css/calendars/'.$bookings['output']['calendar'].$ext))  echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/calendars/'.$bookings['output']['calendar'].$ext.'" media="screen" />';
-	
+
 	if (!$bookingsScriptsLoaded && isset($bookings['output']['template'])) {
 		wp_enqueue_script(array('jquery-ui-core','jquery-ui-dialog','jquery-ui-datepicker'));
 		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/flick/jquery-ui.css');
@@ -594,9 +598,33 @@ function bookings_footer() {
 }
 
 function bookings_version($tag = 'Stable tag') {
-    $trunk_readme = file( dirname(__FILE__).'/readme.txt');
-    foreach( $trunk_readme as $i => $line ) 
-    if( substr_count( $line, $tag . ': ' ) > 0 ) return trim( substr( $line, strpos( $line, $tag . ': ' ) + strlen( $tag ) + 2 ) );
-    return NULL;
+	$trunk_readme = file( dirname(__FILE__).'/readme.txt');
+	foreach( $trunk_readme as $i => $line )
+	if( substr_count( $line, $tag . ': ' ) > 0 ) return trim( substr( $line, strpos( $line, $tag . ': ' ) + strlen( $tag ) + 2 ) );
+	return NULL;
 }
- 
+
+/*
+ * Ajax calls
+ */
+add_action('wp_ajax_bookings_ajax_backend', 'bookings_ajax_backend_callback');
+add_action('wp_ajax_bookings_ajax_frontend', 'bookings_ajax_frontend_callback');
+add_action('wp_ajax_nopriv__frontend', 'bookings_ajax_frontend_callback');
+
+function bookings_ajax_backend_callback() {
+	define('BOOKINGS_AJAX_ORIGIN',"b");
+	$pg=isset($_REQUEST['zb']) ? $_REQUEST['zb']: '';
+	//	$http=bookings_http($pg);
+	bookings_output($pg);
+	//echo 'http='.$http;
+	die();
+}
+
+function bookings_ajax_frontend_callback() {
+	define('BOOKINGS_AJAX_ORIGIN',"f");
+	$pg=isset($_REQUEST['zb']) ? $_REQUEST['zb']: '';
+	//	$http=bookings_http($pg);
+	bookings_output($pg);
+	//echo 'http='.$http;
+	die();
+}
