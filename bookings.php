@@ -4,7 +4,7 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 3.1.0
+ Version: 3.1.1
  Author URI: http://www.zingiri.com/
  */
 
@@ -264,11 +264,11 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 			}
 			die();
 		} elseif (($ajax==1) && in_array($_REQUEST['form'],array('form_field','form'))) {
-			while (count(ob_get_status(true)) > 0) ob_end_clean();
+			if (!defined('BOOKINGS_AJAX_ORIGIN')) while (count(ob_get_status(true)) > 0) ob_end_clean();
 			$buffer=$news->DownloadToString();
 			$output=json_decode($buffer,true);
 			echo $output['body'];
-			die();
+			if (!defined('BOOKINGS_AJAX_ORIGIN')) die();
 		} elseif (($ajax==2) || (($ajax==1) && ($_REQUEST['form']=='form_field'))) {
 			while (count(ob_get_status(true)) > 0) ob_end_clean();
 			$output=$news->DownloadToString();
@@ -320,6 +320,13 @@ function bookings_parser($buffer) {
 				ob_start();
 				wp_editor($textarea->innertext,$textarea->id);
 				$editor=ob_get_clean();
+				/*
+				$s='<script language="javascript">
+            jQuery(document).ready(function(){
+                tinymce.execCommand(\'mceAddControl\',true,\''.$textarea->id.'\');
+            });
+        </script>';
+        */
 				$textarea->outertext=$editor;
 			}
 		}
@@ -328,14 +335,6 @@ function bookings_parser($buffer) {
 		unset($html);
 	}
 	return $buffer;
-}
-
-function bookings_replace($match) {
-	$id=$match[1];
-	$content=$match[2];
-	ob_start();
-	wp_editor($content,$id);
-	return ob_get_clean();
 }
 
 function bookings_header() {
@@ -366,10 +365,10 @@ function bookings_admin_header() {
 		if (isset($bookings['output']['head'])) echo $bookings['output']['head'];
 		echo '<script type="text/javascript">';
 		echo "var bookingsPageurl='admin.php?page=bookings&';";
-		//echo "var bookingsAjaxUrl='".get_admin_url()."admin.php?page=bookings&';";
+		//echo "var bookingsAjaxUrl='".get_admin_url()."admin.php?page=bookings&';"; old style
 		echo "var bookingsAjaxUrl=ajaxurl+'?action=bookings_ajax_backend&';";
-		echo "var aphpsAjaxURL='".get_admin_url().'admin.php?page=bookings&zb=ajax&ajax=1&form='."';";
-		//echo "var aphpsAjaxURL=ajaxurl+'?action=abookings_ajax&form=';";
+		//echo "var aphpsAjaxURL='".get_admin_url().'admin.php?page=bookings&zb=ajax&ajax=1&form='."';";
+		echo "var aphpsAjaxURL=ajaxurl+'?action=bookings_ajax_backend&zb=ajax&ajax=1&form=';";
 		echo "var aphpsURL='".bookings_url(false).'aphps/fwkfor/'."';";
 		echo "var wsCms='gn';";
 		echo '</script>';
@@ -427,7 +426,7 @@ function bookings_http($page="index",$params=array()) {
 	} elseif (!is_admin()) {
 		$wp['mode']='f';
 		$wp['pageurl']=bookings_home();
-		$wp['sid']=$post->ID.'-'.(isset($bookings_shortcode_id) ? $bookings_shortcode_id : '1');
+		if (isset($post)) $wp['sid']=$post->ID.'-'.(isset($bookings_shortcode_id) ? $bookings_shortcode_id : '1');
 	} else {
 		$wp['mode']='b';
 		$wp['pageurl']=get_admin_url().'admin.php?page=bookings&';
@@ -536,7 +535,7 @@ function bookings_init() {
 		}
 		if (isset($_REQUEST['page']) && ($_REQUEST['page']=='bookings'))  {
 			if ($wp_version < '3.3') {
-				wp_enqueue_script(array('editor', 'thickbox', 'media-upload'));
+				wp_enqueue_script(array('editor', 'thickbox', 'media-editor'));
 				wp_enqueue_style('thickbox');
 			}
 		}
@@ -582,6 +581,7 @@ function bookings_url($endpoint=true) { //URL end point for web services stored 
 function bookings_admin_footer() {
 	global $bookings;
 	if (isset($bookings['output']['footer'])) echo $bookings['output']['footer'];
+	//echo '<!--';wp_editor( '', 'invisible_editor_for_initialization' );echo '-->';
 }
 
 function bookings_footer() {
@@ -613,8 +613,13 @@ add_action('wp_ajax_nopriv_bookings_ajax_frontend', 'bookings_ajax_frontend_call
 
 function bookings_ajax_backend_callback() {
 	define('BOOKINGS_AJAX_ORIGIN',"b");
+	
 	$pg=isset($_REQUEST['zb']) ? $_REQUEST['zb']: '';
+	ob_start();
 	bookings_output($pg);
+	$json=ob_get_clean();
+	//$output=json_decode($json,true);$output['html']=bookings_parser($output['html']);echo json_encode($output);
+	echo $json;
 	die();
 }
 
