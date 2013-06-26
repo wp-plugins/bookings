@@ -425,3 +425,70 @@ table.date_text, table.date_text td {
 	top: 200px;
 	left: 10px;
 }
+
+/* Shopping cart */
+.bookings-cart {
+	float:left;
+	width: 100%;
+}
+
+.bookings-cart-line-slots {
+	width: 38%;
+	float:left;
+	margin-right: 2%;
+}
+
+.bookings-cart-line-items {
+	width: 38%;
+	float:left;
+	margin-right: 2%;
+}
+
+.bookings-cart-line-edit {
+	width: 20%;
+	float: left;
+	padding-bottom: 5px;
+}
+
+.bookings-cart-line-edit a img {
+	border: 0px;
+	box-shadow: 0 0px;
+	margin: 0px 5px;
+	border-radius: 0px;
+	vertical-align: middle;
+}
+
+.bookings-cart-control {
+	float: left;
+	width: 100%;
+	padding: 5px 0px;
+	margin: 5px 0px;
+	text-align: right;
+}
+
+.bookings-cart-line-items div {
+	float:left;
+	padding-right: 0.5em;
+	margin: auto;
+}
+
+div.bookings-cart-line-items-price {
+	text-align: right;	
+	float: right;
+	padding-right: 0px;
+}
+
+.bookings-cart-total-price {
+	float: left;
+	width: 78%;
+	padding-right: 22%;
+	font-weight: bold;
+	text-align: right;
+}
+
+/* Buttons */
+#bookings .ui-button-text-only .ui-button-text {
+	padding: 0.2em 1.2em;
+	line-height: 1.2em;
+}
+
