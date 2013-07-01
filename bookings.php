@@ -4,7 +4,7 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 3.1.4
+ Version: 3.1.5
  Author URI: http://www.zingiri.com/
  */
 
@@ -77,7 +77,7 @@ register_uninstall_hook(__FILE__,'bookings_uninstall');
 require_once(dirname(__FILE__) . '/includes/shared.inc.php');
 require_once(dirname(__FILE__) . '/includes/http.class.php');
 require_once(dirname(__FILE__) . '/controlpanel.php');
-//require_once(dirname(__FILE__) . '/includes/widget.inc.php');
+require_once(dirname(__FILE__) . '/includes/widget.inc.php');
 
 function bookings_admin_notices() {
 	global $bookings;
@@ -225,7 +225,7 @@ function bookings_shortcode_pages( $atts, $content=null, $code="" ) {
 }
 
 function bookings_output($bookings_to_include='',$postVars=array()) {
-	global $post,$bookings;
+	global $post,$bookings,$bookingsTemplate;
 	global $wpdb;
 	global $wordpressPageName;
 	global $bookings_loaded;
@@ -304,7 +304,8 @@ function bookings_output($bookings_to_include='',$postVars=array()) {
 				if (isset($bookings['output']['http_referer'])) update_option('bookings_http_referer',$bookings['output']['http_referer']);
 				else update_option('bookings_http_referer','');
 			}
-
+			if (isset($bookings['output']['template']) && $bookings['output']['template']) $bookingsTemplate=$bookings['output']['template'];
+			else $bookings['output']['template']=$bookingsTemplate;
 			$bookings['output']['body']=bookings_parser($bookings['output']['body']);
 		}
 	}
@@ -556,7 +557,6 @@ function bookings_init() {
 		if (version_compare($wp_version,'3.2.1','<=')) wp_enqueue_script('datepicker',bookings_url(false).'js/datepicker/jquery-ui-1.9.2.custom.min.js',array('jquery-ui-core'));
 		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/flick/jquery-ui.css');
 	}
-
 }
 
 function bookings_log($type=0,$msg='',$filename="",$linenum=0) {

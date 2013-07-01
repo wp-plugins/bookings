@@ -374,12 +374,6 @@ table.dayReservations {
 	float:right;
 }
 
-#compact1Template div#left table .selectedDayBoxStyle, .selectedDayBoxStyle {
-	font-size: smaller;
-	border: solid 4px #DDCAF6 !important;
-	text-align: center;
-}
-
 #additionalinfo-quantity {
 	margin-bottom: 10px;
 }
@@ -492,3 +486,16 @@ div.bookings-cart-line-items-price {
 	line-height: 1.2em;
 }
 
+/* Search widget */
+#bookings-search-box .bookings-search-field label {
+	margin: 0px 10px;
+}
+
+#bookings-search-box .bookings-search-field {
+	margin: 10px 0px;
+}
+
+#bookings-search-box .bookings-search-submit {
+	margin-top: 20px;
+	text-align: right;
+}

@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.5.2
-Stable tag: 3.1.4
+Stable tag: 3.1.5
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,12 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 3.1.5 =
+* Increased size of resource description in yearly back-end calendar
+* Added new option to hide capacity when displaying resource availability
+* Auto adjust end date in date picker in hotel1 template
+* Fixed issue with Manage Users menu not appearing in Bookings Expert
 
 = 3.1.4 =
 * Reviewed resources setup screens

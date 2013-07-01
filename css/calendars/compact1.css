@@ -35,3 +35,9 @@ table.availability td.MyCalCellColorEmpty p {
 a.bookingsMoveForward, a.bookingsMoveBack {
 	text-decoration:none;
 }
+
+#compact1Template div#left table .selectedDayBoxStyle {
+	font-size: smaller;
+	border: solid 4px #DDCAF6 !important;
+	text-align: center;
+}

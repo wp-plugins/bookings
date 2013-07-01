@@ -1,0 +1,57 @@
+table.bookings-results {
+	width: 100%;
+}
+
+table.bookings-results tr {
+	border: 0px none;
+}
+		
+table.bookings-results tr td {
+	vertical-align: top;
+	padding: 5px 10px;
+	border: 0px none;
+}
+	
+.bookings-resource-name {
+	font-weight: bold;
+}
+
+.bookings-resource-price {
+	font-weight: bold;
+	font-size: larger;
+}
+
+table.bookings-results tr td.bookings-availability table {
+	border: 1px solid;
+}
+
+table.bookings-results tr td.bookings-day {
+	width:3.56%;
+	padding: 0px;
+	text-align: center;
+}
+
+table.bookings-results tr td.bookings-week {
+	text-align: center;
+	border-left: 1px solid;
+	border-right: 1px solid;
+}
+		
+table.bookings-results tr td.bookings-first-day-of-the-week {
+	color:red;
+	border-left: 1px solid #000;
+}
+
+table.bookings-results tr td.bookedDayBoxStyle {
+	background-color: #D5D8D3;
+}
+
+table.bookings-results tr td.currentDayBoxStyle {
+	color: green;
+	font-size: inherit;
+}
+
+table.bookings-results tr td.selectedDayBoxStyle {
+	font-size: inherit;
+	background-color: PaleTurquoise;
+} 

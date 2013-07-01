@@ -62,3 +62,10 @@ div.bookingsCalendarBody div.viewdays {
 a.bookingsMoveForward, a.bookingsMoveBack {
 	text-decoration:none;
 }
+
+.selectedDayBoxStyle {
+	font-size: smaller;
+	border: solid 4px #DDCAF6 !important;
+	text-align: center;
+}
+

@@ -58,6 +58,7 @@
 	<?php } elseif ($value['type'] == "textarea") { 
 		if ( get_option( $value['id'] ) != "") $textarea=stripslashes(get_option( $value['id'] )); 
 		elseif (isset($value['std'])) $textarea=$value['std'];
+		else $textarea='';
 		?>
 	<tr align="left">
 		<th scope="row"><?php echo $value['name']; ?>:</th>
