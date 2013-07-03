@@ -93,26 +93,72 @@ table.dayReservations {
 	font-weight: bold;
 }
 
-div.rescalender_year_wrapper {
-	overflow-x: scroll;
-	overflow-y: visible;
-	margin-left: 19em;
+#rescalendar_year_wrapper {
+	overflow: scroll;
+	position: relative;
+	max-height: 600px;
 }
 
-table.rescalendar_year {
+#rescalender_year_corner {
+	width:200px;
+	height:50px;
+	z-index: 2000;
+}
+
+div.rescalender_year_wrapper_head {
+	height: 50px;
+	position: relative;
+	z-index: 1001;
+}
+
+table.rescalendar_year_headcol {
+	position: absolute;
+	left: 0;
+	top: 50;
+	width: 200px;
+	z-index: 1000;
 	border-collapse:collapse;
-	border:0px;
+	border:0 none;
+}
+
+table.rescalendar_year_headcol tr td div {
+	height: 80px;
+	overflow: hidden;
+}
+
+table.rescalendar_year_head {
+	position: absolute;
+	left: 200px;
+	top: 0;
+	border-collapse:collapse;
+	border:0 none;
+	background-color: #A2B5CD;
+	padding: 0px;
+	color: #fff;
+	margin: 0px;
+	text-align: center;
+}
+
+table.rescalendar_year_head tr td {
+	padding: 0px;
+	margin: 0px;
 }
 
 table.rescalendar_year tr.datarow td {
 	height: 80px;
 }
 
+table.rescalendar_year {
+	margin-left: 200px;
+	border-collapse:collapse;
+	border:0 none;
+}
+
 table.rescalendar_year tr td.headcol {
 	position: absolute;
 	left:0;
 	top: auto;
-	width: 20em;
+	width: 200px;
 }
 
 table.rescalendar_year tr td {
@@ -121,7 +167,6 @@ table.rescalendar_year tr td {
 }
 
 table.rescalendar_year tr td.scheduleDateHeader {
-	padding: 1px;
 	font-size: 10px;
 }
 

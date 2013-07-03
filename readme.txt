@@ -70,6 +70,10 @@ Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/booki
 
 == Changelog ==
 
+= 3.1.6 =
+* Fixed title position in yearly back-end calendar view
+* Added option to display a redirect link in case of session expiry
+
 = 3.1.5 =
 * Increased size of resource description in yearly back-end calendar
 * Added new option to hide capacity when displaying resource availability
