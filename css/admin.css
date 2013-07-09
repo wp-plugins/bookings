@@ -121,6 +121,11 @@ table.rescalendar_year_headcol {
 	border:0 none;
 }
 
+table.rescalendar_year_headcol tr td {
+	padding: 0px;
+	margin: 0px;
+}
+
 table.rescalendar_year_headcol tr td div {
 	height: 80px;
 	overflow: hidden;
