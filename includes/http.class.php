@@ -225,6 +225,7 @@ if (!class_exists('zHttpRequest')) {
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER,1); // return into a variable
 			curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
 			curl_setopt($ch, CURLOPT_TIMEOUT, 60); // times out after 10s
+			curl_setopt($ch, CURLOPT_ENCODING , "gzip, deflate"); 
 			if ($this->_protocol == "https") {
 				if (file_exists($cainfo)) {
 					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
@@ -413,4 +414,3 @@ if (!class_exists('zHttpRequest')) {
 		}
 	}
 }
-?>
