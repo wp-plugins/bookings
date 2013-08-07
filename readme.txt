@@ -3,8 +3,8 @@ Contributors: zingiri
 Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
-Tested up to: 3.5.2
-Stable tag: 3.2.1
+Tested up to: 3.6
+Stable tag: 3.2.2
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,9 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 3.2.2 =
+* Verified compatibility with Wordpress v2.6
 
 = 3.2.1 =
 * Fixed issue with resource min_notice_time field not being created for new installations
