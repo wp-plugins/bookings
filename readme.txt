@@ -71,7 +71,8 @@ Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/booki
 == Changelog ==
 
 = 3.2.2 =
-* Verified compatibility with Wordpress v2.6
+* Verified compatibility with Wordpress v3.6
+* Added temporary disabling of media buttons in product & services description due to issue in Wordpress v3.6
 
 = 3.2.1 =
 * Fixed issue with resource min_notice_time field not being created for new installations

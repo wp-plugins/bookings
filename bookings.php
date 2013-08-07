@@ -321,7 +321,7 @@ function bookings_parser($buffer) {
 			foreach ($textareas as $textarea) {
 				ob_start();
 				if (version_compare($wp_version,'3.6') == -1) wp_editor($textarea->innertext,$textarea->id,array( 'media_buttons' => true ));
-				else wp_editor($textarea->innertext,$textarea->id,array( 'media_buttons' => true ));
+				else wp_editor($textarea->innertext,$textarea->id,array( 'media_buttons' => false ));
 				$editor=ob_get_clean();
 				$textarea->outertext=$editor;
 			}
