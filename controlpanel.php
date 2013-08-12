@@ -67,7 +67,7 @@ function bookings_options() {
 		'ko'	=> array('ko([-_][[:alpha:]]{2})?|korean', 'ko_KR.lang.php', 'ko', 'Korean (&#54620;&#44397;&#50612;)'),
 		'hu'	=> array('hu([-_][[:alpha:]]{2})?|hungarian', 'hu.lang.php', 'hu', 'Magyar'),
 		'nl'	=> array('nl([-_][[:alpha:]]{2})?|dutch', 'nl.lang.php', 'nl', 'Nederlands'),
-	//'no'	=> array('no([-_][[:alpha:]]{2})?|norwegian', 'no.lang.php', 'no', 'Norwegian'),
+		'no'	=> array('no([-_][[:alpha:]]{2})?|norwegian', 'no.lang.php', 'no', 'Norwegian'),
 		'pl'	=> array('pl([-_][[:alpha:]]{2})|polish', 'pl.lang.php', 'pl', 'Polski'),
 		'pt_PT'	=> array('pr([-_]PT)|portuguese', 'pt_PT.lang.php', 'pt', 'Portugu&ecirc;s'),
 		'pt_BR'	=> array('pr([-_]BR)|portuguese', 'pt_BR.lang.php', 'pt', 'Portugu&ecirc;s Brasileiro'),

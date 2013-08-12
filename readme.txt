@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.6
-Stable tag: 3.2.2
+Stable tag: 3.2.3
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,13 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 3.2.3 =
+* Fixed issue with last date of month availability not displaying when using predefined dates and times
+* Fixed issue with availability display if using future dates in predefined dates and times setup
+* Added freeDayBoxStyle class to identify calendar days with availability
+* Added new 'event1' calendar template to display list of upcoming dates and times
+* Added Norwegian translation 
 
 = 3.2.2 =
 * Verified compatibility with Wordpress v3.6

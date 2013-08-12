@@ -4,7 +4,7 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 3.2.2
+ Version: 3.2.3
  Author URI: http://www.zingiri.com/
  */
 
@@ -339,9 +339,10 @@ function bookings_parser($buffer) {
 function bookings_header() {
 	global $bookings,$post;
 
+	//if (isset($bookings['output']['head'])) echo $bookings['output']['head'];
+	
 	echo '<script type="text/javascript">';
 	echo "var bookingsPageurl='".bookings_home()."';";
-	//echo "var bookingsAjaxUrl='".bookings_home()."';";
 	echo "var bookingsAjaxUrl='".admin_url('admin-ajax.php')."?action=bookings_ajax_frontend&bookingspid=".$post->ID."&';";
 
 	echo '</script>';
@@ -364,9 +365,7 @@ function bookings_admin_header() {
 		if (isset($bookings['output']['head'])) echo $bookings['output']['head'];
 		echo '<script type="text/javascript">';
 		echo "var bookingsPageurl='admin.php?page=bookings&';";
-		//echo "var bookingsAjaxUrl='".get_admin_url()."admin.php?page=bookings&';"; old style
 		echo "var bookingsAjaxUrl=ajaxurl+'?action=bookings_ajax_backend&';";
-		//echo "var aphpsAjaxURL='".get_admin_url().'admin.php?page=bookings&zb=ajax&ajax=1&form='."';";
 		echo "var aphpsAjaxURL=ajaxurl+'?action=bookings_ajax_backend&zb=ajax&ajax=1&form=';";
 		echo "var aphpsURL='".bookings_url(false).'aphps/fwkfor/'."';";
 		echo "var wsCms='gn';";
@@ -375,7 +374,7 @@ function bookings_admin_header() {
 		echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/jquery.getUrlParam.js"></script>';
 		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/admin.css" media="screen" />';
 		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
-		echo '<link rel="stylesheet" type="text/css" href="' . bookings_url(false) . 'aphps/fwkfor/css/integrated_view.css" media="screen" />';
+		//echo '<link rel="stylesheet" type="text/css" href="' . bookings_url(false) . 'aphps/fwkfor/css/integrated_view.css" media="screen" />';
 		if ($wp_version < '3.3') wp_tiny_mce( false, array( 'editor_selector' => 'theEditor' ) );
 	}
 }
