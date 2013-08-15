@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.6
-Stable tag: 3.2.3
+Stable tag: 3.3.0
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,10 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 3.3.0 =
+* Fixed issue with move one day forward/back links not working on calendar
+* Added Norwegian to language drop down in templates
 
 = 3.2.3 =
 * Fixed issue with last date of month availability not displaying when using predefined dates and times
