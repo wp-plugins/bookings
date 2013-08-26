@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.6
-Stable tag: 3.3.0
+Stable tag: 3.3.1
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,17 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 3.3.1 =
+* Added new option to set a Session expiry message
+* Fixed issue with Norwegian not appearing correctly in drop down of languages when creating a template
+* Fixed issue with conversion of durations to hours/minutes and vice versa
+* Fixed issues with price calculation when using shopping cart
+* Improved display of reservation summary when viewing a reservation
+* Fixed issue with displaying availability when using products and time between bookings
+* Minor enhancements to admin look and feel
+* Fixed compatibility issue with media buttons in product & services following Wordpress 3.6 upgrade 
+* Improved French translations
 
 = 3.3.0 =
 * Fixed issue with move one day forward/back links not working on calendar

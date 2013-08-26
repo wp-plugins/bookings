@@ -4,7 +4,7 @@
  Plugin URI: http://www.zingiri.com/bookings
  Description: Bookings is a powerful reservations scheduler.
  Author: Zingiri
- Version: 3.3.0
+ Version: 3.3.1
  Author URI: http://www.zingiri.com/
  */
 
@@ -320,8 +320,13 @@ function bookings_parser($buffer) {
 		if ($textareas=$html->find('textarea[class=theEditor]')) {
 			foreach ($textareas as $textarea) {
 				ob_start();
-				if (version_compare($wp_version,'3.6') == -1) wp_editor($textarea->innertext,$textarea->id,array( 'media_buttons' => true ));
-				else wp_editor($textarea->innertext,$textarea->id,array( 'media_buttons' => false ));
+				try {
+					wp_enqueue_script('post');
+					wp_enqueue_media( array( 'post' => 1 ) );
+					wp_editor($textarea->innertext,$textarea->id,array( 'media_buttons' => true ));
+				} catch (Exception $e) {
+					//continue
+				}
 				$editor=ob_get_clean();
 				$textarea->outertext=$editor;
 			}
@@ -340,7 +345,7 @@ function bookings_header() {
 	global $bookings,$post;
 
 	//if (isset($bookings['output']['head'])) echo $bookings['output']['head'];
-	
+
 	echo '<script type="text/javascript">';
 	echo "var bookingsPageurl='".bookings_home()."';";
 	echo "var bookingsAjaxUrl='".admin_url('admin-ajax.php')."?action=bookings_ajax_frontend&bookingspid=".$post->ID."&';";
@@ -374,7 +379,6 @@ function bookings_admin_header() {
 		echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/jquery.getUrlParam.js"></script>';
 		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/admin.css" media="screen" />';
 		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
-		//echo '<link rel="stylesheet" type="text/css" href="' . bookings_url(false) . 'aphps/fwkfor/css/integrated_view.css" media="screen" />';
 		if ($wp_version < '3.3') wp_tiny_mce( false, array( 'editor_selector' => 'theEditor' ) );
 	}
 }
@@ -579,7 +583,6 @@ function bookings_url($endpoint=true) { //URL end point for web services stored 
 function bookings_admin_footer() {
 	global $bookings;
 	if (isset($bookings['output']['footer'])) echo $bookings['output']['footer'];
-	//echo '<!--';wp_editor( '', 'invisible_editor_for_initialization' );echo '-->';
 }
 
 function bookings_footer() {
@@ -611,7 +614,7 @@ add_action('wp_ajax_nopriv_bookings_ajax_frontend', 'bookings_ajax_frontend_call
 
 function bookings_ajax_backend_callback() {
 	define('BOOKINGS_AJAX_ORIGIN',"b");
-	
+
 	$pg=isset($_REQUEST['zb']) ? $_REQUEST['zb']: '';
 	ob_start();
 	bookings_output($pg);

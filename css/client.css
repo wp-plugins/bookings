@@ -499,3 +499,11 @@ div.bookings-cart-line-items-price {
 	margin-top: 20px;
 	text-align: right;
 }
+
+.bookings-alert {
+	margin: 2x;
+	background-color: orange;
+	padding: 5px;
+	text-align: center;
+	width: 100%;
+}
