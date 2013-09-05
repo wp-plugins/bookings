@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.6
-Stable tag: 3.3.1
+Stable tag: 3.3.2
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,13 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 3.3.2 =
+* Adjustments to hotel3 template
+* New api function
+* Fixed issue with display of availability in schedule template
+* Fixed issue with reminders not being sent
+* Fixed issue with encoding of French language file
 
 = 3.3.1 =
 * Added new option to set a Session expiry message

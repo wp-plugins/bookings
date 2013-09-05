@@ -25,33 +25,33 @@ table.bookings-results tr td.bookings-availability table {
 	border: 1px solid;
 }
 
-table.bookings-results tr td.bookings-day {
+table.bookings-results-availability tr td.bookings-day {
 	width:3.56%;
 	padding: 0px;
 	text-align: center;
 }
 
-table.bookings-results tr td.bookings-week {
+table.bookings-results-availability tr td.bookings-week {
 	text-align: center;
 	border-left: 1px solid;
 	border-right: 1px solid;
 }
 		
-table.bookings-results tr td.bookings-first-day-of-the-week {
+table.bookings-results-availability tr td.bookings-first-day-of-the-week {
 	color:red;
 	border-left: 1px solid #000;
 }
 
-table.bookings-results tr td.bookedDayBoxStyle {
+table.bookings-results-availability tr td.bookedDayBoxStyle {
 	background-color: #D5D8D3;
 }
 
-table.bookings-results tr td.currentDayBoxStyle {
+table.bookings-results-availability tr td.currentDayBoxStyle {
 	color: green;
 	font-size: inherit;
 }
 
-table.bookings-results tr td.selectedDayBoxStyle {
+table.bookings-results-availability td.selectedDayBoxStyle.bookings-day {
 	font-size: inherit;
 	background-color: PaleTurquoise;
 } 
