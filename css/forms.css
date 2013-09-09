@@ -3,13 +3,16 @@
 }
 
 .zfaces-form {
-	background-color:#F8F8F8; 
-	border-radius: 12px;
-	-moz-border-radius: 12px;
 	width: 100%;
 	float:left;	
 }
 
 .mceContentBody p, .zfaces-form input[type="text"],.zfaces-form textarea {
 	background-color:white; 
+}
+
+div.bookings-cart {
+	border: 1px solid #DDDDDD;
+	border-radius: 2px 2px 2px 2px;
+	padding: 3px;
 }
