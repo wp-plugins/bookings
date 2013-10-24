@@ -96,7 +96,7 @@
 			<option value="<?php echo $key;?>"
 			<?php 
 			if (!$selected && get_option($value['id']) && (get_option( $value['id'] ) == $key)) { echo ' selected="selected"'; $selected=true; }
-			elseif (!$selected && !get_option($value['id']) && $value['std'] == $key) { echo ' selected="selected"'; $selected=true; }
+			elseif (!$selected && !get_option($value['id']) && isset($value['std']) && ($value['std'] == $key)) { echo ' selected="selected"'; $selected=true; }
 			?>
 			><?php echo $option; ?></option>
 			<?php } ?>

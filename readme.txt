@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.6
-Stable tag: 3.4.0
+Stable tag: 3.4.1
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,12 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 3.4.1 =
+* Fixed issue where booking cart doesn't work when using template rp2 and allowing multiple slots and selection of quantity
+* Fixed issue with changing usernames ane emails
+* Fixed issue with length of calculated availability period when using predefined dates and times
+* Added support for Wordpress versions that don't have the 'wp_enqueue_media' function yet
 
 = 3.4.0 =
 * Added booking cart feature (experimental)
