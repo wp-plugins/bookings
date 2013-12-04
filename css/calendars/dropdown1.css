@@ -1,0 +1,72 @@
+.bookingsCalendarBody table, .bookingsCalendarBody table tr, .bookingsCalendarBody table td {
+	border: 0px !important;
+	max-width: 300px;
+}
+
+.monthNameStyle {
+	font-size: 11px;
+	text-align: center;
+}
+.dayBoxStyle {
+	font-size: 10px;
+	background-color: #F0F0F0;
+	text-align: center;
+	width: 25px;
+	height: 25px;
+}
+.currentDayBoxStyle {
+	width: 25px;
+	height: 25px;
+	font-size: 10px;
+	background-color: #FFFFFF;
+	text-align: center;
+}
+.emptyDayStyle {
+	background-color: #D5D8D3;
+}
+.dayNamesStyle {
+	font-size: 11px;
+	text-align: center;
+	height: 25px;
+	background-color: #DDCAF6;
+}
+.navMonthStyle {
+	font-size: 11px;
+	color: #000000;
+}
+.selectBoxStyle {
+	font-size: 11px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+div.bookingsCalendarBody div.viewdays {
+	margin: 0 auto;
+}
+
+a.bookingsMoveForward, a.bookingsMoveBack {
+	text-decoration:none;
+}
+
+.selectedDayBoxStyle {
+	font-size: smaller;
+	border: solid 4px #DDCAF6 !important;
+	text-align: center;
+}
+
+.bookingsCalendarDateSelector {
+	width:45%;
+	float:left;
+}
+
+.bookingsCalendarTimeSlots {
+	width:55%;
+	float:right;
+	margin: auto;
+	text-align:center;
+}
+
+.selectedDay {
+	width:55%;
+	float:right;
+}
+		
