@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 3.4.4
+Stable tag: 3.4.5
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,9 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 3.4.5 =
+* Fixed issue with month dropdown on some templates
 
 = 3.4.4 =
 * Added display of reservation quantity when viewing a reservation and the system is configured to allow multiple quantity reservations
