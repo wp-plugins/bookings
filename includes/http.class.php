@@ -215,6 +215,7 @@ if (!class_exists('zHttpRequest')) {
 			if (!session_id()) @session_start();
 			$ch = curl_init();    // initialize curl handle
 			//echo '<br />call:'.$url;echo '<br />post='.print_r($this->post,true).'=<br />';
+			bookings_log($url);
 			curl_setopt($ch, CURLOPT_URL,$url); // set url to post to
 			curl_setopt($ch, CURLOPT_FAILONERROR, 1);
 			if ($withHeaders) curl_setopt($ch, CURLOPT_HEADER, 1);
@@ -383,6 +384,7 @@ if (!class_exists('zHttpRequest')) {
 				$this->type=$headers['content-type'];
 			}
 			if ($this->follow && isset ($headers['location']) && $headers['location']) {
+				bookings_log('redirect to:'.print_r($headers,true));
 				//echo '<br />redirect to:'.print_r($headers,true);
 				//echo '<br />path='.$this->_path;
 				$redir=$headers['location'];

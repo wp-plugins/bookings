@@ -200,7 +200,7 @@ function bookings_main() {
 
 	echo '<div class="wrap">';
 	//zing_support_us_top('bookings','bookings','bookings',BOOKINGS_VERSION,false);
-	echo '<div id="bookings" style="position:relative;float:left;width:100%">';
+	echo '<div id="bookings">';
 	if (isset($bookings['output']['messages']) && is_array($bookings['output']['messages']) && (count($bookings['output']['messages']) > 0)) {
 		echo '<div class="error">';
 		foreach ($bookings['output']['messages'] as $msg) {
@@ -216,8 +216,8 @@ function bookings_main() {
 		die();
 	} elseif (isset($bookings['output']['body'])) echo $bookings['output']['body'];
 
-	require(dirname(__FILE__).'/includes/help.inc.php');
 	echo '</div>';
+	require(dirname(__FILE__).'/includes/help.inc.php');
 
 	zing_support_us_bottom('bookings','bookings','bookings',BOOKINGS_VERSION,false);
 

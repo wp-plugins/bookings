@@ -29,7 +29,7 @@ div.nopermission {
 }
 
 .zfaces-form {
-	max-width:1000px;
+	/*max-width:1000px;*/
 }
 
 table.dayReservations {
@@ -198,4 +198,12 @@ div.pnl_basic_data {
 
 div.pnl_basic_data table td h5 {
 	margin: 0px;
+}
+
+div.wrap div#bookings {
+	background-color: #fff;
+	padding: 1%;
+	position:relative;
+	float:left;
+	width:98%
 }

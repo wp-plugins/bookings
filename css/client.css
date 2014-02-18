@@ -227,8 +227,8 @@ table.availability tr.product a {
 	clear:both;
 	width:100%;
 	background-color:#F8F8F8;
-	border-radius: 12px;
-	-moz-border-radius: 12px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
 	float:left;
 }
 
@@ -506,4 +506,22 @@ div.bookings-cart-line-items-price {
 	padding: 5px;
 	text-align: center;
 	width: 100%;
+}
+
+.bookings-payment-gateway {
+	margin: 10px;
+}
+
+.bookings-payment-gateways, .bookings-confirmation {
+	clear:both;
+	width:100%;
+	background-color:#F8F8F8;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	float:left;
+	padding: 10px;
+}
+
+.bookings-confirmation table.message, .bookings-confirmation table.message td {
+	border: 0 none;
 }
