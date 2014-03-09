@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 3.8.1
-Stable tag: 3.5.2
+Stable tag: 3.5.3
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,11 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 3.5.3 =
+* Fixed issue with shownames not working
+* Fixed issue with adminEmail config option initialisation when accessing via DAV server
+* Removed 'Predefined set of dates and times'
 
 = 3.5.2 =
 * Fixed issue with updating Paypal standard gateway
