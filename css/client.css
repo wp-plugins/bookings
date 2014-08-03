@@ -525,3 +525,7 @@ div.bookings-cart-line-items-price {
 .bookings-confirmation table.message, .bookings-confirmation table.message td {
 	border: 0 none;
 }
+
+#bookings table.dayReservations td {
+	overflow: hidden;
+}
