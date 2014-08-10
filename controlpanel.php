@@ -192,14 +192,13 @@ function bookings_add_admin() {
 function bookings_main() {
 	global $bookings;
 
-	if (!isset($_GET['zb'])) return bookings_admin();
+	if (!isset($_GET['zfaces'])) return bookings_admin();
 
 	if (defined('BOOKINGS_LIVE') && !get_option('bookings_siteurl')) return bookings_admin();
 
 	require(dirname(__FILE__).'/includes/support-us.inc.php');
 
 	echo '<div class="wrap">';
-	//zing_support_us_top('bookings','bookings','bookings',BOOKINGS_VERSION,false);
 	echo '<div id="bookings">';
 	if (isset($bookings['output']['messages']) && is_array($bookings['output']['messages']) && (count($bookings['output']['messages']) > 0)) {
 		echo '<div class="error">';
