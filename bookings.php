@@ -4,7 +4,7 @@
  * Plugin URI: http://www.zingiri.com/bookings 
  * Description: Bookings is a powerful reservations scheduler. 
  * Author: Zingiri 
- * Version: 4.0.0
+ * Version: 4.0.1
  * Author URI: http://www.zingiri.com/
  */
 define("BOOKINGS_VERSION", bookings_version());
@@ -226,7 +226,7 @@ function bookings_output($bookings_to_include='', $postVars=array()) {
 	
 	$http=bookings_http($bookings_to_include);
 	bookings_log('Notification', 'Call: ' . $http);
-	// echo '<br />'.$http.'<br />';
+	//echo '<br />'.$http.'<br />';
 	$news=new bookingsHttpRequest($http, 'bookings');
 	$news->noErrors=true;
 	$news->post=array_merge($news->post, $postVars);
@@ -343,6 +343,7 @@ function bookings_header() {
 	echo "var bookingsPageurl='" . bookings_home() . "';";
 	echo "var bookingsAjaxUrl='" . admin_url('admin-ajax.php') . "?action=bookings_ajax_frontend&bookingspid=" . $post->ID . "&';";
 	echo '</script>';
+//	echo '<script type="text/javascript" src="' . bookings_url(false) . 'app/bookings/js/' . BOOKINGS_JSPREFIX . '/bookx.jquery.js"></script>';
 	echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/functions.js"></script>';
 	echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/jquery.getUrlParam.js"></script>';
 	$pg=isset($_REQUEST['zfaces']) ? $_REQUEST['zfaces'] : 'book1';
@@ -583,10 +584,7 @@ function bookings_ajax_backend_callback() {
 	define('BOOKINGS_AJAX_ORIGIN', "b");
 	$pg=isset($_REQUEST['zfaces']) ? $_REQUEST['zfaces'] : 'ajax';
 	ob_end_clean();
-	ob_start();
 	bookings_output();
-	$json=ob_get_clean();
-	echo $json;
 	die();
 }
 

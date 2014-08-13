@@ -207,3 +207,19 @@ div.wrap div#bookings {
 	float:left;
 	width:98%
 }
+
+.pnl_basic_data .bookingsButtonPushed {
+	background-color: rgb(208,212,228);
+}
+
+.bookingsApprovedReservation {
+	background-color: rgb(208,212,228);
+}
+
+.ui-widget-overlay.ui-front {
+	z-index: 10000;
+}
+
+.ui-dialog { 
+	z-index: 10001 !important;
+}

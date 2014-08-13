@@ -373,14 +373,6 @@ div.mycal_div {
 	color: #616161;
 }
 
-/* SelectUser colors */
-.SelectUserRowOver, .SelectUserRowOver td, td.SelectUserRowOver {
-	background-color: #D9EAF5;
-	padding: 2px;
-    font-size: 11px;
-	cursor: pointer;
-}
-
 /* Admin row-selected color */
 .adminRowSelected, .adminRowSelected td {
     padding: 2px;
