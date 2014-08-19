@@ -4,7 +4,7 @@
  * Plugin URI: http://www.zingiri.com/bookings 
  * Description: Bookings is a powerful reservations scheduler. 
  * Author: Zingiri 
- * Version: 4.0.1
+ * Version: 4.1.0
  * Author URI: http://www.zingiri.com/
  */
 define("BOOKINGS_VERSION", bookings_version());
@@ -342,8 +342,12 @@ function bookings_header() {
 	echo '<script type="text/javascript">';
 	echo "var bookingsPageurl='" . bookings_home() . "';";
 	echo "var bookingsAjaxUrl='" . admin_url('admin-ajax.php') . "?action=bookings_ajax_frontend&bookingspid=" . $post->ID . "&';";
+	echo "var aphpsAjaxURL='".admin_url('admin-ajax.php')."'+'?action=bookings_ajax_frontend&zfaces=ajax&ajax=1&form=';";
+	echo "var aphpsBaseUrl='".bookings_url(false)."';";
 	echo '</script>';
-//	echo '<script type="text/javascript" src="' . bookings_url(false) . 'app/bookings/js/' . BOOKINGS_JSPREFIX . '/bookx.jquery.js"></script>';
+	echo '<script type="text/javascript" src="' . bookings_url(false) . 'app/bookings/js/' . BOOKINGS_JSPREFIX . '/bookx.jquery.js"></script>';
+	echo '<script type="text/javascript" src="' . bookings_url(false) . 'app/bookings/js/' . BOOKINGS_JSPREFIX . '/helper.jquery.js"></script>';
+	echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/jquery.cookie.js"></script>';
 	echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/functions.js"></script>';
 	echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/jquery.getUrlParam.js"></script>';
 	$pg=isset($_REQUEST['zfaces']) ? $_REQUEST['zfaces'] : 'book1';
@@ -354,6 +358,7 @@ function bookings_header() {
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . bookings_url(false) . 'aphps/fwkfor/css/integrated_view.css" media="screen" />';
 	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/forms.css" media="screen" />';
+	echo '<link rel="stylesheet" type="text/css" href="' . bookings_url(false) . 'app/bookings/css/bookx.css" media="screen" />';
 }
 
 function bookings_admin_header() {
@@ -430,7 +435,6 @@ function bookings_http($page="index", $params=array()) {
 		$wp['pageurl']=get_admin_url() . 'admin.php?page=bookings&';
 		$wp['secret']=get_option('bookings_secret');
 	}
-	
 	if (get_option('bookings_showcase')) {
 		$wp['desc']=get_bloginfo('description');
 		$wp['showcase']=1;
@@ -516,7 +520,7 @@ function bookings_init() {
 		$_SESSION['bookings']['connected']=true;
 	}
 	wp_enqueue_script('jquery');
-	if (!is_admin() && isset($_REQUEST['zfaces'])) {
+	if (!is_admin()) {
 		$bookingsScriptsLoaded=true;
 		wp_enqueue_script(array('jquery-ui-core','jquery-ui-dialog','jquery-ui-datepicker'));
 		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/flick/jquery-ui.css');

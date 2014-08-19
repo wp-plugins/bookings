@@ -11,7 +11,7 @@ a.bookingsMoveForward, a.bookingsMoveBack {
 	text-decoration:none;
 }
 
-.selectedDayBoxStyle {
+#bookings td.selectedDayBoxStyle {
 	font-size: smaller;
 	border: solid 4px #DDCAF6 !important;
 	text-align: center;

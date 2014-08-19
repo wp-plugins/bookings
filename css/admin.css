@@ -44,6 +44,7 @@ table.dayReservations {
 
 .bookingsCalendarDateSelector {
 	clear: both;
+	width: 100%;
 }
 
 .bookingsCalendarsBody {
@@ -75,6 +76,10 @@ table.dayReservations {
 	clear: both;
 	text-align: center;
 	margin: 20px;
+}
+
+.selectedDay a:link {
+	text-decoration: none;
 }
 
 .viewLinks {
