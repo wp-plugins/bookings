@@ -1,71 +1,73 @@
-.bookingsCalendarBody table, .bookingsCalendarBody table tr, .bookingsCalendarBody table td {
+.bookings .bookingsCalendarBody table, 
+.bookings .bookingsCalendarBody table tr, 
+.bookings .bookingsCalendarBody table td {
 	border: 0px !important;
 	max-width: 300px;
 }
 
-.monthNameStyle {
+.bookings .monthNameStyle {
 	font-size: 11px;
 	text-align: center;
 }
-.dayBoxStyle {
+.bookings .dayBoxStyle {
 	font-size: 10px;
 	background-color: #F0F0F0;
 	text-align: center;
 	width: 25px;
 	height: 25px;
 }
-.currentDayBoxStyle {
+.bookings .currentDayBoxStyle {
 	width: 25px;
 	height: 25px;
 	font-size: 10px;
 	background-color: #FFFFFF;
 	text-align: center;
 }
-.emptyDayStyle {
+.bookings .emptyDayStyle {
 	background-color: #D5D8D3;
 }
-.dayNamesStyle {
+.bookings .dayNamesStyle {
 	font-size: 11px;
 	text-align: center;
 	height: 25px;
 	background-color: #DDCAF6;
 }
-.navMonthStyle {
+.bookings .navMonthStyle {
 	font-size: 11px;
 	color: #000000;
 }
-.selectBoxStyle {
+.bookings .selectBoxStyle {
 	font-size: 11px;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 
-.bookings-step2 table.availability {
+.bookings .bookings-step2 table.availability {
 	font-size: smaller;
 	table-layout:fixed;
 	width: inherit;
 	margin: auto;
 }
 
-td.resourceName {
+.bookings td.resourceName {
 	text-align:right;
 	padding: 0px 10px 0px 0px;
 }
 
-td.MyCalCellColorEmpty, td.MyCalCellColor {
+.bookings td.MyCalCellColorEmpty, 
+.bookings td.MyCalCellColor {
 	padding: 0px;
 }
 
-div.bookingsCalendarBody div.viewdays {
+.bookings div.bookingsCalendarBody div.viewdays {
 	margin: 0 auto;
 }
 
-a.bookingsMoveForward, a.bookingsMoveBack {
+.bookings a.bookingsMoveForward, a.bookingsMoveBack {
 	text-decoration:none;
 }
 
-.selectedDayBoxStyle {
+.bookings .selectedDayBoxStyle {
 	font-size: smaller;
 	border: solid 4px #DDCAF6 !important;
 	text-align: center;
 }
-

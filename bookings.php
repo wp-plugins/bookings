@@ -4,7 +4,7 @@
  * Plugin URI: http://www.zingiri.com/bookings 
  * Description: Bookings is a powerful reservations scheduler. 
  * Author: Zingiri 
- * Version: 4.1.0
+ * Version: 4.2.0
  * Author URI: http://www.zingiri.com/
  */
 define("BOOKINGS_VERSION", bookings_version());
@@ -177,7 +177,7 @@ function bookings_shortcode($atts, $content=null, $code="") {
 			}
 		}
 		bookings_output($pg, $postVars);
-		$output='<div id="bookings">';
+		$output='<div id="bookings" class="bookings aphps">';
 		$output.=$bookings['output']['body'];
 		$output.='</div>';
 		return $content . $output;
@@ -188,7 +188,7 @@ function bookings_shortcode($atts, $content=null, $code="") {
 		if ($bookings_shortcode_id && ($bookings_shortcode_id != $bookings_shortcode_counter)) return;
 		$bookings_shortcode_processed=true;
 		bookings_output($pg);
-		$output='<div id="bookings">';
+		$output='<div id="bookings" class="bookings aphps">';
 		$output.=$bookings['output']['body'];
 		$output.='</div>';
 		return $content . $output;
@@ -286,7 +286,7 @@ function bookings_output($bookings_to_include='', $postVars=array()) {
 			$buffer=$news->DownloadToString();
 			if ($news->error) {
 				$bookings['output']=array();
-				if (is_admin()) $bookings['output']['body']='An error occured when connecting to the Bookings service.<br />If you need help with this, please contact our <a href="http://go.zingiri.com" target="_blank">technical support service</a>.';
+				if (is_admin()) $bookings['output']['body']='An error occured when connecting to the Bookings service.<br />If you need help with this, please contact our <a href="http://www.zingiri.com/go" target="_blank">technical support service</a>.';
 				else $bookings['output']['body']='The service is currently not available, please try again later.';
 				return false;
 			}
@@ -345,20 +345,19 @@ function bookings_header() {
 	echo "var aphpsAjaxURL='".admin_url('admin-ajax.php')."'+'?action=bookings_ajax_frontend&zfaces=ajax&ajax=1&form=';";
 	echo "var aphpsBaseUrl='".bookings_url(false)."';";
 	echo '</script>';
+	echo '<script type="text/javascript" src="' . bookings_url(false) . 'app/bookings/js/' . BOOKINGS_JSPREFIX . '/templatex.jquery.js"></script>';
 	echo '<script type="text/javascript" src="' . bookings_url(false) . 'app/bookings/js/' . BOOKINGS_JSPREFIX . '/bookx.jquery.js"></script>';
+	echo '<script type="text/javascript" src="' . bookings_url(false) . 'app/bookings/js/' . BOOKINGS_JSPREFIX . '/hotelx.jquery.js"></script>';
 	echo '<script type="text/javascript" src="' . bookings_url(false) . 'app/bookings/js/' . BOOKINGS_JSPREFIX . '/helper.jquery.js"></script>';
 	echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/jquery.cookie.js"></script>';
 	echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/functions.js"></script>';
 	echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/jquery.getUrlParam.js"></script>';
 	$pg=isset($_REQUEST['zfaces']) ? $_REQUEST['zfaces'] : 'book1';
+	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL  . 'css/client.css" media="screen" />';
 	if (in_array($pg, array('myschedule'))) {
-		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/css-client.css" media="screen" />';
+		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/client/css-client.css" media="screen" />';
 	}
-	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/client.css" media="screen" />';
-	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
-	echo '<link rel="stylesheet" type="text/css" href="' . bookings_url(false) . 'aphps/fwkfor/css/integrated_view.css" media="screen" />';
-	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/forms.css" media="screen" />';
-	echo '<link rel="stylesheet" type="text/css" href="' . bookings_url(false) . 'app/bookings/css/bookx.css" media="screen" />';
+
 }
 
 function bookings_admin_header() {
@@ -375,7 +374,6 @@ function bookings_admin_header() {
 		echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/functions.js"></script>';
 		echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/jquery.getUrlParam.js"></script>';
 		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/admin.css" media="screen" />';
-		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/colors.css" media="screen" />';
 		if ($wp_version < '3.3') wp_tiny_mce(false, array('editor_selector' => 'theEditor'));
 	}
 }
@@ -559,6 +557,7 @@ function bookings_admin_footer() {
 function bookings_footer() {
 	global $bookings, $bookingsScriptsLoaded;
 	$ext='.css';
+	
 	if (isset($bookings['output']['template']) && file_exists(dirname(__FILE__) . '/css/templates/' . $bookings['output']['template'] . $ext)) echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/templates/' . $bookings['output']['template'] . $ext . '" media="screen" />';
 	if (isset($bookings['output']['calendar']) && file_exists(dirname(__FILE__) . '/css/calendars/' . $bookings['output']['calendar'] . $ext)) echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/calendars/' . $bookings['output']['calendar'] . $ext . '" media="screen" />';
 	

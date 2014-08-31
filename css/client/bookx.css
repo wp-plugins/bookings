@@ -1,0 +1,146 @@
+.bookings .bookx td.bookingsSelectorAmount {
+	text-align: right;
+}
+
+.bookings .bookx #bookings-timeslots-wrapper {
+	float: right;
+	position:relative;
+	width: 60%;
+}
+
+.bookings .bookx .bookings-timeslots-times .bookings-timeslots-time {
+	cursor: pointer;	
+}
+
+.bookings .bookx .bookings-timeslots-times .bookings-timeslots-selected {
+	background-color: rgb(192,192,192);
+	cursor: not-allowed;
+}
+
+.bookings .bookx .bookings-timeslots-dates {
+	float:left;
+	position: relative;
+}
+
+.bookings .bookx div.bookings-timeslots-date {
+	font-weight: bold;
+}
+
+.bookings .bookx div.bookings-timeslots-time {
+	font-size: smaller;
+	text-align: center;
+	float: left;
+	position: relative;
+	border-radius: 2px;
+	background-color: rgb(208,212,228);
+	margin: 1% 1% 1% 0;
+	padding: 1%;
+}
+
+.bookings .bookx div.bookings-timeslots-time img {
+	float: right;
+	cursor: pointer;
+}
+
+.bookings .bookx div.bookings-timeslots-dates {
+	padding: 0 5px;
+}
+
+.bookings .bookx #bookings-section-selected-times {
+	min-height: 35px;
+}
+
+.bookings .bookx #bookings-section-products {
+	padding-right: 1%;
+	width: 99%;
+	float: left;
+	position: relative;
+}
+
+.bookings .bookx #bookings-section-products table {
+	width: 100%;
+}
+
+.bookings .bookx #bookings-section-products table td.bookings-product-name {
+	text-align: left;
+}
+
+.bookings .bookx #bookings-section-resources {
+	padding-right: 1%;
+	width: 49%;
+	float: left;
+}
+
+.bookings .bookx #bookings-section-resources table {
+	width: 100%
+}
+
+.bookings .bookx #bookings-section-resources, 
+.bookings #bookings-section-products, 
+.bookings .bookx #bookings-section-selected-times {
+	margin: 0 0 10px 0;
+}
+
+.bookings .bookx #bookings-section-resources table.machid {
+	margin: 0;
+}
+
+.bookings .bookx #bookings-section-resources table.machid tr td, 
+.bookings .bookx #bookings-section-products table.productid tr td {
+	margin: 0px !important;
+	padding: 3px !important;
+}
+
+.bookings .bookx #bookings-section-products table.productid {
+	margin: 0;
+	float: left;
+}
+
+.bookings .bookx #bookings-section-times {
+	float: left;
+	width: 100%;
+	display: none; 
+}
+
+.bookings .bookx #bookings-section-selected-times {
+	width: 100%;
+}
+
+.bookings .bookx #bookings-section-selected-times-submit {
+	width: 100%;
+	text-align: right;
+	display: none;
+}
+
+.bookings .bookx #bookings-section-quantity {
+	display: none;
+	float: left;
+	width: 12%;
+	text-align: center;
+}
+
+.bookings .bookx #bookings-section-quantity-wrapper {
+	background-color: rgb(208,212,228);
+	padding: 3px;
+	margin: 0px;
+}
+
+.bookings .bookx #bookings-section-selected-times div.bookings-timeslots-time {
+	width: 23%;
+} 
+
+.bookings .bookx #bookings-edit {
+	position: absolute;
+	top: 2px;
+	right: 2%;
+	display: none;
+}
+
+.bookings .bookx #bookings-edit img {
+	cursor: pointer;
+}
+
+.bookings .bookx #bookings-section-products table.productid tr:hover, 
+.bookings .bookx #bookings-section-resources table.machid tr:hover {
+	background-color: rgb(208,212,228);
+}

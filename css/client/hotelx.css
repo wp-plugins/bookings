@@ -1,0 +1,49 @@
+.bookings .hotelx .fromto .fromtime,
+.bookings .hotelx .fromto .totime {
+	display: none;
+}
+
+.bookings .hotelx #bookings-search {
+	float: right;
+	margin: 20px 0 0 0;
+}
+
+.bookings .hotelx #bookings-section2 table.availability td {
+	padding: 10px 0px;
+}
+
+.bookings .hotelx #bookings-results {
+	display: none;
+}
+
+.bookings .hotelx #bookings-results #bookings-next {
+	display: none;
+}
+
+.bookings .hotelx .bookings-quantity {
+	text-align: right;
+}
+
+.bookings .hotelx #bookings-next {
+	float: right;
+	margin: 20px 0 0 0;
+}
+
+.bookings .hotelx .availability .productname,
+.bookings .hotelx .availability .productexcerpt {
+	text-align: left;
+}
+
+.bookings .hotelx .bookings-line .productname,
+.bookings .hotelx .bookings-line .productexcerpt {
+	text-align: left;
+}
+
+.bookings .hotelx #bookings-datelabel {
+	font-weight: bold
+}
+
+/* Override cartx.css */
+.bookings .hotelx #bookings-cart .bookings-cart-line .bookings-time-slot {
+	width: 100%;
+}

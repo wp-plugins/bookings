@@ -1,0 +1,20 @@
+.bookings .zing_ws_page {
+	width:100%;
+}
+
+.bookings .zfaces-form {
+	width: 100%;
+	float:left;	
+}
+
+.bookings .mceContentBody p,
+.bookings .zfaces-form input[type="text"],
+.bookings .zfaces-form textarea {
+	background-color:white; 
+}
+
+.bookings div.bookings-cart {
+	border: 1px solid #DDDDDD;
+	border-radius: 2px 2px 2px 2px;
+	padding: 3px;
+}

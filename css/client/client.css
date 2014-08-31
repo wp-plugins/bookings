@@ -1,0 +1,493 @@
+.bookings {
+	position: relative;
+	float: left;
+	width: 100%;
+}
+
+.bookings .currentTimeBoxStyle {
+	background-color: #DDCAF6;
+}
+
+/*
+Individal time cells for the weekly view with resources
+*/
+.bookings td.scheduleTimes,.scheduleTimes td {
+	font-size: 11px;
+	color: #333333;
+	text-align: left;
+	background-color: #EDEDED;
+	padding-left: 2px;
+	border: 1px solid;
+}
+
+.bookings .r0 td,
+.bookings .ro0 td {
+	padding: 2px;
+	background-color: #FFFFFF;
+	font-size: 11px;
+}
+
+.bookings .r1 td,
+.bookings .ro1 td {
+	padding: 2px;
+	background-color: #F8FAEA;
+	font-size: 11px;
+}
+
+.bookings .r0 td.o:hover {
+	cursor: default;
+	background-color: #FFFFFF;
+}
+
+.bookings .r1 td.o:hover {
+	cursor: default;
+	background-color: #F8FAEA;
+}
+
+.bookings .r0:hover td.resourceName,
+.bookings .r1:hover td.resourceName {
+	background-color: #f7f18b;
+}
+
+.bookings .r0 td.resourceName:hover,
+.bookings .r1 td.resourceName:hover {
+	cursor: default;
+	background-color: #EDEDED;
+}
+
+.bookings .viewdays {
+	clear: both;
+}
+
+.bookings .viewdays a {
+	margin: 5px;
+	padding: 5px;
+	float: left;
+	border: 1px #000000 solid;
+}
+
+/*
+* Date and time selectors on book2 page
+*/
+.bookings #bookings-step2 {
+	text-align:center;
+}
+
+.bookings .fromto {
+	clear: both;
+}
+
+.bookings .fromdatetime,
+.bookings .todatetime {
+	width: 48%;
+	float: left;
+	margin: 1%;
+	text-align:left;
+}
+
+.bookings .totime,
+.bookings .fromtime {
+	margin-top: 10px;
+}
+
+.bookings .fromdate {
+	width: 100%;
+}
+
+.bookings .fromdate label,
+.bookings .todate label {
+	width: 50%;
+}
+
+.bookings div.availability {
+	border-top: 1px #000000 solid;
+	margin-top: 20px;
+	padding-top: 20px;
+}
+
+.bookings div.availability .resource {
+	margin-bottom: 30px;
+	clear: both;
+}
+
+.bookings div.availability .resourcename {
+	width: 20%;
+	float: left;
+	font-weight: bold;
+}
+
+.bookings div.availability .resourcenotes {
+	width: 50%;
+	float: left;
+}
+
+.bookings div.availability .resource a {
+	float: left;
+}
+
+/* product availability */
+.bookings table.availability  {
+	width:100%;
+	clear: both;
+}
+
+.bookings table.availability .product {
+	margin-bottom: 30px;
+	clear: both;
+	border: 0px;
+}
+
+.bookings table.availability,table.availability tr td {
+	border: 0px;
+}
+
+.bookings table.availability div.productname {
+	font-weight: bold;
+}
+
+.bookings table.availability div.productexcerpt {
+}
+	
+.bookings table.availability td.productprice {
+	text-align:right;
+}
+
+.bookings table.availability td.productqty {
+	text-align:right;
+}
+
+.bookings table.availability tr.product a {
+	
+}
+
+/*
+* book2 page: This page shows the date selector and resource availability
+*/
+.bookings #book2-submit {
+	float: right;
+}
+
+.bookings #book2-search {
+	text-align:center;
+	margin:20px auto;
+}
+
+/*
+* book3 page: This page shows the registration form
+*/
+.bookings #book3-submit {
+	float: right;
+	margin-top:30px;
+}
+
+.bookings .bookings-reservationsummary {
+	clear:both;
+	width:100%;
+	background-color:#F8F8F8;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	float:left;
+}
+
+.bookings .bookings-productprice {
+	text-align:right;
+}
+
+.bookings .bookings-reservationsummary table, 
+.bookings .bookings-reservationsummary tr, 
+.bookings .bookings-reservationsummary tr td {
+	border: none;
+}
+
+.bookings .bookings-reservationsummary table {
+	padding:10px;
+}
+
+.bookings .bookings-productname {
+	font-weight:bold;
+}
+
+.bookings .bookings-totalprice {
+	text-align:right;
+	font-weight:bold;
+}
+	
+.bookings .bookings-resource {
+	font-weight:bold;
+	padding: 10px;
+	margin-bottom: 0px;
+}
+
+.bookings .bookings-accessory-title {
+	font-weight:bold;
+	padding: 10px;
+	margin-bottom: 0px;
+}
+
+.bookings .bookings-accessory {
+	padding-left: 20px;
+	margin-bottom: 0px;
+}
+
+.bookings .bookings-accessory-price {
+	text-align:right;
+}
+
+.bookings .bookings-reservationdates {
+	float: left;
+}
+
+.bookings .bookings-price {
+	padding: 10px;
+	margin-bottom: 0px;
+	text-align:right;
+}
+
+.bookings .bookings-totalprice {
+	padding: 10px;
+	margin-bottom: 0px;
+	text-align:right;
+	font-weight: bold; 
+}
+
+/* Button */
+.bookings .button {
+	display: inline-block;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	font: 12px/100% Arial, Helvetica, sans-serif;
+	padding: .4em 1.2em .4em;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, .5);
+	-webkit-border-radius: 1.4em;
+	-moz-border-radius: 1.4em;
+	border-radius: 1.4em;
+	color: #222222;
+	border: solid 1px #dddddd;
+	background: #eeeeee;
+	background: -webkit-gradient(linear, left top, left bottombottom, from(#ffffff),
+		to(#cccccc) );
+	background: -moz-linear-gradient(top, #cccccc, #ffffff);
+	filter: progid :   DXImageTransform.Microsoft.gradient (   startColorstr
+		= 
+		 '#cccccc', endColorstr =   '#ffffff' );
+}
+
+.bookings .button:hover {
+	text-decoration: none;
+	color: #111111;
+	border: solid 1px #aaaaaa;
+}
+
+.bookings .button:active {
+	color: #222222;
+	border: solid 1px #aaaaaa;
+	background: #eeeeee;
+	background: -webkit-gradient(linear, left top, left bottombottom, from(#ccccccc),
+		to(#ffffff) );
+	background: -moz-linear-gradient(top, #ffffff, #cccccc);
+	filter: progid :   DXImageTransform.Microsoft.gradient (   startColorstr
+		= 
+		 '#ffffff', endColorstr =   '#cccccc' );
+}
+
+/* Booking form */
+.bookings li.zfli {
+	list-style-type: none !important;
+}
+
+.bookings td.navMonthStyle {
+	width: 33%;
+}
+
+.bookings td.MyCalCellColorEmpty a {
+	text-align:center;
+}
+.bookings td.MyCalCellColorEmpty p {
+	display:inline
+}
+.bookings .mycal_div {
+	width: 200px;
+}
+.bookings .resourceName {
+	vertical-align:top;
+}
+.bookings .MyCalCellColor {
+	vertical-align:top;
+}
+.bookings .MyCalCellColorEmpty {
+	vertical-align:top;
+}
+.bookings .selectedDay {
+	text-align: center;
+}
+
+.bookings table.dayReservations {
+	table-layout:fixed; 
+	overflow:hidden;
+	white-space: nowrap;
+}
+
+.bookings .bookings-step2 input.button {
+	float:right;
+}
+
+.bookings #additionalinfo-quantity {
+	margin-bottom: 10px;
+}
+	
+.bookings #bookings-select-accessories {
+	text-align: center;
+	vertical-align: center;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.bookings #pnl_additional {
+	width:100%; 
+	position: relative;
+	/*height:400px;
+	overflow:scroll;*/
+}
+
+.bookings #pnl_additional table {
+	font-size:smaller;
+}
+
+/* spinner */
+.bookings .aphpsSpinner {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-left: -50px; /* half width of the spinner gif */
+	margin-top: -50px; /* half height of the spinner gif */
+	text-align:center;
+	z-index:1234;
+	overflow: auto;
+	width: 100px; /* width of the spinner gif */
+	height: 102px; /*hight of the spinner gif +2px to fix IE8 issue */
+}
+
+.bookings table.date_text, 
+.bookings table.date_text td {
+	border: 0px none !important;
+}
+
+.bookings #stylist {
+	position: fixed;
+	top: 200px;
+	left: 10px;
+}
+
+/* Shopping cart */
+.bookings .bookings-cart {
+	float:left;
+	width: 100%;
+}
+
+.bookings .bookings-cart-line-slots {
+	width: 38%;
+	float:left;
+	margin-right: 2%;
+}
+
+.bookings .bookings-cart-line-items {
+	width: 38%;
+	float:left;
+	margin-right: 2%;
+}
+
+.bookings .bookings-cart-line-edit {
+	width: 20%;
+	float: left;
+	padding-bottom: 5px;
+}
+
+.bookings .bookings-cart-line-edit a img {
+	border: 0px;
+	box-shadow: 0 0px;
+	margin: 0px 5px;
+	border-radius: 0px;
+	vertical-align: middle;
+}
+
+.bookings .bookings-cart-control {
+	float: left;
+	width: 100%;
+	padding: 5px 0px;
+	margin: 5px 0px;
+	text-align: right;
+}
+
+.bookings .bookings-cart-line-items div {
+	float:left;
+	padding-right: 0.5em;
+	margin: auto;
+}
+
+.bookings div.bookings-cart-line-items-price {
+	text-align: right;	
+	float: right;
+	padding-right: 0px;
+}
+
+.bookings .bookings-cart-total-price {
+	float: left;
+	width: 78%;
+	padding-right: 22%;
+	font-weight: bold;
+	text-align: right;
+}
+
+/* Buttons */
+.bookings .ui-button-text-only .ui-button-text {
+	padding: 0.2em 1.2em;
+	line-height: 1.2em;
+}
+
+/* Search widget */
+.bookings #bookings-search-box .bookings-search-field label {
+	margin: 0px 10px;
+}
+
+.bookings #bookings-search-box .bookings-search-field {
+	margin: 10px 0px;
+}
+
+.bookings #bookings-search-box .bookings-search-submit {
+	margin-top: 20px;
+	text-align: right;
+}
+
+.bookings .bookings-alert {
+	margin: 2x;
+	background-color: orange;
+	padding: 5px;
+	text-align: center;
+	width: 100%;
+}
+
+.bookings .bookings-payment-gateway {
+	margin: 10px;
+}
+
+.bookings .bookings-payment-gateways,
+.bookings .bookings-confirmation {
+	clear:both;
+	width:100%;
+	background-color:#F8F8F8;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	float:left;
+	padding: 10px;
+}
+
+.bookings .bookings-confirmation table.message,
+.bookings .bookings-confirmation table.message td {
+	border: 0 none;
+}
+
+.bookings table.dayReservations td {
+	overflow: hidden;
+}

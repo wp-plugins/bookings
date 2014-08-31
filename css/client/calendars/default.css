@@ -1,0 +1,21 @@
+.bookings .bookingsCalendarBody table, 
+.bookings .bookingsCalendarBody table tr, 
+.bookings .bookingsCalendarBody table td {
+	border: 0px !important;
+	max-width: 300px;
+}
+
+.bookings table.availability td.scheduleDateHeader:first-child {
+	width: 20%;
+}
+
+.bookings a.bookingsMoveForward, a.bookingsMoveBack {
+	text-decoration:none;
+}
+
+.bookings .bookings td.selectedDayBoxStyle {
+	font-size: smaller;
+	border: solid 4px #DDCAF6 !important;
+	text-align: center;
+}
+

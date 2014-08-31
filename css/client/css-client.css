@@ -1,85 +1,8 @@
-#bookings {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    color: #333333;
-	font-size: 11px;
-}
-#bookings a {
-    color: #104E8B;
-    text-decoration: none;
-}
-#bookings a:hover {
-    color: #474747;
-    text-decoration: underline;
-}
-/*
-Common text settings
-*/
-#bookings p {
-    font-size: 11px;
-    margin-bottom: 2px;
-    margin-top: 2px;
-    margin-right: 2px;
-    margin-left: 2px;
-}
-#bookings h5 {
-    margin-bottom: 0px;
-	margin-top: 0px;
-    font-size: 12px;
-}
-#bookings h4 {
-	font-size: 13px;
-}
-#bookings h3 {
-	font-size: 18px;
-	margin-top: 0px;
-}
-/*
-#bookings table {
-	border-width: 0;
-	font-size: 11px;
-}
-*/
-/*
-Error box settings
-*/
-#bookings table.alert {
-    color: #CC0000;
-	background-color: red;
-    text-align: center;
-	width: 60%;
-	border: solid #8B0000 2px;
-	padding: 5px;
-	margin-bottom: 5px;
-	color: white;
-	font-size: 11px;
-}
-/*
-Form text box settings
-*/
-#bookings .textbox {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 11px;  
-    color: #36648B;
-    background-color: #FCFCFC;
-}
-/*
-Form button settings
-*/
-#bookings .button {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 10px;
-    font-weight: bold;
-	border: solid 1px #7C7A7A;
-	color: #36648B;
-	background-color: #E7E7E7;
-}
-
+/* Used in myschedule only */
 /*
 Data table head row settings
 */
-#bookings .tableTitle {
+.bookings .tableTitle {
     font-size: 11px;
     font-weight: bold;
     color: #FFFFFF;
@@ -89,27 +12,13 @@ Data table head row settings
 	vertical-align: middle;
 }
 
-#bookings .tableTitle a, #bookings .tableTitle a:hover {
+.bookings .tableTitle a, .bookings .tableTitle a:hover {
 	color: #FFFFFF;
 	text-decoration: none;
 }
 /*
-Welcome message settings
-*/
-.welcomeBack {
-    margin-top: 0px;
-    margin-right: 0px;
-    margin-bottom: 0px;
-    margin-left: 0px;
-    color: #708090;
-	font-size: 12px;
-}
-/*
 Table border color
 */
-.tableBorder {
-    background-color: #36648B;
-}
 
 .cpanelCell td {
     padding: 2px;
@@ -236,7 +145,7 @@ td.scheduleDate, td.scheduleDateHeader a {
 	color: #FFFFFF;
 }
 
-tr.r0 td, tr.r1 td {
+tr.r0 td {
 	overflow:hidden;
 }
 /*
@@ -341,17 +250,13 @@ Calendar settings
 	width: 25px;
 	height: 25px;
 }
-.currentDayBoxStyle,.selectedDayBoxStyle {
+.currentDayBoxStyle {
 	width: 25px;
 	height: 25px;
 	font-size: 10px;
 	background-color: #FFFFFF;
 	text-align: center;
 }
-.selectedDayBoxStyle {
-	background-color: #DDCAF6;
-}
-
 .emptyDayStyle {
 	background-color: #D5D8D3;
 }

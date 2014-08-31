@@ -43,7 +43,7 @@ class Bookings_Search_Widget extends WP_Widget {
 		$postVars['searchurl']=get_permalink($instance['page_id']);
 		$postVars['template']=$instance['template'];
 		bookings_output('search',$postVars);
-		$output='<div id="bookings">';
+		$output='<div id="bookings" class="bookings">';
 		$output.=$bookings['output']['body'];
 		$output.='</div>';
 		echo $output;

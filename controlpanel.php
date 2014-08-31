@@ -199,7 +199,7 @@ function bookings_main() {
 	require(dirname(__FILE__).'/includes/support-us.inc.php');
 
 	echo '<div class="wrap">';
-	echo '<div id="bookings">';
+	echo '<div id="bookings" class="bookings aphps">';
 	if (isset($bookings['output']['messages']) && is_array($bookings['output']['messages']) && (count($bookings['output']['messages']) > 0)) {
 		echo '<div class="error">';
 		foreach ($bookings['output']['messages'] as $msg) {

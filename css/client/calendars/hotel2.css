@@ -1,108 +1,111 @@
 /*
 Calendar settings
 */
-.monthNameStyle {
+.bookings .monthNameStyle {
 	font-size: 11px;
 	text-align: center;
 }
-.dayBoxStyle {
+.bookings .dayBoxStyle {
 	font-size: 10px;
 	background-color: #F0F0F0;
 	text-align: center;
 	width: 25px;
 	height: 25px;
 }
-.currentDayBoxStyle {
+.bookings .currentDayBoxStyle {
 	width: 25px;
 	height: 25px;
 	font-size: 10px;
 	background-color: #FFFFFF;
 	text-align: center;
 }
-.emptyDayStyle {
+.bookings .emptyDayStyle {
 	background-color: #D5D8D3;
 }
-.bookedDayBoxStyle {
+.bookings .bookedDayBoxStyle {
 	background-color: #D5D8D3;
 }
-.dayNamesStyle {
+.bookings .dayNamesStyle {
 	font-size: 11px;
 	text-align: center;
 	height: 25px;
 	background-color: #DDCAF6;
 }
-.navMonthStyle {
+.bookings .navMonthStyle {
 	font-size: 11px;
 	color: #000000;
 }
-.selectBoxStyle {
+.bookings .selectBoxStyle {
 	background-color: AliceBlue;
 	color: white;
 }
 
-.bookingsCalendarsBody {
+.bookings .bookingsCalendarsBody {
 	width:100%;
 }
 
-.bookingsCalendarBody table td {
+.bookings .bookingsCalendarBody table td {
 	vertical-align: baseline;
 }
 
-.bookingsCalendarBody {
+.bookings .bookingsCalendarBody {
 	float:left;
 	width: 48%; /*31.3%;*/
 	padding:1%;
 }
 
-table.availability td {
+.bookings table.availability td {
 	padding: 0px;
 }
 
-table.availability td.resourceName {
+.bookings table.availability td.resourceName {
 	text-align:right;
 	padding: 0px 10px 0px 0px;
 }
 
-div.MyCalCellColorEmpty, div.MyCalCellColor {
+.bookings div.MyCalCellColorEmpty, 
+.bookings div.MyCalCellColor {
 	padding: 0px 3px 3px 3px;
 }
 
-table.availability td.scheduleDateHeader {
+.bookings table.availability td.scheduleDateHeader {
 	padding: 0px 5px;
 }
 
-.bookings-step2 table.availability {
+.bookings .bookings-step2 table.availability {
 	font-size: smaller;
 	table-layout:fixed;
 	width: inherit;
 	margin: auto;
 }
 
-#book2-next {
+.bookings #book2-next {
 	float: right;
 }
 
-#bookingsCalendarNext {
+.bookings #bookingsCalendarNext {
 	min-height: 30px;
 }
 
-.bookingsCalendarBody table td.dayBoxStyle, .bookingsCalendarBody table td.currentDayBoxStyle {
+.bookings .bookingsCalendarBody table td.dayBoxStyle, 
+.bookings .bookingsCalendarBody table td.currentDayBoxStyle {
 	border: 1px solid black;
 }
 	
-.bookingsCalendarCellDate {
+.bookings .bookingsCalendarCellDate {
 	text-align:right;
 	font-weight: bold;
 }
 	
-.bookingsCalendarCellData {
+.bookings .bookingsCalendarCellData {
 	text-align:right;
 }
 
-a.bookingsMoveForward, a.bookingsMoveBack {
+.bookings a.bookingsMoveForward, 
+.bookings a.bookingsMoveBack {
 	text-decoration:none;
 }
 
-#bookings_date_span {
+.bookings #bookings_date_span {
 	clear: both;
 }

@@ -1,0 +1,47 @@
+.bookings div, .bookings span, .bookings applet, .bookings object, .bookings iframe,
+/*.bookings h1, .bookings h2, .bookings h3, .bookings h4, .bookings h5, .bookings h6,*/ 
+.bookings p, .bookings blockquote, .bookings pre,
+.bookings a, .bookings abbr, .bookings acronym, .bookings address, .bookings big, .bookings cite, .bookings code,
+.bookings del, .bookings dfn, .bookings em, .bookings img, .bookings ins, .bookings kbd, .bookings q, .bookings s, .bookings samp,
+.bookings small, .bookings strike, .bookings strong, .bookings sub, .bookings sup, .bookings tt, .bookings var,
+.bookings b, .bookings u, .bookings i, .bookings center,
+.bookings dl, .bookings dt, .bookings dd, .bookings ol, .bookings ul, .bookings li,
+.bookings fieldset, .bookings form, .bookings label, .bookings legend,
+.bookings table, .bookings caption, .bookings tbody, .bookings tfoot, .bookings thead, .bookings tr, .bookings th, .bookings td,
+.bookings article, .bookings aside, .bookings canvas, .bookings details, .bookings embed, .bookings 
+.bookings figure, .bookings figcaption, .bookings footer, .bookings header, .bookings hgroup, .bookings 
+.bookings menu, .bookings nav, .bookings output, .bookings ruby, .bookings section, .bookings summary,
+.bookings time, .bookings mark, .bookings audio, .bookings video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+.bookings article, .bookings aside, .bookings details, .bookings figcaption, .bookings figure, .bookings 
+.bookings footer, .bookings header, .bookings hgroup, .bookings menu, .bookings nav, .bookings section {
+	display: block;
+}
+.bookings {
+	line-height: 1;
+}
+.bookings ol, .bookings ul {
+	list-style: none;
+}
+.bookings blockquote, .bookings q {
+	quotes: none;
+}
+.bookings blockquote:before, .bookings blockquote:after,
+.bookings q:before, .bookings q:after {
+	content: '';
+	content: none;
+}
+.bookings table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.bookings table tr:nth-child(2n) {
+	background: none;
+}

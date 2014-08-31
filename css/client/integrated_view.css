@@ -1,0 +1,367 @@
+.aphps .zferror {
+	background-color: #FFDFDF !important;
+	border-bottom: 1px solid #EACBCC;
+	border-right: 1px solid #EACBCC;
+	margin: 3px 0;
+}
+
+.aphps .zferror label {
+	color: #DF0000 !important;
+}
+
+.aphps .zferror p {
+	clear: both;
+	color: red;
+	font-size: 10px;
+	font-weight: 700;
+	margin: 0 0 5px !important;
+}
+
+/**** Guidelines and Error Highlight ****/
+.aphps .zfaces-form form li.highlighted {
+	background-color: #fff7c0;
+}
+
+.aphps .zfaces-form p.guidelines {
+	padding: 0;
+	margin: 0;
+	font-size: smaller;
+} 
+
+.aphps .alt {
+	background: #efefef;
+}
+
+/******************** Faces ******************/
+.aphps .zfsub {
+	float: left;
+	/*border:1px solid blue;*/
+}
+
+.aphps .zfclear {
+	clear: both;
+	height: 0px;
+	background-color:red;
+}
+
+.aphps .zfsub label.subname {
+	clear: both;
+	display: block;
+	font-size: 9px !important;
+	line-height: 9px;
+	margin: 0;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	text-align: left;
+	font-weight: normal;
+}
+
+
+.aphps .zfedit {
+	border: 0px;
+}
+
+.aphps .zfli {
+	background-image: none; /*FIXME: doesnt work*/
+	padding-left:10px;
+	padding-right:10px;
+}
+
+.aphps .zflist li {
+	width: 50%;
+}
+
+.aphps .zflistshow {
+	background: #DEDEDE;
+}
+
+.aphps .zflisthide {
+	background: red;
+}
+
+.aphps .zfimg {
+	vertical-align:middle;
+	margin: 0px;
+	padding: 0px;
+}
+
+.aphps .zfelement { 
+	padding-bottom:4px;
+	padding-top: 10px;
+}
+
+.aphps .zfli input:focus {
+	background-color: bisque;
+}
+
+.aphps .zfsubelements {
+	float: left;
+	width: 75%;
+}
+
+.aphps .zfelabel.left {
+	width: 24%;
+	text-align: left;
+	clear: both;
+	float: left;
+}
+
+.aphps .zfelabel.top {
+	width: 100%;
+	text-align: left;
+	clear: both;
+	float: left;
+}
+
+.aphps .zfalert {
+	text-align: center;
+	color: red;
+	border: 1px solid #ccc;
+	width: 400px;
+}
+
+.aphps .zfrequired {
+	color: red !important;
+	float: none !important;
+	font-weight: 700;
+}
+
+.aphps .faces {
+	float: left;
+}
+
+.aphps .faces.fw100 {
+	width: 100%;
+}
+
+.aphps .faces.lw66 {
+	width: 66%;
+	float: left
+}
+
+.aphps .faces.rw66 {
+	width: 66%;
+	float: right
+}
+
+.aphps .faces.lw33 {
+	width: 33%;
+	float: left
+}
+
+.aphps .faces.rw33 {
+	width: 33%;
+	float: right
+}
+
+.aphps .faces.lw50 {
+	width: 50%;
+	float: left
+}
+
+.aphps .faces.rw50 {
+	width: 50%;
+	float: right
+}
+
+.aphps .faces.lw25 {
+	width: 25%;
+	float: left
+}
+
+.aphps .faces.rw25 {
+	width: 25%;
+	float: right
+}
+
+.aphps .faces.lw75 {
+	width: 75%;
+	float: left
+}
+
+.aphps .faces.rw75 {
+	width: 75%;
+	float: right
+}
+
+.aphps div.faces ul,div#zfaces ul,
+.aphps ul#zfaces,ul.zfaces {
+	list-style-type: none;
+	list-style-image: none;
+	margin-left: 0px;
+  	padding-left: 0px
+}
+
+.aphps li.zfacestab {
+	float:left;
+	padding-left:5px;
+	padding-right:5px;
+	margin-left:10px;
+	margin-right:0px;
+	background: #F8F8F8;
+	margin-bottom:0px;
+}
+
+.aphps .aphps_form_buttons {
+	position:relative;
+	clear:both;
+	text-align:center;
+}
+
+.aphps div.aphps-list-top-buttons {
+	float: left; 
+	position: relative; 
+	margin-bottom: 10px;	
+}
+
+.aphps div.aphps-list-top-elements {
+	float: right; 
+	position: relative; 
+	padding-bottom: 10px;
+}
+
+.aphps .aphps-list-links-wrapper {
+	height: 2em;
+}
+
+.aphps .aphps-list-links {
+	filter:alpha(opacity=80);
+	opacity:0.8;
+	padding:2px;
+	display:none;
+	position:absolute;
+}
+
+.aphps .ui-aphps-table {
+	border: 1px solid #DDDDDD;
+	border-collapse: collapse;
+	margin-left: auto;
+	margin-right: auto;
+	min-width: 100%;
+}
+
+.aphps .ui-aphps-table th {
+	padding: 10px 4px;
+	font-weight: bold;
+	text-align: left;
+}
+
+.aphps .ui-aphps-table td {
+	padding: 2px 4px;
+	border-bottom: 1px solid #D6DDE6; /*darkgrey*/
+	text-align: left;
+	vertical-align: top;
+}
+
+.aphps .ui-aphps-table caption {
+	font-size: 24px;
+	font-weight: bold;
+	text-align: left;
+	padding-top: 3px;
+	padding-bottom: 8px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.aphps .ui-aphps-table input[type="text"],
+.aphps .ui-aphps-table textarea {
+	
+}
+
+/* Form */
+.aphps li.zfli {
+	list-style-type: none !important;
+}
+
+/**** Multiple choice ****/
+.aphps .zfsub.multiple_choice {
+	clear: left;
+}
+	
+.aphps .zfsub.multiple_choice label {
+	margin-left:10px;
+}
+
+.aphps div.zfsub .element {
+	margin-bottom: 3px;
+}
+
+.aphps input.formpricingfieldoption {
+	text-align: right;
+}
+
+.aphps .zfrepeatable .element, 
+.aphps .zfrepeatable_add, 
+.aphps .zfrepeatable_del {
+	height: 2em;
+	margin-bottom: 3px;
+}
+
+.aphps .zfrepeatable .element, 
+.aphps .zfrepeatable_add, 
+.aphps .zfrepeatable_del {
+	display: block;
+}
+
+.aphps button.aphps-small-button,
+.aphps button.aphps-small-button.ui-widget,
+.aphps input.aphps-small-button,
+.aphps li.aphps-small-button,
+.aphps a.aphps-small-button,
+.aphps a.aphps-small-button.ui-button {
+	font-size: smaller;
+}
+
+.aphps .aphps-split-button-wrapper {
+	display: inline-block;
+}
+
+.aphps .aphps-split-button-wrapper ul.ui-menu { 
+	position: absolute; 
+	width: 100px;
+}
+
+.aphps .aphps-split-button-wrapper ul.ui-menu li {
+	background-image: none;
+	overflow: hidden;
+}
+
+.aphps .ui-menu .ui-menu-item a:link {
+	text-decoration:none;
+}
+
+.aphps .ui-icon.ui-icon-info,.ui-icon.ui-icon-alert {
+	float: left; 
+	margin-right: .3em;
+}
+
+.aphps .ui-widget.zfaces {
+	border: 1px solid #DDDDDD;
+	border-radius: 2px;
+}
+
+/* tablesorter */
+.aphps table.tablesorter thead tr .header {
+	background-image: url('../images/bg.gif');
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+.aphps table.tablesorter thead tr .headerSortUp {
+	background-image: url('../images/asc.gif');
+}
+.aphps table.tablesorter thead tr .headerSortDown {
+	background-image: url('../images/desc.gif');
+}
+
+.aphps input.ui-element-view, 
+.aphps input.ui-element-delete {
+	border: none;
+	margin: 2px;
+	color: #666
+}
+
+.aphps .aphps-formname-system {
+	color: #1C94C4;
+	font-style: normal;
+}

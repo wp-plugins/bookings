@@ -1,0 +1,10 @@
+.bookings .bookings-page#bookings-reservation .bookings-product-name {
+	text-align: center;
+}
+
+.bookings .bookings-page#bookings-reservation .zfaces-form ul div[data-field="FNAME"],
+.bookings .bookings-page#bookings-reservation .zfaces-form ul div[data-field="LNAME"],
+.bookings .bookings-page#bookings-reservation .zfaces-form ul div[data-field="EMAILADDRESS"],
+.bookings .bookings-page#bookings-reservation .zfaces-form ul div[data-field="PHONE"] {
+	display: none;
+} 
