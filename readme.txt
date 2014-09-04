@@ -3,12 +3,12 @@ Contributors: zingiri
 Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
-Tested up to: 3.9.1
-Stable tag: 4.2.0
+Tested up to: 3.9.2
+Stable tag: 4.2.1
 
 Bookings is a powerful reservations scheduler.
 
-Whether you’re running a Beauty salon, Spa, Hairdresser, Massage therapy, Acupuncture or providing hotel rooms, visitors to your site will be able to check availability of your service and make online bookings.
+Whether you're running a Beauty salon, Spa, Hairdresser, Massage therapy, Acupuncture or providing hotel rooms, visitors to your site will be able to check availability of your service and make online bookings.
 
 == Description ==
 
@@ -69,6 +69,11 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 4.2.1 =
+* Ajax calendar now automatically detects whether to display a schedule calendar or predefined dates & times
+* Fixed issue with calendar sync initialisation
+* Verified compatibility with version 3.9.1
 
 = 4.2.0 =
 * Rearranged css files

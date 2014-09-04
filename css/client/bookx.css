@@ -126,7 +126,7 @@
 }
 
 .bookings .bookx #bookings-section-selected-times div.bookings-timeslots-time {
-	width: 23%;
+	width: 31%;
 } 
 
 .bookings .bookx #bookings-edit {
@@ -143,4 +143,8 @@
 .bookings .bookx #bookings-section-products table.productid tr:hover, 
 .bookings .bookx #bookings-section-resources table.machid tr:hover {
 	background-color: rgb(208,212,228);
+}
+
+.bookings .bookx .bookings-timeslots-predefined {
+	width:100%;
 }
