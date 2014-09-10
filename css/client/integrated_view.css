@@ -342,6 +342,7 @@
 
 /* tablesorter */
 .aphps table.tablesorter thead tr .header {
+	padding-right: 21px;
 	background-image: url('../images/bg.gif');
 	background-repeat: no-repeat;
 	background-position: center right;
