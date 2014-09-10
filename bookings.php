@@ -1,10 +1,10 @@
 <?php
 /*
- * Plugin Name: Bookings 
- * Plugin URI: http://www.zingiri.com/bookings 
- * Description: Bookings is a powerful reservations scheduler. 
- * Author: Zingiri 
- * Version: 4.2.1
+ * Plugin Name: Bookings
+ * Plugin URI: http://www.zingiri.com/bookings
+ * Description: Bookings is a powerful reservations scheduler.
+ * Author: Zingiri
+ * Version: 4.3.0
  * Author URI: http://www.zingiri.com/
  */
 define("BOOKINGS_VERSION", bookings_version());
@@ -226,7 +226,7 @@ function bookings_output($bookings_to_include='', $postVars=array()) {
 	
 	$http=bookings_http($bookings_to_include);
 	bookings_log('Notification', 'Call: ' . $http);
-	//echo '<br />'.$http.'<br />';
+	// echo '<br />'.$http.'<br />';
 	$news=new bookingsHttpRequest($http, 'bookings');
 	$news->noErrors=true;
 	$news->post=array_merge($news->post, $postVars);
@@ -342,38 +342,43 @@ function bookings_header() {
 	echo '<script type="text/javascript">';
 	echo "var bookingsPageurl='" . bookings_home() . "';";
 	echo "var bookingsAjaxUrl='" . admin_url('admin-ajax.php') . "?action=bookings_ajax_frontend&bookingspid=" . $post->ID . "&';";
-	echo "var aphpsAjaxURL='".admin_url('admin-ajax.php')."'+'?action=bookings_ajax_frontend&zfaces=ajax&ajax=1&form=';";
-	echo "var aphpsBaseUrl='".bookings_url(false)."';";
+	echo "var aphpsAjaxURL='" . admin_url('admin-ajax.php') . "'+'?action=bookings_ajax_frontend&zfaces=ajax&ajax=1&form=';";
+	echo "var aphpsBaseUrl='" . bookings_url(false) . "';";
 	echo '</script>';
-	echo '<script type="text/javascript" src="' . bookings_url(false) . 'app/bookings/js/' . BOOKINGS_JSPREFIX . '/templatex.jquery.js"></script>';
-	echo '<script type="text/javascript" src="' . bookings_url(false) . 'app/bookings/js/' . BOOKINGS_JSPREFIX . '/bookx.jquery.js"></script>';
-	echo '<script type="text/javascript" src="' . bookings_url(false) . 'app/bookings/js/' . BOOKINGS_JSPREFIX . '/hotelx.jquery.js"></script>';
-	echo '<script type="text/javascript" src="' . bookings_url(false) . 'app/bookings/js/' . BOOKINGS_JSPREFIX . '/helper.jquery.js"></script>';
-	echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/jquery.cookie.js"></script>';
-	echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/functions.js"></script>';
-	echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/jquery.getUrlParam.js"></script>';
-	$pg=isset($_REQUEST['zfaces']) ? $_REQUEST['zfaces'] : 'book1';
-	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL  . 'css/client.css" media="screen" />';
-	if (in_array($pg, array('myschedule'))) {
-		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/client/css-client.css" media="screen" />';
+	if (BOOKINGS_JSPREFIX == 'src') {
+		bookings_load_js_client();
+	} else {
+		echo '<script type="text/javascript" src="' . bookings_cdn('js') . 'js/' . BOOKINGS_JSPREFIX . '/client.js"></script>';
 	}
-
+	
+	$pg=isset($_REQUEST['zfaces']) ? $_REQUEST['zfaces'] : 'book1';
+	echo '<link rel="stylesheet" type="text/css" href="' . bookings_cdn('css') . 'app/bookings/css/client.css" media="screen" />';
+	if (in_array($pg, array('myschedule'))) {
+		echo '<link rel="stylesheet" type="text/css" href="' . bookings_cdn('css') . 'app/bookings/css/client/css-client.css" media="screen" />';
+	}
 }
 
 function bookings_admin_header() {
 	global $bookings, $wp_version;
 	if (isset($_REQUEST['page']) && ($_REQUEST['page'] == 'bookings')) {
-		if (isset($bookings['output']['head'])) echo $bookings['output']['head'];
+		
+		if (BOOKINGS_JSPREFIX == 'src') {
+			bookings_load_js_admin();
+		} else {
+			echo '<script type="text/javascript" src="' . bookings_cdn('js') . 'js/' . BOOKINGS_JSPREFIX . '/admin.js"></script>';
+		}
+		
 		echo '<script type="text/javascript">';
 		echo "var bookingsPageurl='admin.php?page=bookings&';";
 		echo "var bookingsAjaxUrl=ajaxurl+'?action=bookings_ajax_backend&';";
 		echo "var aphpsAjaxURL=ajaxurl+'?action=bookings_ajax_backend&zfaces=ajax&ajax=1&form=';";
 		echo "var aphpsURL='" . bookings_url(false) . 'aphps/fwkfor/' . "';";
 		echo "var wsCms='gn';";
+		echo "var appsIsAdmin=1;";
+		echo "var zfurl='".bookings_url(false)."aphps/devbld/';";
+		echo "var zfAppsCms='gn';";
 		echo '</script>';
-		echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/functions.js"></script>';
-		echo '<script type="text/javascript" src="' . bookings_url(false) . 'js/' . BOOKINGS_JSPREFIX . '/jquery.getUrlParam.js"></script>';
-		echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/admin.css" media="screen" />';
+		echo '<link rel="stylesheet" type="text/css" href="' . bookings_cdn('css') . 'app/bookings/css/admin.css" media="screen" />';
 		if ($wp_version < '3.3') wp_tiny_mce(false, array('editor_selector' => 'theEditor'));
 	}
 }
@@ -385,7 +390,7 @@ function bookings_http($page="index", $params=array()) {
 	$http=bookings_url();
 	$and='?';
 	if (!isset($_REQUEST['zfaces'])) {
-		$http.='?zfaces='.$page;
+		$http.='?zfaces=' . $page;
 		$and="&";
 	}
 	if (count($_GET) > 0) {
@@ -455,12 +460,13 @@ function bookings_http($page="index", $params=array()) {
 	
 	$vars.=$and . 'wp=' . urlencode(base64_encode(json_encode($wp)));
 	
+	if (defined('APHPS_DEV') && !APHPS_DEV) $vars.='&aphps_dev=0';
+	
 	$_SESSION['bookings']['wp']=urlencode(base64_encode(json_encode($wp)));
 	
 	if (get_option('bookings_http_referer')) $vars.='&http_referer=' . urlencode(get_option('bookings_http_referer'));
 	
 	if ($vars) $http.=$vars;
-	
 	return $http;
 }
 
@@ -490,7 +496,7 @@ function bookings_init() {
 	
 	ob_start();
 	session_start();
-	//FIXME: check this
+	// FIXME: check this
 	if (!is_admin() && isset($_REQUEST['zfaces']) && ($_REQUEST['zfaces'] == 'wp-user-profile')) {
 		$userid=email_exists($_REQUEST['email']);
 		if ($userid) {
@@ -596,4 +602,9 @@ function bookings_ajax_frontend_callback() {
 	$pg=isset($_REQUEST['zfaces']) ? $_REQUEST['zfaces'] : 'ajax';
 	bookings_output();
 	die();
+}
+
+function bookings_cdn($sub='') {
+	if (defined('BOOKINGS_CDN')) return BOOKINGS_CDN;
+	else return '//cdn.zingiri.net/bookings/' . ($sub ? $sub . '/' : '');
 }
