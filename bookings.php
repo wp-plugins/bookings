@@ -4,7 +4,7 @@
  * Plugin URI: http://www.zingiri.com/bookings
  * Description: Bookings is a powerful reservations scheduler.
  * Author: Zingiri
- * Version: 4.3.1
+ * Version: 4.3.3
  * Author URI: http://www.zingiri.com/
  */
 define("BOOKINGS_VERSION", bookings_version());
@@ -239,8 +239,9 @@ function bookings_output($bookings_to_include='', $postVars=array()) {
 		return "A HTTP Error occured";
 	} else {
 		if (($ajax == 1) && !in_array($_REQUEST['form'], array('form_field','form'))) {
-			while ( count(ob_get_status(true)) > 0 )
+			while ( count(ob_get_status(true)) > 0 ) {
 				ob_end_clean();
+			}
 			$buffer=$news->DownloadToString();
 			$bookings['output']=json_decode($buffer, true);
 			if (!$bookings['output']) {
@@ -260,15 +261,19 @@ function bookings_output($bookings_to_include='', $postVars=array()) {
 			}
 			die();
 		} elseif (($ajax == 1) && in_array($_REQUEST['form'], array('form_field','form'))) {
-			if (!defined('BOOKINGS_AJAX_ORIGIN')) while ( count(ob_get_status(true)) > 0 )
-				ob_end_clean();
+			if (!defined('BOOKINGS_AJAX_ORIGIN')) {
+				while ( count(ob_get_status(true)) > 0 ) {
+					ob_end_clean();
+				}
+			}
 			$buffer=$news->DownloadToString();
 			$output=json_decode($buffer, true);
 			echo $output['body'];
 			if (!defined('BOOKINGS_AJAX_ORIGIN')) die();
 		} elseif (($ajax == 2) || (($ajax == 1) && ($_REQUEST['form'] == 'form_field'))) {
-			while ( count(ob_get_status(true)) > 0 )
+			while ( count(ob_get_status(true)) > 0 ) {
 				ob_end_clean();
+			}
 			$output=$news->DownloadToString();
 			foreach (array('content-disposition','content-type') as $i) {
 				if (isset($news->headers[$i])) header($i . ':' . $news->headers[$i]);
@@ -276,8 +281,9 @@ function bookings_output($bookings_to_include='', $postVars=array()) {
 			if (isset($news->body)) echo $news->body;
 			die();
 		} elseif ($ajax == 3) {
-			while ( count(ob_get_status(true)) > 0 )
+			while ( count(ob_get_status(true)) > 0 ) {
 				ob_end_clean();
+			}
 			$buffer=$news->DownloadToString();
 			$output=json_decode($buffer, true);
 			echo $output['body'];
@@ -375,7 +381,7 @@ function bookings_admin_header() {
 		echo "var aphpsURL='" . bookings_url(false) . 'aphps/fwkfor/' . "';";
 		echo "var wsCms='gn';";
 		echo "var appsIsAdmin=1;";
-		echo "var zfurl='".bookings_url(false)."aphps/devbld/';";
+		echo "var zfurl='" . bookings_url(false) . "aphps/devbld/';";
 		echo "var zfAppsCms='gn';";
 		echo '</script>';
 		echo '<link rel="stylesheet" type="text/css" href="' . bookings_cdn('css') . 'app/bookings/css/admin.css" media="screen" />';
@@ -527,12 +533,12 @@ function bookings_init() {
 	if (!is_admin()) {
 		$bookingsScriptsLoaded=true;
 		wp_enqueue_script(array('jquery-ui-core','jquery-ui-dialog','jquery-ui-datepicker'));
-		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/flick/jquery-ui.css');
+		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/flick/jquery-ui.css');
 	} elseif (is_admin() && isset($_REQUEST['page']) && ($_REQUEST['page'] == 'bookings')) {
 		$bookingsScriptsLoaded=true;
 		wp_enqueue_script(array('jquery-ui-core','jquery-ui-dialog','jquery-ui-datepicker','jquery-ui-sortable','jquery-ui-tabs','jquery-ui-menu'));
 		if (version_compare($wp_version, '3.2.1', '<=')) wp_enqueue_script('datepicker', bookings_url(false) . 'js/datepicker/jquery-ui-1.9.2.custom.min.js', array('jquery-ui-core'));
-		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/flick/jquery-ui.css');
+		wp_enqueue_style('jquery-style', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/flick/jquery-ui.css');
 	}
 }
 
@@ -592,7 +598,9 @@ add_action('wp_ajax_nopriv_bookings_ajax_frontend', 'bookings_ajax_frontend_call
 function bookings_ajax_backend_callback() {
 	define('BOOKINGS_AJAX_ORIGIN', "b");
 	$pg=isset($_REQUEST['zfaces']) ? $_REQUEST['zfaces'] : 'ajax';
-	ob_end_clean();
+	while ( count(ob_get_status(true)) > 0 ) {
+		ob_end_clean();
+	}
 	bookings_output();
 	die();
 }

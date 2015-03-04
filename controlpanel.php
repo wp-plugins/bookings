@@ -208,7 +208,9 @@ function bookings_main() {
 		echo '</div>';
 	}
 	if (isset($bookings['output']['mimetype']) && ($bookings['output']['mimetype'] == 'text/plain')) {
-		while (count(ob_get_status(true)) > 0) ob_end_clean();
+		while (count(ob_get_status(true)) > 0) { 
+			ob_end_clean();
+		}
 		header('Content-Type: ' . $bookings['output']['mimetype']);
 		header('Content-Disposition: attachment; filename="'.$bookings['output']['filename'].'"');
 		if (isset($bookings['output']['body'])) echo trim($bookings['output']['body']);
