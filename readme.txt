@@ -4,7 +4,7 @@ Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
 Tested up to: 4.1.1
-Stable tag: 4.3.3
+Stable tag: 4.3.4
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,9 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 4.3.4 =
+* Fixed issue with resource names not returned as UTF-8
 
 = 4.3.3 =
 * Verified compatibility with WP version 4.1.1
