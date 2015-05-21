@@ -3,8 +3,8 @@ Contributors: zingiri, globalprogramming
 Donate link: http://www.zingiri.com/donations
 Tags: booking, schedule, scheduler, appointment, reservation, appointment, availability, availability calendar, Booking calendar, booking form, calendar, event calendar, events, reservation plugin, scheduling, online reservation, appointment scheduling
 Requires at least: 3.0
-Tested up to: 4.1.1
-Stable tag: 4.3.4
+Tested up to: 4.2.2
+Stable tag: 4.3.5
 
 Bookings is a powerful reservations scheduler.
 
@@ -69,6 +69,11 @@ Please visit the [Zingiri Support Forums](http://forums.zingiri.net/forumdisplay
 Screenshots are available [here](http://www.zingiri.com/plugins-and-addons/bookings/ "screenshots").
 
 == Changelog ==
+
+= 4.3.5 =
+* Fixed issue with CALDAV sync
+* Added support for CDN files in SSL mode
+* Verified compatibility with Wordpress 4.2.2
 
 = 4.3.4 =
 * Fixed issue with resource names not returned as UTF-8
