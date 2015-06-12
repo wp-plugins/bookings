@@ -21,6 +21,7 @@ class bookingsHttpRequest {
 	var $follow=true; // whether to follow redirect links or not
 	var $noErrors=false; // whether to trigger an error in case of a curl error
 	var $errorMessage;
+	var $reSubmit=array();
 	
 	// constructor
 	function __construct($url="", $sid='', $repost=false) {
@@ -220,17 +221,12 @@ class bookingsHttpRequest {
 					$c=count($file['tmp_name']);
 					for($i=0; $i < $c; $i++) {
 						if ($file['tmp_name'][$i]) {
-							$newfile=BLOGUPLOADDIR . $file['name'][$i];
-							$newfiles[]=$newfile;
-							copy($file['tmp_name'][$i], $newfile);
-							if ($file['tmp_name'][$i]) $this->post[$name][$i]='@' . $newfile . $this->mimeType($newfile);
+							if ($file['tmp_name'][$i]) $this->post[$name][$i]='@' . $file['tmp_name'][$i] . $this->mimeType($file['tmp_name'][$i]).';filename='.$file['name'][$i];
 						}
 					}
 				} elseif ($file['tmp_name']) {
-					$newfile=BLOGUPLOADDIR . $file['name'];
-					$newfiles[]=$newfile;
-					copy($file['tmp_name'], $newfile);
-					if ($file['tmp_name']) $this->post[$name]='@' . $newfile . $this->mimeType($newfile);
+					$newfiles[]=$file['tmp_name'];
+					if ($file['tmp_name']) $this->post[$name]='@' . $file['tmp_name'] . $this->mimeType($file['tmp_name']).';filename='.$file['name'];
 				}
 			}
 		}
@@ -290,6 +286,14 @@ class bookingsHttpRequest {
 		}
 		
 		$data=curl_exec($ch); // run the whole process
+		
+		// remove temporary upload files
+		if (count($newfiles) > 0) {
+			foreach ($newfiles as $file) {
+				unlink($file);
+			}
+		}
+		
 		if (curl_errno($ch)) {
 			$this->errno=curl_errno($ch);
 			$this->error=curl_error($ch);
@@ -331,13 +335,6 @@ class bookingsHttpRequest {
 		
 		curl_close($ch);
 		
-		// remove temporary upload files
-		if (count($newfiles) > 0) {
-			foreach ($newfiles as $file) {
-				unlink($file);
-			}
-		}
-		
 		$this->headers=$headers;
 		$this->data=$data;
 		$this->cookies=$cookies;
@@ -366,6 +363,11 @@ class bookingsHttpRequest {
 			if (!strstr($redir,'&wp=')) $redir.='&wp='.$_SESSION['bookings']['wp'];
 			if (!$this->repost) $this->post=array();
 			$this->countRedirects++;
+			if (count($this->reSubmit) > 0) {
+				foreach ($this->reSubmit as $n => $v) {
+					$redir.='&' . $n . '=' . $v;
+				}
+			}
 			if ($this->countRedirects < 10) {
 				if ($redir != $url) {
 					return $this->connect($redir, $withHeaders, $withCookies);

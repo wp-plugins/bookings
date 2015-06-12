@@ -4,21 +4,10 @@
  * Plugin URI: http://www.zingiri.com/bookings
  * Description: Bookings is a powerful reservations scheduler.
  * Author: Zingiri
- * Version: 4.3.6
+ * Version: 5.0.0
  * Author URI: http://www.zingiri.com/
  */
 define("BOOKINGS_VERSION", bookings_version());
-
-if (!defined("BOOKINGS_PLUGIN")) {
-	$bookings_plugin=str_replace(realpath(dirname(__FILE__) . '/..'), "", dirname(__FILE__));
-	$bookings_plugin=substr($bookings_plugin, 1);
-	define("BOOKINGS_PLUGIN", $bookings_plugin);
-}
-
-if (!defined("BLOGUPLOADDIR")) {
-	$upload=wp_upload_dir();
-	define("BLOGUPLOADDIR", $upload['path']);
-}
 
 if (!defined("BOOKINGS_USER_CAP")) define("BOOKINGS_USER_CAP", get_option('bookings_user_cap') ? get_option('bookings_user_cap') : 'edit_posts');
 if (!defined("BOOKINGS_ADMIN_CAP")) define("BOOKINGS_ADMIN_CAP", get_option('bookings_admin_cap') ? get_option('bookings_admin_cap') : 'manage_options');
@@ -27,17 +16,11 @@ define("BOOKINGS_URL", plugin_dir_url(__FILE__));
 
 if (defined('BOOKINGS_LIVE')) require (dirname(__FILE__) . '/live.php');
 
-$bookingsRegions['us1']=array('North America, South America & Asia Pacific','http://bookings4us1.zingiri.net/us1/');
-$bookingsRegions['eu1']=array('Europe & Africa','http://bookings4eu1.zingiri.net/eu1/');
+$bookingsRegions['us1']=array('North America, South America & Asia Pacific','bookings5.us1.zingiri.net/');
+$bookingsRegions['eu1']=array('Europe & Africa','bookings5.eu1.zingiri.net/');
 if (file_exists(dirname(__FILE__) . '/regions.php')) require (dirname(__FILE__) . '/regions.php');
 
 if (!defined("BOOKINGS_JSPREFIX")) define("BOOKINGS_JSPREFIX", "min");
-
-$bookings_version=get_option("bookings_version");
-if ($bookings_version != BOOKINGS_VERSION) {
-	if ($bookings_version && ($bookings_version <= '1.3.0') && !get_option('bookings_region')) update_option('bookings_region', 'us1');
-	update_option("bookings_version", BOOKINGS_VERSION);
-}
 
 if (get_option('bookings_region') && (!defined('BOOKINGS_LIVE') || get_option('bookings_siteurl'))) {
 	if (!isset($_REQUEST['action']) || !in_array($_REQUEST['action'], array('bookings_ajax_frontend','bookings_ajax_backend','aphps_ajax'))) {
@@ -54,13 +37,13 @@ if (get_option('bookings_region') && (!defined('BOOKINGS_LIVE') || get_option('b
 	add_shortcode('bookings4', 'bookings_shortcode_pages');
 	// remove auto loading rel=next post link in header
 	remove_action('wp_head', 'adjacent_posts_rel_link_wp_head');
+	add_action('wp_ajax_bookings_ajax_frontend', 'bookings_ajax_frontend_callback');
+	add_action('wp_ajax_nopriv_bookings_ajax_frontend', 'bookings_ajax_frontend_callback');
 }
 
 add_action('admin_head', 'bookings_admin_header');
-add_action('admin_footer', 'bookings_admin_footer');
 add_action('admin_notices', 'bookings_admin_notices');
 
-register_activation_hook(__FILE__, 'bookings_activate');
 register_deactivation_hook(__FILE__, 'bookings_deactivate');
 register_uninstall_hook(__FILE__, 'bookings_uninstall');
 
@@ -105,12 +88,6 @@ function bookings_admin_notices() {
 	}
 	
 	return array('errors' => $errors,'warnings' => $warnings);
-}
-
-function bookings_activate() {
-	if (!get_option('bookings_key')) update_option('bookings_key', bookings_create_api_key());
-	if (!get_option('bookings_secret')) update_option('bookings_secret', bookings_create_secret());
-	update_option("bookings_version", BOOKINGS_VERSION);
 }
 
 function bookings_deactivate() {
@@ -176,6 +153,7 @@ function bookings_shortcode($atts, $content=null, $code="") {
 				$postVars[$id]=$value;
 			}
 		}
+		// echo '<h1>'.$pg.'</h1>';
 		bookings_output($pg, $postVars);
 		$output='<div id="bookings" class="bookings aphps">';
 		$output.=$bookings['output']['body'];
@@ -243,23 +221,7 @@ function bookings_output($bookings_to_include='', $postVars=array()) {
 				ob_end_clean();
 			}
 			$buffer=$news->DownloadToString();
-			$bookings['output']=json_decode($buffer, true);
-			if (!$bookings['output']) {
-				$bookings['output']['body']=$buffer;
-				$bookings['output']['head']='';
-			}
-			if (isset($_REQUEST['scr'])) {
-				echo $bookings['output']['body'];
-			} elseif ($ajax == '1') {
-				echo $bookings['output']['body'];
-			} else {
-				echo '<html><head>';
-				echo $bookings['output']['head'];
-				echo '</head><body>';
-				echo $bookings['output']['body'];
-				echo '</body></html>';
-			}
-			die();
+			echo $buffer;
 		} elseif (($ajax == 1) && in_array($_REQUEST['form'], array('form_field','form'))) {
 			if (!defined('BOOKINGS_AJAX_ORIGIN')) {
 				while ( count(ob_get_status(true)) > 0 ) {
@@ -310,36 +272,8 @@ function bookings_output($bookings_to_include='', $postVars=array()) {
 			}
 			if (isset($bookings['output']['template']) && $bookings['output']['template']) $bookingsTemplate=$bookings['output']['template'];
 			else $bookings['output']['template']=$bookingsTemplate;
-			$bookings['output']['body']=bookings_parser($bookings['output']['body']);
 		}
 	}
-}
-
-function bookings_parser($buffer) {
-	global $wp_version;
-	if (is_admin() && ($wp_version >= '3.3') && strstr($buffer, 'theEditor')) {
-		if (!class_exists('simple_html_dom')) require (dirname(__FILE__) . '/includes/simple_html_dom.php');
-		$html=new simple_html_dom();
-		$html->load($buffer);
-		if ($textareas=$html->find('textarea[class=theEditor]')) {
-			foreach ($textareas as $textarea) {
-				ob_start();
-				try {
-					wp_enqueue_script('post');
-					if (function_exists('wp_enqueue_media')) wp_enqueue_media(array('post' => 1));
-					wp_editor($textarea->innertext, $textarea->id, array('media_buttons' => true));
-				} catch ( Exception $e ) {
-					// continue
-				}
-				$editor=ob_get_clean();
-				$textarea->outertext=$editor;
-			}
-		}
-		$buffer=$html->__toString();
-		$html->clear();
-		unset($html);
-	}
-	return $buffer;
 }
 
 function bookings_header() {
@@ -366,27 +300,7 @@ function bookings_header() {
 
 function bookings_admin_header() {
 	global $bookings, $wp_version;
-	if (isset($_REQUEST['page']) && ($_REQUEST['page'] == 'bookings')) {
-		
-		if (BOOKINGS_JSPREFIX == 'src') {
-			bookings_load_js_admin();
-		} else {
-			echo '<script type="text/javascript" src="' . bookings_cdn('js') . 'js/' . BOOKINGS_JSPREFIX . '/admin.js"></script>';
-		}
-		
-		echo '<script type="text/javascript">';
-		echo "var bookingsPageurl='admin.php?page=bookings&';";
-		echo "var bookingsAjaxUrl=ajaxurl+'?action=bookings_ajax_backend&';";
-		echo "var aphpsAjaxURL=ajaxurl+'?action=bookings_ajax_backend&zfaces=ajax&ajax=1&form=';";
-		echo "var aphpsURL='" . bookings_url(false) . 'aphps/fwkfor/' . "';";
-		echo "var wsCms='gn';";
-		echo "var appsIsAdmin=1;";
-		echo "var zfurl='" . bookings_url(false) . "aphps/devbld/';";
-		echo "var zfAppsCms='gn';";
-		echo '</script>';
-		echo '<link rel="stylesheet" type="text/css" href="' . bookings_cdn('css') . 'app/bookings/css/admin.css" media="screen" />';
-		if ($wp_version < '3.3') wp_tiny_mce(false, array('editor_selector' => 'theEditor'));
-	}
+	echo '<link rel="stylesheet" type="text/css" href="' . BOOKINGS_URL . 'css/admin.css" media="screen" />';
 }
 
 function bookings_http($page="index", $params=array()) {
@@ -401,6 +315,7 @@ function bookings_http($page="index", $params=array()) {
 	}
 	if (count($_GET) > 0) {
 		foreach ($_GET as $n => $v) {
+			if ($n == 'action' && $v == 'bookings_ajax_frontend') continue;
 			if (!in_array($n, array('page','bookingsasid'))) {
 				if (is_array($v)) {
 					foreach ($v as $w) {
@@ -459,7 +374,7 @@ function bookings_http($page="index", $params=array()) {
 	}
 	if (current_user_can(BOOKINGS_ADMIN_CAP)) $wp['cap']='admin';
 	elseif (current_user_can(BOOKINGS_USER_CAP)) $wp['cap']='operator';
-	$wp['is_secure']=bookings_is_secure();
+	$wp['is_secure']=zingiri::isSecure();
 	
 	$wp=array_merge($wp, $params);
 	
@@ -467,13 +382,12 @@ function bookings_http($page="index", $params=array()) {
 	
 	$vars.=$and . 'wp=' . urlencode(base64_encode(json_encode($wp)));
 	
-	if (defined('APHPS_DEV') && !APHPS_DEV) $vars.='&aphps_dev=0';
-	
 	$_SESSION['bookings']['wp']=urlencode(base64_encode(json_encode($wp)));
 	
 	if (get_option('bookings_http_referer')) $vars.='&http_referer=' . urlencode(get_option('bookings_http_referer'));
 	
 	if ($vars) $http.=$vars;
+	
 	return $http;
 }
 
@@ -512,34 +426,16 @@ function bookings_init() {
 		}
 	}
 	if (is_admin()) {
-		if (isset($_GET['page']) && $_GET['page'] == 'bookings' && !current_user_can(BOOKINGS_ADMIN_CAP) && !isset($_GET['zfaces'])) {
-			$_GET['zfaces']='schedule';
+		if (isset($_REQUEST['page']) && ($_REQUEST['page'] == 'bookings') && get_option('bookings_version')) {
+			bookings_output('saas_check');
+			// global $bookings;var_dump($bookings);die();
 		}
-		if (isset($_GET['zfaces']) || !isset($_SESSION['bookings']['menus'])) {
-			$pg=isset($_GET['zfaces']) ? $_GET['zfaces'] : 'usage';
-			bookings_output($pg);
-		}
-		if (isset($_REQUEST['page']) && ($_REQUEST['page'] == 'bookings')) {
-			if ($wp_version < '3.3') {
-				wp_enqueue_script(array('editor','thickbox','media-editor'));
-				wp_enqueue_style('thickbox');
-			}
-		}
-	}
-	if (is_user_logged_in() && !isset($_GET['zfaces']) && !isset($_SESSION['bookings']['connected'])) {
-		bookings_output('myschedule');
-		$_SESSION['bookings']['connected']=true;
 	}
 	wp_enqueue_script('jquery');
 	if (!is_admin()) {
 		$bookingsScriptsLoaded=true;
 		wp_enqueue_script(array('jquery-ui-core','jquery-ui-dialog','jquery-ui-datepicker'));
 		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/flick/jquery-ui.css');
-	} elseif (is_admin() && isset($_REQUEST['page']) && ($_REQUEST['page'] == 'bookings')) {
-		$bookingsScriptsLoaded=true;
-		wp_enqueue_script(array('jquery-ui-core','jquery-ui-dialog','jquery-ui-datepicker','jquery-ui-sortable','jquery-ui-tabs','jquery-ui-menu'));
-		if (version_compare($wp_version, '3.2.1', '<=')) wp_enqueue_script('datepicker', bookings_url(false) . 'js/datepicker/jquery-ui-1.9.2.custom.min.js', array('jquery-ui-core'));
-		wp_enqueue_style('jquery-style', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/flick/jquery-ui.css');
 	}
 }
 
@@ -556,15 +452,9 @@ function bookings_log($type=0, $msg='', $filename="", $linenum=0) {
 function bookings_url($endpoint=true) { // URL end point for web services stored on Zingiri servers
 	global $bookingsRegions;
 	$r=get_option('bookings_region');
-	if (isset($bookingsRegions[$r])) $url=$bookingsRegions[$r][1];
-	else $url='http://bookings.zingiri.net/us1/';
-	if ($endpoint) $url.='api.php';
+	$url='http://' . $bookingsRegions[$r][1];
+	if ($endpoint) $url.='index.php';
 	return $url;
-}
-
-function bookings_admin_footer() {
-	global $bookings;
-	if (isset($bookings['output']['footer'])) echo $bookings['output']['footer'];
 }
 
 function bookings_footer() {
@@ -588,24 +478,6 @@ function bookings_version($tag='Stable tag') {
 	return NULL;
 }
 
-/*
- * Ajax calls
- */
-add_action('wp_ajax_bookings_ajax_backend', 'bookings_ajax_backend_callback');
-add_action('wp_ajax_aphps_ajax', 'bookings_ajax_backend_callback');
-add_action('wp_ajax_bookings_ajax_frontend', 'bookings_ajax_frontend_callback');
-add_action('wp_ajax_nopriv_bookings_ajax_frontend', 'bookings_ajax_frontend_callback');
-
-function bookings_ajax_backend_callback() {
-	define('BOOKINGS_AJAX_ORIGIN', "b");
-	$pg=isset($_REQUEST['zfaces']) ? $_REQUEST['zfaces'] : 'ajax';
-	while ( count(ob_get_status(true)) > 0 ) {
-		ob_end_clean();
-	}
-	bookings_output();
-	die();
-}
-
 function bookings_ajax_frontend_callback() {
 	define('BOOKINGS_AJAX_ORIGIN', "f");
 	$pg=isset($_REQUEST['zfaces']) ? $_REQUEST['zfaces'] : 'ajax';
@@ -616,11 +488,8 @@ function bookings_ajax_frontend_callback() {
 function bookings_cdn($sub='') {
 	if (defined('BOOKINGS_CDN')) return BOOKINGS_CDN;
 	else {
-		$s= (bookings_is_secure() ? 'https://d173498e4e66d414ff74-516be1fc79a87be931cfbe73f8cfa194.ssl.cf1.rackcdn.com' : 'http://cdn.zingiri.net') . '/bookings/' . ($sub ? $sub . '/' : '');
+		$s=(zingiri::isSecure() ? 'https://d173498e4e66d414ff74-516be1fc79a87be931cfbe73f8cfa194.ssl.cf1.rackcdn.com' : 'http://cdn.zingiri.net') . '/bookings/v5/' . ($sub ? $sub . '/' : '');
 		return $s;
 	}
 }
 
-function bookings_is_secure() {
-	return isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) ? 1 : 0;
-}

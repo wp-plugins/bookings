@@ -1,0 +1,23 @@
+#zingiri-help {
+	width: 49%;
+	float:right;
+}
+
+#zingiri-help li {
+	display: inline;
+	float: left;
+	padding-right: 1em;
+}
+
+.cc-left {
+	position: relative;
+	float: left;
+	width: 49%;
+	margin-right: 2%;
+}
+
+.cc-right {
+	position: relative;
+	float: right;
+	width: 49%;
+}

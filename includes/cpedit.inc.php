@@ -1,5 +1,5 @@
 <?php
-//v1.09.15
+//v2.04.17
 ?>
 <table class="optiontable">
 
@@ -9,7 +9,7 @@
 	
 	if ($value['type'] == "text" || $value['type'] == "password") { ?>
 
-	<tr align="left"">
+	<tr align="left">
 		<th scope="row"><?php echo $value['name']; ?>:</th>
 		<td><input name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>"
 			type="<?php echo $value['type']; ?>"
@@ -18,8 +18,8 @@
 		/></td>
 
 	</tr>
-	<tr">
-		<td colspan=2"><div style="width:800px;font-size:smaller;"><?php echo $value['desc']; ?> </div>
+	<tr>
+		<td colspan=2><small><?php echo $value['desc']; ?> </small>
 		<hr />
 		</td>
 	</tr>
@@ -28,11 +28,15 @@
 
 	<tr align="left">
 		<th scope="row"><?php echo $value['name']; ?>:</th>
-		<td><?php echo $value['id']; ?>
-		</td>
+		<td><input 
+			type="<?php echo $value['type']; ?>"
+			value="<?php echo $value['value']; ?>"
+			size="40" disabled="disabled"
+		/></td>
+
 	</tr>
 	<tr>
-		<td colspan=2"><div style="width:800px;font-size:smaller;"><?php echo $value['desc']; ?> </div>
+		<td colspan=2><small><?php echo $value['desc']; ?> </small>
 		<hr />
 		</td>
 	</tr>
@@ -49,23 +53,26 @@
 
 	</tr>
 	<tr>
-		<td colspan=2"><div style="width:800px;font-size:smaller;"><?php echo $value['desc']; ?> </div>
+		<td colspan=2><small><?php echo $value['desc']; ?> </small>
 		<hr />
 		</td>
 	</tr>
 
 
-	<?php } elseif ($value['type'] == "textarea") { 
-		if ( get_option( $value['id'] ) != "") $textarea=stripslashes(get_option( $value['id'] )); 
-		elseif (isset($value['std'])) $textarea=$value['std'];
-		else $textarea='';
-		?>
+	<?php } elseif ($value['type'] == "textarea") { ?>
 	<tr align="left">
 		<th scope="row"><?php echo $value['name']; ?>:</th>
-		<td><textarea name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>" cols="50" rows="8"><?php echo $textarea;?></textarea></td>
+		<td><textarea name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>" cols="50"
+			rows="8"
+		/>
+		<?php if ( get_option( $value['id'] ) != "") { echo stripslashes (get_option( $value['id'] )); }
+		elseif (isset($value['std'])) { echo $value['std'];
+		} ?>
+</textarea></td>
+
 	</tr>
 	<tr>
-		<td colspan=2"><div style="width:800px;font-size:smaller;"><?php echo $value['desc']; ?> </div>
+		<td colspan=2><small><?php echo $value['desc']; ?> </small>
 		<hr />
 		</td>
 	</tr>
@@ -82,7 +89,7 @@
 
 	</tr>
 	<tr>
-		<td colspan=2"><div style="width:800px;font-size:smaller;"><?php echo $value['desc']; ?> </div>
+		<td colspan=2><small><?php echo $value['desc']; ?> </small>
 		<hr />
 		</td>
 	</tr>
@@ -96,7 +103,7 @@
 			<option value="<?php echo $key;?>"
 			<?php 
 			if (!$selected && get_option($value['id']) && (get_option( $value['id'] ) == $key)) { echo ' selected="selected"'; $selected=true; }
-			elseif (!$selected && !get_option($value['id']) && isset($value['std']) && ($value['std'] == $key)) { echo ' selected="selected"'; $selected=true; }
+			elseif (!$selected && !get_option($value['id']) && $value['std'] == $key) { echo ' selected="selected"'; $selected=true; }
 			?>
 			><?php echo $option; ?></option>
 			<?php } ?>
@@ -104,22 +111,23 @@
 
 	</tr>
 	<tr>
-		<td colspan=2"><div style="width:800px;font-size:smaller;"><?php echo $value['desc']; ?> </div>
-		<hr />
+		<td colspan=2><small><?php echo $value['desc']; ?> </small><hr /></td>
 	</tr>
 
 	<?php } elseif ($value['type'] == "heading") { ?>
 
 	<tr valign="top">
 		<td colspan="2" style="text-align: left;">
-		<h2 style="color: green;"><?php echo $value['name']; ?></h2>
+		<h3><?php echo $value['name']; ?></h3>
 		</td>
 	</tr>
 	<tr>
-		<td colspan=2"><div style="width:800px;font-size:smaller;color:red;"><?php echo $value['desc']; ?> </div>
+		<td colspan=2>
+		<p class="description"><?php echo $value['desc']; ?></p>
 		<hr />
 		</td>
 	</tr>
+
 	<?php } 
 } //end foreach
 ?>
